@@ -6,6 +6,7 @@ import type { Vote } from '@/lib/db/schema';
 import { DocumentToolCall, DocumentToolResult } from './document';
 import { PencilEditIcon, SparklesIcon } from './icons';
 import { Markdown } from './markdown';
+import { StreamingMarkdown } from './streaming-markdown';
 import { MessageActions } from './message-actions';
 import { PreviewAttachment } from './preview-attachment';
 import { Weather } from './weather';
@@ -142,7 +143,11 @@ const PurePreviewMessage = ({
                             message.role === 'user',
                         })}
                       >
-                        <Markdown>{sanitizeText(part.text)}</Markdown>
+                        <StreamingMarkdown
+                          content={sanitizeText(part.text)}
+                          isUser={message.role === 'user'}
+                          isStreaming={isLoading && index === message.parts.length - 1}
+                        />
                       </div>
                     </div>
                   );

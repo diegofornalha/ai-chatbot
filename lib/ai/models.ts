@@ -17,4 +17,9 @@ export const chatModels: Array<ChatModel> = [
     name: 'Reasoning model',
     description: 'Uses advanced reasoning',
   },
+  {
+    id: 'claude-code-sdk',
+    name: 'Claude Code (Local)',
+    description: 'Claude rodando localmente via Code SDK - sem API keys',
+  },
 ];
