@@ -66,11 +66,15 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:3033",
         "http://localhost:3033",
+        "http://localhost:3001",
         "https://localhost:3033",
+        "http://127.0.0.1:3033",
+        "*"  # Permitir qualquer origem em desenvolvimento
     ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["*"]
 )
 
 # Modelos Pydantic
