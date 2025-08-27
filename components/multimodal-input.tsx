@@ -296,11 +296,8 @@ function PureMultimodalInput({
           ) {
             event.preventDefault();
 
-            if (status !== 'ready') {
-              toast.error('Please wait for the model to finish its response!');
-            } else {
-              submitForm();
-            }
+            // Permite enviar mensagem sempre, especialmente para claude-code-sdk
+            submitForm();
           }
         }}
       />

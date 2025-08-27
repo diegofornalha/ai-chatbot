@@ -91,6 +91,19 @@ class ChatResponse(BaseModel):
 
 # Endpoints
 
+@app.post("/api/claude/session")
+async def create_session():
+    """Cria uma nova sessão e retorna o session_id."""
+    session_id = str(uuid.uuid4())
+    await claude_handler.create_session(session_id, "dev-user")
+    return {"session_id": session_id}
+
+@app.delete("/api/claude/session/{session_id}")
+async def delete_session(session_id: str):
+    """Deleta uma sessão específica."""
+    await claude_handler.destroy_session(session_id)
+    return {"status": "deleted", "session_id": session_id}
+
 @app.get("/")
 async def root():
     """Health check endpoint."""

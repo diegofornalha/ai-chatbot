@@ -1,4 +1,4 @@
-export const DEFAULT_CHAT_MODEL: string = 'chat-model';
+export const DEFAULT_CHAT_MODEL: string = 'claude-code-sdk';
 
 export interface ChatModel {
   id: string;
@@ -8,6 +8,11 @@ export interface ChatModel {
 
 export const chatModels: Array<ChatModel> = [
   {
+    id: 'claude-code-sdk',
+    name: 'Claude Code (Local)',
+    description: 'Claude rodando localmente via Code SDK - sem API keys',
+  },
+  {
     id: 'chat-model',
     name: 'Chat model',
     description: 'Primary model for all-purpose chat',
@@ -16,10 +21,5 @@ export const chatModels: Array<ChatModel> = [
     id: 'chat-model-reasoning',
     name: 'Reasoning model',
     description: 'Uses advanced reasoning',
-  },
-  {
-    id: 'claude-code-sdk',
-    name: 'Claude Code (Local)',
-    description: 'Claude rodando localmente via Code SDK - sem API keys',
   },
 ];
