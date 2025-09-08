@@ -2,7 +2,7 @@ import { NextResponse, type NextRequest } from 'next/server';
 import { getToken } from 'next-auth/jwt';
 import { guestRegex, isDevelopmentEnvironment } from './lib/constants';
 import { getBaseUrl, createAbsoluteUrl } from './lib/get-url';
-import { applyRateLimit } from './lib/middleware/rate-limit';
+import { applyRateLimit } from './lib/middleware/rate-limit-edge';
 import { applyCORS, setSecurityHeaders } from './lib/middleware/cors';
 
 export async function middleware(request: NextRequest) {

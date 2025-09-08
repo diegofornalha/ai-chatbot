@@ -90,9 +90,6 @@ export default async function RootLayout({
           fallback={CriticalErrorFallback}
           level="critical"
           maxRetries={2}
-          onError={(error, errorInfo, errorId) => {
-            console.error('Critical layout error:', { error, errorInfo, errorId });
-          }}
         >
           <ThemeProvider
             attribute="class"
