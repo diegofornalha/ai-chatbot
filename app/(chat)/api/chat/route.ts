@@ -2,6 +2,7 @@ import {
   convertToModelMessages,
   createUIMessageStream,
   JsonToSseTransformStream,
+  type LanguageModelUsage,
   smoothStream,
   stepCountIs,
   streamText,
@@ -17,6 +18,7 @@ import {
   saveChat,
   saveMessages,
 } from '@/lib/db/queries';
+import { updateChatLastContextById } from '@/lib/db/queries';
 import { convertToUIMessages, generateUUID } from '@/lib/utils';
 import { generateTitleFromUserMessage } from '../../actions';
 import { createDocument } from '@/lib/ai/tools/create-document';
@@ -124,6 +126,8 @@ export async function POST(request: Request) {
     const streamId = generateUUID();
     await createStreamId({ streamId, chatId: id });
 
+    let finalUsage: LanguageModelUsage | undefined;
+
     const stream = createUIMessageStream({
       execute: ({ writer: dataStream }) => {
         const result = streamText({
@@ -154,6 +158,10 @@ export async function POST(request: Request) {
             isEnabled: isProductionEnvironment,
             functionId: 'stream-text',
           },
+          onFinish: ({ usage }) => {
+            finalUsage = usage;
+            dataStream.write({ type: 'data-usage', data: usage });
+          },
         });
 
         result.consumeStream();
@@ -176,6 +184,17 @@ export async function POST(request: Request) {
             chatId: id,
           })),
         });
+
+        if (finalUsage) {
+          try {
+            await updateChatLastContextById({
+              chatId: id,
+              context: finalUsage,
+            });
+          } catch (err) {
+            console.warn('Unable to persist last usage for chat', id, err);
+          }
+        }
       },
       onError: () => {
         return 'Oops, an error occurred!';
@@ -209,7 +228,7 @@ export async function DELETE(request: Request) {
 
   const chat = await getChatById({ id });
 
-  if (chat.userId !== session.user.id) {
+  if (chat?.userId !== session.user.id) {
     return new ChatSDKError('forbidden:chat').toResponse();
   }
 
