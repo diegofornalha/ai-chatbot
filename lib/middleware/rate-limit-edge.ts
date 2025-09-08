@@ -1,6 +1,6 @@
 /**
- * Rate Limiting Middleware for Next.js
- * Protection against API abuse with Redis backend and memory fallback
+ * Edge Runtime compatible Rate Limiting Middleware for Next.js
+ * In-memory only implementation without Redis dependencies
  */
 
 import { NextRequest, NextResponse } from 'next/server';
@@ -19,18 +19,20 @@ interface RateLimitResult {
   retryAfter?: number;
 }
 
-// Fallback in-memory store when Redis is unavailable
+// In-memory store for Edge Runtime
 const memoryRateLimitStore = new Map<string, RateLimitEntry>();
 
-// Clean expired entries periodically for memory fallback
-setInterval(() => {
-  const now = Date.now();
-  for (const [key, entry] of memoryRateLimitStore.entries()) {
-    if (entry.resetTime < now) {
-      memoryRateLimitStore.delete(key);
+// Clean expired entries periodically
+if (typeof setInterval !== 'undefined') {
+  setInterval(() => {
+    const now = Date.now();
+    for (const [key, entry] of memoryRateLimitStore.entries()) {
+      if (entry.resetTime < now) {
+        memoryRateLimitStore.delete(key);
+      }
     }
-  }
-}, 60000); // Clean every minute
+  }, 60000); // Clean every minute
+}
 
 /**
  * Get unique client identifier
@@ -49,31 +51,16 @@ function getClientIdentifier(request: NextRequest): string {
 }
 
 /**
- * Rate limit check using memory store (Edge Runtime compatible)
+ * Memory-based rate limit check
  */
-async function checkRateLimit(
+function checkRateLimit(
   key: string,
   windowMs: number,
   maxRequests: number
-): Promise<RateLimitResult> {
+): RateLimitResult {
   const now = Date.now();
   const resetTime = now + windowMs;
-
-  // Use memory store for Edge Runtime compatibility
-  return checkRateLimitMemory(key, windowMs, maxRequests, now, resetTime);
-}
-
-
-/**
- * Memory fallback implementation of rate limiting
- */
-function checkRateLimitMemory(
-  key: string,
-  windowMs: number,
-  maxRequests: number,
-  now: number,
-  resetTime: number
-): RateLimitResult {
+  
   let entry = memoryRateLimitStore.get(key);
 
   if (!entry || entry.resetTime < now) {
@@ -101,7 +88,7 @@ function checkRateLimitMemory(
 }
 
 /**
- * Rate limiting middleware with Redis backend and memory fallback
+ * Rate limiting middleware for Edge Runtime
  */
 export async function rateLimit(
   request: NextRequest,
@@ -128,7 +115,7 @@ export async function rateLimit(
     : getClientIdentifier(request);
   
   // Check rate limit
-  const result = await checkRateLimit(key, windowMs, maxRequests);
+  const result = checkRateLimit(key, windowMs, maxRequests);
   
   // If rate limit exceeded
   if (!result.success) {
@@ -261,7 +248,6 @@ export async function getRateLimitStats(key: string): Promise<{
   resetTime: number;
   backend: 'redis' | 'memory';
 } | null> {
-  // Only use memory store in Edge Runtime
   const entry = memoryRateLimitStore.get(key);
   if (entry) {
     return {
