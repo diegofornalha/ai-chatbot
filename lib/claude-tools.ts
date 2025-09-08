@@ -56,35 +56,51 @@ export async function runCode(code: string, language: string): Promise<ToolResul
   };
 }
 
-// Search Tool
+// Search Tool - Real web search using API
 export async function search(query: string): Promise<ToolResult> {
-  await new Promise(resolve => setTimeout(resolve, 1200));
-  
-  const results = [
-    {
-      title: `Resultado 1 para "${query}"`,
-      snippet: 'Este é um snippet do primeiro resultado da busca...',
-      url: 'https://example.com/1'
-    },
-    {
-      title: `Resultado 2 para "${query}"`,
-      snippet: 'Este é um snippet do segundo resultado da busca...',
-      url: 'https://example.com/2'
-    },
-    {
-      title: `Resultado 3 para "${query}"`,
-      snippet: 'Este é um snippet do terceiro resultado da busca...',
-      url: 'https://example.com/3'
+  try {
+    const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Search API failed: ${response.status}`);
     }
-  ];
-  
-  return {
-    type: 'search',
-    data: {
-      query,
-      results
-    }
-  };
+
+    const searchData = await response.json();
+    
+    return {
+      type: 'search',
+      data: searchData
+    };
+  } catch (error) {
+    console.error('Search error:', error);
+    
+    // Fallback to basic search links on error
+    const fallbackResults = [
+      {
+        title: `Pesquisar "${query}" no Google`,
+        snippet: `Clique para pesquisar "${query}" no Google`,
+        url: `https://www.google.com/search?q=${encodeURIComponent(query)}`,
+      },
+      {
+        title: `Pesquisar "${query}" no DuckDuckGo`,
+        snippet: `Clique para pesquisar "${query}" no DuckDuckGo`,
+        url: `https://duckduckgo.com/?q=${encodeURIComponent(query)}`,
+      }
+    ];
+
+    return {
+      type: 'search',
+      data: {
+        query,
+        results: fallbackResults
+      }
+    };
+  }
 }
 
 // Registro de todas as tools disponíveis

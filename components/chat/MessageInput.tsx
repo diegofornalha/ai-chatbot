@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils';
 interface MessageInputProps {
   onSendMessage: (message: string) => void;
   onInterrupt?: () => void;
-  isStreaming?: boolean;
+  isLoading?: boolean;
   disabled?: boolean;
   placeholder?: string;
   onFocus?: () => void;
@@ -19,7 +19,7 @@ interface MessageInputProps {
 export const MessageInput = React.forwardRef<HTMLTextAreaElement, MessageInputProps>(({
   onSendMessage,
   onInterrupt,
-  isStreaming = false,
+  isLoading = false,
   disabled = false,
   placeholder = "Digite sua mensagem... (Enter para enviar)",
   onFocus,
@@ -31,7 +31,7 @@ export const MessageInput = React.forwardRef<HTMLTextAreaElement, MessageInputPr
   const textareaRef = ref || internalRef;
 
   const handleSend = () => {
-    if (message.trim() && !disabled && !isStreaming) {
+    if (message.trim() && !disabled && !isLoading) {
       onSendMessage(message.trim());
       setMessage('');
       if (typeof textareaRef === 'object' && textareaRef?.current) {
@@ -72,7 +72,7 @@ export const MessageInput = React.forwardRef<HTMLTextAreaElement, MessageInputPr
               onFocus={onFocus}
               onBlur={onBlur}
               placeholder={placeholder}
-              disabled={disabled || isStreaming}
+              disabled={disabled || isLoading}
               className={cn(
                 className,
                 "w-full resize-none rounded-lg border bg-background px-4 py-3 pr-12",
@@ -92,7 +92,7 @@ export const MessageInput = React.forwardRef<HTMLTextAreaElement, MessageInputPr
           </div>
 
           <div className="flex gap-2">
-            {isStreaming ? (
+            {isLoading ? (
               <Button
                 type="button"
                 variant="destructive"
