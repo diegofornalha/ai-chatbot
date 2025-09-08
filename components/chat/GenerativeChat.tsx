@@ -6,7 +6,7 @@ import { MessageInput } from './MessageInput';
 import { ToolRenderer } from '../generative/ToolRenderer';
 import { SmartLoadingState } from './SmartLoadingState';
 import { Button } from '@/components/ui/button';
-import { Bot, Trash2, Sparkles, Zap, ZapOff } from 'lucide-react';
+import { Bot, Trash2, Sparkles } from 'lucide-react';
 import { executeTool } from '@/lib/claude-tools';
 import { executeMCPTool } from '@/lib/mcp-tools';
 import { getWeatherViaMCP } from '@/lib/mcp-direct';
@@ -28,7 +28,6 @@ export function GenerativeChat() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [sessionId, setSessionId] = useState<string | null>(null);
-  const [streamingMessageId, setStreamingMessageId] = useState<string | null>(null);
   
   // Refs
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -38,8 +37,6 @@ export function GenerativeChat() {
   // Estado para controle de foco do input
   const [isInputFocused, setIsInputFocused] = useState(false);
   
-  // Estado para controle do streaming
-  const [isStreamingEnabled, setIsStreamingEnabled] = useState(true);
   
   // Estado para a query atual (para o loading inteligente)
   const [currentQuery, setCurrentQuery] = useState('');
@@ -291,8 +288,6 @@ ${m.content}`
           console.log('📨 [DEBUG] Última mensagem:', newMessages[newMessages.length - 1]);
           return newMessages;
         });
-        // Marca esta mensagem para streaming
-        setStreamingMessageId(assistantMessage.id);
       } else {
         console.log('⚠️ [DEBUG] Nenhum conteúdo do assistente para adicionar!');
       }
@@ -334,19 +329,6 @@ ${m.content}`
             <Button 
               variant="ghost" 
               size="icon"
-              onClick={() => setIsStreamingEnabled(!isStreamingEnabled)}
-              title={isStreamingEnabled ? "Desativar streaming" : "Ativar streaming"}
-              className={isStreamingEnabled ? "text-primary" : "text-muted-foreground"}
-            >
-              {isStreamingEnabled ? (
-                <Zap className="h-5 w-5" />
-              ) : (
-                <ZapOff className="h-5 w-5" />
-              )}
-            </Button>
-            <Button 
-              variant="ghost" 
-              size="icon"
               onClick={clearMessages}
               title="Limpar conversa"
             >
@@ -357,12 +339,6 @@ ${m.content}`
         <div className="border-b bg-muted/30 px-4 py-2">
           <div className="flex items-center justify-between text-sm text-muted-foreground">
             <span>💬 {messages.length} {messages.length === 1 ? 'mensagem' : 'mensagens'}</span>
-            {!isStreamingEnabled && (
-              <span className="flex items-center gap-1">
-                <ZapOff className="h-3 w-3" />
-                Streaming desativado
-              </span>
-            )}
           </div>
         </div>
       </header>
@@ -415,9 +391,6 @@ ${m.content}`
                     role={message.role}
                     content={message.content}
                     timestamp={new Date(message.timestamp)}
-                    isStreaming={message.role === 'assistant' && streamingMessageId === message.id && isStreamingEnabled}
-                    streamingSpeed={50}
-                    onStreamComplete={() => setStreamingMessageId(null)}
                   />
                 )}
                 {message.tool && (
@@ -452,7 +425,7 @@ ${m.content}`
         ref={inputRef}
         onSendMessage={handleSend}
         disabled={isLoading}
-        isStreaming={isLoading}
+        isLoading={isLoading}
         placeholder="Pergunte o que quiser..."
         onFocus={() => setIsInputFocused(true)}
         onBlur={() => setIsInputFocused(false)}
