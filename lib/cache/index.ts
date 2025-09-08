@@ -3,7 +3,16 @@
  * Export all Redis-related functionality with fallback support
  */
 
-// Core Redis client
+// Core Redis client  
+import { 
+  isRedisAvailable as _isRedisAvailable, 
+  redisClient as _redisClient
+} from './redis-client';
+import { cacheManager as _cacheManager } from './cache-manager';
+import { sessionManager as _sessionManager } from './session-manager';
+import { fallbackManager as _fallbackManager } from './fallback-manager';
+import { pubSubManager as _pubSubManager } from './pubsub-manager';
+import { redisHealthChecker as _redisHealthChecker } from './redis-health';
 export { 
   redisClient, 
   isRedisAvailable, 
@@ -116,11 +125,11 @@ export async function initializeRedisSystem(options?: {
 
   try {
     // Check Redis availability
-    components.redis = isRedisAvailable();
+    components.redis = _isRedisAvailable();
     
     // Initialize cache manager
     try {
-      await cacheManager.getInfo();
+      await _cacheManager.getInfo();
       components.cache = true;
     } catch (error) {
       console.warn('Cache manager initialization failed:', error);
@@ -128,7 +137,7 @@ export async function initializeRedisSystem(options?: {
 
     // Initialize session manager
     try {
-      await sessionManager.getStats();
+      await _sessionManager.getStats();
       components.sessions = true;
     } catch (error) {
       console.warn('Session manager initialization failed:', error);
@@ -136,7 +145,7 @@ export async function initializeRedisSystem(options?: {
 
     // Initialize pub/sub manager
     try {
-      pubSubManager.getActiveChannels();
+      _pubSubManager.getActiveChannels();
       components.pubsub = true;
     } catch (error) {
       console.warn('Pub/Sub manager initialization failed:', error);
@@ -145,7 +154,7 @@ export async function initializeRedisSystem(options?: {
     // Initialize fallback system
     if (options?.enableFallback !== false) {
       try {
-        fallbackManager.getStats();
+        _fallbackManager.getStats();
         components.fallback = true;
       } catch (error) {
         console.warn('Fallback manager initialization failed:', error);
@@ -155,7 +164,7 @@ export async function initializeRedisSystem(options?: {
     // Start health monitoring
     if (options?.enableHealthMonitoring !== false) {
       try {
-        const healthChecker = redisHealthChecker;
+        const healthChecker = _redisHealthChecker;
         healthChecker.startPeriodicHealthChecks(options?.healthCheckInterval);
       } catch (error) {
         console.warn('Health monitoring initialization failed:', error);
@@ -189,11 +198,11 @@ export async function shutdownRedisSystem(): Promise<void> {
   console.log('Shutting down Redis system...');
   
   const shutdownPromises = [
-    redisClient.shutdown(),
-    cacheManager.shutdown(),
-    sessionManager.shutdown(),
-    pubSubManager.shutdown(),
-    fallbackManager.shutdown(),
+    _redisClient.shutdown(),
+    _cacheManager.shutdown(),
+    _sessionManager.shutdown(),
+    _pubSubManager.shutdown(),
+    _fallbackManager.shutdown(),
   ];
 
   try {
@@ -232,22 +241,22 @@ export async function getSystemStatus(): Promise<{
 }> {
   try {
     const [cacheStats, sessionStats, pubsubStats, fallbackStats] = await Promise.all([
-      cacheManager.getStats(),
-      sessionManager.getStats(),
-      pubSubManager.getChannelStats(),
-      fallbackManager.getStats(),
+      _cacheManager.getStats(),
+      _sessionManager.getStats(),
+      _pubSubManager.getChannelStats(),
+      _fallbackManager.getStats(),
     ]);
 
     let redisStatus;
     try {
-      redisStatus = await redisHealthChecker.performHealthCheck();
+      redisStatus = await _redisHealthChecker.performHealthCheck();
     } catch (error) {
-      redisStatus = null;
+      redisStatus = undefined;
     }
 
     const status = {
       redis: {
-        available: isRedisAvailable(),
+        available: _isRedisAvailable(),
         status: redisStatus,
       },
       cache: {
@@ -293,24 +302,4 @@ export async function getSystemStatus(): Promise<{
 }
 
 // Default export for easy usage
-export default {
-  // Core components
-  redisClient,
-  cacheManager,
-  sessionManager,
-  pubSubManager,
-  redisHealthChecker,
-  fallbackManager,
-  
-  // Utilities
-  initializeRedisSystem,
-  shutdownRedisSystem,
-  getSystemStatus,
-  isRedisAvailable,
-  
-  // Specialized managers
-  AICacheManager,
-  GuestSessionManager,
-  RealTimeManager,
-  FallbackCache,
-};
+// All exports are available as named exports for better tree shaking

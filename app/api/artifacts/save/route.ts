@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
+import { auth } from '@/app/(auth)/auth';
 import { z } from 'zod';
 
 // Schema de validação para artifact
@@ -19,7 +19,7 @@ const artifactSchema = z.object({
 export async function POST(req: NextRequest) {
   try {
     // Verificar autenticação (opcional - pode salvar para guests também)
-    const session = await getServerSession();
+    const session = await auth();
     
     // Parse e validar o body
     const body = await req.json();

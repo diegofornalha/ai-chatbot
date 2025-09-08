@@ -597,9 +597,6 @@ export class FallbackCache {
   }
 }
 
-// Export types
-export type { FallbackOptions, FallbackStats, FallbackData };
-
 // Export utilities
 export const getFallbackStats = () => fallbackManager.getStats();
 export const syncWithRedis = () => fallbackManager.syncWithRedis();

@@ -561,9 +561,6 @@ export class RealTimeManager {
   }
 }
 
-// Export types
-export type { PubSubMessage, PubSubOptions, ChannelStats, MessageHandler };
-
 // Export utilities
 export const subscribe = pubSubManager.subscribe.bind(pubSubManager);
 export const unsubscribe = pubSubManager.unsubscribe.bind(pubSubManager);

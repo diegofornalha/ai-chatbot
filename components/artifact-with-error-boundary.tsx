@@ -96,7 +96,7 @@ export function ArtifactContentErrorBoundary({
       onError={handleContentError}
       level="component"
       maxRetries={3}
-      resetKeys={[artifactType, documentId]}
+      resetKeys={[artifactType, documentId || '']}
     >
       {children}
     </ErrorBoundary>
@@ -165,7 +165,7 @@ export function DocumentLoadingErrorBoundary({
       onError={handleDocumentError}
       level="component"
       maxRetries={3}
-      resetKeys={[documentId]}
+      resetKeys={[documentId || '']}
     >
       {children}
     </ErrorBoundary>
@@ -258,7 +258,7 @@ export function ArtifactEditorErrorBoundary({
       onError={handleEditorError}
       level="component"
       maxRetries={2}
-      resetKeys={[documentId]}
+      resetKeys={[documentId || '']}
     >
       {children}
     </ErrorBoundary>

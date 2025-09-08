@@ -172,7 +172,6 @@ export class ArtifactRepository extends BaseRepository<Artifact, CreateArtifactD
       content: original.content,
       type: original.type,
       metadata: original.metadata,
-      userId: original.userId,
     });
     
     return copy;

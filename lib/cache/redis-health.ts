@@ -625,9 +625,6 @@ class RedisHealthChecker {
 // Export singleton instance
 export const redisHealthChecker = RedisHealthChecker.getInstance();
 
-// Export types
-export type { HealthCheckResult, HealthCheckOptions };
-
 // Export utilities
 export const performHealthCheck = (options?: HealthCheckOptions) => 
   redisHealthChecker.performHealthCheck(options);

@@ -540,9 +540,6 @@ export class AICacheManager {
   }
 }
 
-// Export types
-export type { CacheOptions, CacheStats, CacheEntry };
-
 // Export utilities
 export const clearAllCache = () => cacheManager.clear();
 export const getCacheStats = () => cacheManager.getStats();

@@ -251,7 +251,7 @@ export function useFileOperationRetry() {
     onError: (error, attempt) => {
       if (error.message.includes('quota') || error.message.includes('storage')) {
         toast({
-          type: 'warning',
+          type: 'error',
           description: 'Storage quota exceeded. Try clearing browser data.',
         });
       }
@@ -267,7 +267,7 @@ export function useAuthRetry() {
     onError: (error, attempt) => {
       if (error.message.includes('rate limit')) {
         toast({
-          type: 'warning',
+          type: 'error',
           description: 'Too many login attempts. Please wait before trying again.',
         });
       }
@@ -293,7 +293,7 @@ export function useChatRetry() {
     onError: (error, attempt) => {
       if (error.message.includes('rate limit')) {
         toast({
-          type: 'info',
+          type: 'error',
           description: `Rate limited. Retrying in ${attempt * 1.5}s...`,
         });
       }
