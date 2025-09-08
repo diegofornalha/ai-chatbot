@@ -20,7 +20,7 @@ interface ErrorReport {
 export async function POST(request: NextRequest) {
   try {
     const errorReport: ErrorReport = await request.json();
-    const headersList = headers();
+    const headersList = await headers();
     const userAgent = headersList.get('user-agent');
     const forwardedFor = headersList.get('x-forwarded-for');
     const realIp = headersList.get('x-real-ip');

@@ -93,7 +93,7 @@ export async function logError(
     errorId,
     message: isErrorObject ? error.message : error,
     stack: isErrorObject ? error.stack : undefined,
-    componentStack: errorInfo?.componentStack,
+    componentStack: errorInfo?.componentStack || undefined,
     level: 'error',
     timestamp: new Date().toISOString(),
     userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : undefined,

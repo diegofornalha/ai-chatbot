@@ -121,7 +121,7 @@ const DefaultErrorFallback: React.FC<ErrorFallbackProps> = ({
   const handleReportError = () => {
     if (errorId) {
       toast({
-        type: 'info',
+        type: 'success',
         description: `Error reported with ID: ${errorId}`,
       });
     }

@@ -196,7 +196,7 @@ export class InMemoryRepository<T extends { id: string }, CreateDTO = Partial<T>
     const { page, pageSize, ...queryOptions } = options;
     const offset = (page - 1) * pageSize;
     
-    const total = await this.count(queryOptions.where);
+    const total = await this.count(queryOptions.where as Partial<T> | undefined);
     const data = await this.findAll({
       ...queryOptions,
       offset,
@@ -215,7 +215,7 @@ export class InMemoryRepository<T extends { id: string }, CreateDTO = Partial<T>
   async create(data: CreateDTO): Promise<T> {
     const processedData = await this.beforeCreate(data);
     const id = `${this.idCounter++}`;
-    const entity = this.validate({ ...processedData, id } as T);
+    const entity = this.validate({ ...processedData, id } as unknown as T);
     this.data.set(id, entity);
     return this.afterCreate(entity);
   }

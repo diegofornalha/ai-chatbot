@@ -13,7 +13,7 @@ interface GlobalErrorReport {
 export async function POST(request: NextRequest) {
   try {
     const globalErrorReport: GlobalErrorReport = await request.json();
-    const headersList = headers();
+    const headersList = await headers();
 
     const enhancedReport = {
       ...globalErrorReport,

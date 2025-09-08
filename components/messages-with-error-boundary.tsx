@@ -114,7 +114,14 @@ function MessageContent({
   onMessageUpdate,
 }: MessageWithErrorBoundaryProps) {
   // Handle different message types
-  if (message.role === 'assistant' && message.content === '') {
+  // Check if message has empty content by checking parts
+  const hasContent = message.parts && message.parts.length > 0 && 
+    message.parts.some((part: any) => 
+      (part.type === 'text' && part.text) || 
+      (part.type !== 'text')
+    );
+  
+  if (message.role === 'assistant' && !hasContent) {
     return (
       <ErrorBoundary
         fallback={InlineErrorFallback}
@@ -135,9 +142,13 @@ function MessageContent({
       <PreviewMessage
         chatId={chatId}
         message={message}
-        votes={votes?.filter(vote => vote.messageId === message.id)}
-        isReadonly={isReadonly}
-        onMessageUpdate={onMessageUpdate}
+        vote={votes?.find(vote => vote.messageId === message.id)}
+        isLoading={false}
+        setMessages={() => {}}
+        regenerate={async () => {}}
+        isReadonly={isReadonly ?? false}
+        requiresScrollPadding={false}
+        isArtifactVisible={false}
       />
     </ErrorBoundary>
   );

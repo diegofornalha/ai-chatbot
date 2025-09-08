@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
+import { auth } from '@/app/(auth)/auth';
 
 export async function GET(req: NextRequest) {
   try {
     // Verificar autenticação
-    const session = await getServerSession();
+    const session = await auth();
     
     // Aqui você carregaria do banco de dados
     // Por enquanto, vamos retornar dados mock

@@ -91,7 +91,7 @@ export function RetryButton({
   return (
     <Button
       onClick={handleClick}
-      disabled={disabled || isLoading || (error && !canRetry)}
+      disabled={disabled === true || isLoading || Boolean(error && !canRetry)}
       className={cn(
         'flex items-center gap-2',
         error && !canRetry && 'opacity-50 cursor-not-allowed',
@@ -217,7 +217,7 @@ export function RetrySection({
       <RetryButton
         onRetry={handleRetry}
         maxRetries={maxRetries}
-        disabled={!canRetry && !displayError}
+        disabled={!!(!canRetry && !displayError)}
       />
     </div>
   );

@@ -533,9 +533,6 @@ export class GuestSessionManager {
   }
 }
 
-// Export types
-export type { SessionData, SessionOptions, SessionStats };
-
 // Export utilities
 export const createGuestSession = (data?: Record<string, any>) => 
   GuestSessionManager.createGuestSession(data);

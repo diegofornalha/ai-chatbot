@@ -85,14 +85,13 @@ class RedisClient {
       keyPrefix: this.config.keyPrefix,
       connectTimeout: this.config.connectionTimeout,
       commandTimeout: this.config.commandTimeout,
-      retryDelayOnFailover: this.config.retryDelayOnFailover,
       maxRetriesPerRequest: this.config.maxRetriesPerRequest,
       lazyConnect: this.config.lazyConnect,
       enableAutoPipelining: this.config.enableAutoPipelining,
       
       // Connection pool settings
       family: 4,
-      keepAlive: true,
+      keepAlive: 30000,
       
       // Retry logic
       retryStrategy: (times: number) => {
@@ -420,9 +419,6 @@ class RedisClient {
 
 // Export singleton instance
 export const redisClient = RedisClient.getInstance();
-
-// Export types
-export type { RedisConnectionState };
 
 // Export utilities
 export const isRedisAvailable = () => redisClient.isAvailable();
