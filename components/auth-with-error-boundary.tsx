@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useCallback, Children, isValidElement, cloneElement, ReactElement, ErrorInfo } from 'react';
 import { ErrorBoundary } from '@/components/error-boundary';
 import { AuthErrorFallback, NetworkErrorFallback } from '@/components/error-fallbacks';
 import { AuthForm } from './auth-form';
@@ -21,7 +21,7 @@ export function AuthWithErrorBoundary({
   defaultEmail = '',
   formType = 'login',
 }: AuthWithErrorBoundaryProps) {
-  const handleAuthError = React.useCallback((error: Error, errorInfo: React.ErrorInfo, errorId: string) => {
+  const handleAuthError = useCallback((error: Error, errorInfo: ErrorInfo, errorId: string) => {
     logError(error, errorInfo, {
       component: 'AuthForm',
       formType,
@@ -53,10 +53,10 @@ export function EnhancedAuthForm({
   defaultEmail = '',
   formType = 'login',
 }: AuthWithErrorBoundaryProps) {
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [error, setError] = React.useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = React.useCallback(async (formData: FormData) => {
+  const handleSubmit = useCallback(async (formData: FormData) => {
     setIsLoading(true);
     setError(null);
 
@@ -133,9 +133,9 @@ export function EnhancedAuthForm({
         <AuthFormFields defaultEmail={defaultEmail} />
         
         <div className="flex flex-col gap-2">
-          {React.Children.map(children, child => {
-            if (React.isValidElement(child) && child.type === 'button') {
-              return React.cloneElement(child as React.ReactElement<any>, {
+          {Children.map(children, child => {
+            if (isValidElement(child) && child.type === 'button') {
+              return cloneElement(child as ReactElement<any>, {
                 disabled: isLoading,
                 children: isLoading ? 'Please wait...' : child.props.children,
               });
@@ -160,7 +160,7 @@ function AuthFormFields({ defaultEmail }: { defaultEmail: string }) {
             </label>
             <div className="p-2 bg-red-50 border border-red-200 rounded text-sm text-red-700">
               Email field error
-              <button onClick={resetError} className="ml-2 underline">retry</button>
+              <button type="button" onClick={resetError} className="ml-2 underline">retry</button>
             </div>
           </div>
         )}
@@ -178,7 +178,7 @@ function AuthFormFields({ defaultEmail }: { defaultEmail: string }) {
             </label>
             <div className="p-2 bg-red-50 border border-red-200 rounded text-sm text-red-700">
               Password field error
-              <button onClick={resetError} className="ml-2 underline">retry</button>
+              <button type="button" onClick={resetError} className="ml-2 underline">retry</button>
             </div>
           </div>
         )}
@@ -238,7 +238,7 @@ function PasswordField() {
 
 // Session error boundary
 export function SessionErrorBoundary({ children }: { children: React.ReactNode }) {
-  const handleSessionError = React.useCallback((error: Error, errorInfo: React.ErrorInfo, errorId: string) => {
+  const handleSessionError = useCallback((error: Error, errorInfo: ErrorInfo, errorId: string) => {
     logError(error, errorInfo, {
       component: 'Session',
       errorType: 'session_error',
@@ -263,6 +263,7 @@ export function SessionErrorBoundary({ children }: { children: React.ReactNode }
                 Retry
               </button>
               <button
+                type="button"
                 onClick={() => { window.location.href = '/login'; }}
                 className="px-3 py-1 bg-gray-600 text-white rounded text-sm hover:bg-gray-700"
               >
@@ -283,7 +284,7 @@ export function SessionErrorBoundary({ children }: { children: React.ReactNode }
 
 // Auth provider error boundary
 export function AuthProviderErrorBoundary({ children }: { children: React.ReactNode }) {
-  const handleProviderError = React.useCallback((error: Error, errorInfo: React.ErrorInfo, errorId: string) => {
+  const handleProviderError = useCallback((error: Error, errorInfo: ErrorInfo, errorId: string) => {
     logError(error, errorInfo, {
       component: 'AuthProvider',
       errorType: 'auth_provider_error',
@@ -310,6 +311,7 @@ export function AuthProviderErrorBoundary({ children }: { children: React.ReactN
                 Try Again
               </button>
               <button
+                type="button"
                 onClick={() => window.location.reload()}
                 className="px-4 py-2 bg-secondary text-secondary-foreground rounded hover:bg-secondary/90"
               >

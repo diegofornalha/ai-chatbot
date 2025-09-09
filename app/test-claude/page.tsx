@@ -71,10 +71,11 @@ export default function TestClaude() {
       
       <div className="max-w-2xl space-y-4">
         <div>
-          <label className="block text-sm font-medium mb-2">
+          <label htmlFor="test-message" className="block text-sm font-medium mb-2">
             Mensagem de teste:
           </label>
           <input
+            id="test-message"
             type="text"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
@@ -84,6 +85,7 @@ export default function TestClaude() {
         </div>
         
         <button
+          type="button"
           onClick={testClaude}
           disabled={loading}
           className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:opacity-50"

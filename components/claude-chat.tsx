@@ -113,6 +113,7 @@ export function ClaudeChat({ sessionId: initialSessionId }: ClaudeChatProps = {}
             <div className="space-y-2">
               {recentSessions.map((session) => (
                 <button
+                  type="button"
                   key={session.id}
                   onClick={() => {
                     const shortId = session.id.substring(0, 8);
@@ -159,6 +160,7 @@ export function ClaudeChat({ sessionId: initialSessionId }: ClaudeChatProps = {}
         <div className="flex items-center gap-2">
           {/* Botão Toggle Sidebar */}
           <button
+            type="button"
             className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 md:px-2 md:h-fit"
             data-testid="sidebar-toggle-button"
             data-state={sidebarOpen ? "open" : "closed"}
@@ -175,6 +177,7 @@ export function ClaudeChat({ sessionId: initialSessionId }: ClaudeChatProps = {}
         <div className="flex items-center gap-4">
           {/* Botão de Visibilidade (Private/Public) */}
           <button
+            type="button"
             className="items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 w-fit data-[state=open]:bg-accent data-[state=open]:text-accent-foreground order-1 md:order-3 hidden md:flex md:px-2 md:h-[34px]"
             data-testid="visibility-selector"
             type="button"
@@ -192,11 +195,13 @@ export function ClaudeChat({ sessionId: initialSessionId }: ClaudeChatProps = {}
           
           {/* Slider de Velocidade Personalizado */}
           <div className="speed-control">
+            <label htmlFor="speed-slider" className="sr-only">Velocidade de streaming</label>
             <span className={`text-sm ${isMounted && streamSpeed > 100 ? 'speed-emoji-slow' : ''}`}>
               🐢
             </span>
             <div className="relative">
               <input
+                id="speed-slider"
                 type="range"
                 min="10"
                 max="200"
@@ -238,6 +243,7 @@ export function ClaudeChat({ sessionId: initialSessionId }: ClaudeChatProps = {}
                 )}
               </button>
               <button
+                type="button"
                 onClick={handleShareLink}
                 className="relative p-1 hover:bg-gray-100 rounded transition-colors"
                 title={`Compartilhar link curto: /claude/${sessionId?.slice(0, 8)}`}
@@ -252,6 +258,7 @@ export function ClaudeChat({ sessionId: initialSessionId }: ClaudeChatProps = {}
             </div>
           )}
           <button
+            type="button"
             onClick={clearMessages}
             className="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded"
           >
@@ -317,8 +324,10 @@ export function ClaudeChat({ sessionId: initialSessionId }: ClaudeChatProps = {}
       </div>
 
       <form onSubmit={handleSubmit} className="p-4 border-t">
+        <label htmlFor="message-input" className="sr-only">Digite sua mensagem</label>
         <div className="flex space-x-2">
           <input
+            id="message-input"
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}

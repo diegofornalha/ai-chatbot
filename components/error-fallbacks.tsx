@@ -423,6 +423,7 @@ export const InlineErrorFallback: React.FC<ErrorFallbackProps> = ({
       <span className="text-red-700">Error</span>
       {canRetry && (
         <button
+          type="button"
           onClick={resetError}
           className="text-red-600 hover:text-red-800 underline"
         >
