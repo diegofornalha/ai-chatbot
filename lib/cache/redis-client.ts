@@ -3,8 +3,7 @@
  * Provides robust Redis connection with automatic reconnection and failover
  */
 
-import Redis, { RedisOptions } from 'ioredis';
-import { appConfig } from '@/lib/config/app-config';
+import Redis, { type RedisOptions } from 'ioredis';
 
 export interface RedisClientConfig {
   host: string;
@@ -62,14 +61,14 @@ class RedisClient {
   private loadConfig(): RedisClientConfig {
     return {
       host: process.env.REDIS_HOST || 'localhost',
-      port: parseInt(process.env.REDIS_PORT || '6379'),
+      port: Number.parseInt(process.env.REDIS_PORT || '6379'),
       password: process.env.REDIS_PASSWORD,
-      db: parseInt(process.env.REDIS_DB || '0'),
+      db: Number.parseInt(process.env.REDIS_DB || '0'),
       keyPrefix: process.env.REDIS_KEY_PREFIX || 'ai-chatbot:',
-      connectionTimeout: parseInt(process.env.REDIS_CONNECTION_TIMEOUT || '10000'),
-      commandTimeout: parseInt(process.env.REDIS_COMMAND_TIMEOUT || '5000'),
-      retryDelayOnFailover: parseInt(process.env.REDIS_RETRY_DELAY || '100'),
-      maxRetriesPerRequest: parseInt(process.env.REDIS_MAX_RETRIES || '3'),
+      connectionTimeout: Number.parseInt(process.env.REDIS_CONNECTION_TIMEOUT || '10000'),
+      commandTimeout: Number.parseInt(process.env.REDIS_COMMAND_TIMEOUT || '5000'),
+      retryDelayOnFailover: Number.parseInt(process.env.REDIS_RETRY_DELAY || '100'),
+      maxRetriesPerRequest: Number.parseInt(process.env.REDIS_MAX_RETRIES || '3'),
       lazyConnect: process.env.REDIS_LAZY_CONNECT !== 'false',
       enableAutoPipelining: process.env.REDIS_AUTO_PIPELINE !== 'false',
       maxMemoryPolicy: process.env.REDIS_MAXMEMORY_POLICY,
@@ -288,12 +287,12 @@ class RedisClient {
       }
 
       const start = Date.now();
-      await this.client!.ping();
+      await this.client?.ping();
       const latency = Date.now() - start;
 
       // Get Redis info
-      const info = await this.client!.info();
-      const infoLines = info.split('\r\n');
+      const info = await this.client?.info();
+      const infoLines = info?.split('\r\n') || [];
       const infoData: Record<string, string> = {};
       
       infoLines.forEach(line => {
@@ -312,7 +311,7 @@ class RedisClient {
           latency,
           memory: infoData.used_memory_human,
           version: infoData.redis_version,
-          uptime: parseInt(infoData.uptime_in_seconds || '0'),
+          uptime: Number.parseInt(infoData.uptime_in_seconds || '0'),
           keyspace: {
             db0: infoData.db0,
           },
@@ -402,13 +401,13 @@ class RedisClient {
     }
 
     try {
-      const pipeline = this.client!.pipeline();
+      const pipeline = this.client?.pipeline();
       
       operations.forEach(({ command, args }) => {
         (pipeline as any)[command](...args);
       });
       
-      const results = await pipeline.exec();
+      const results = await pipeline?.exec();
       return results?.map(([err, result]) => err ? null : result) || [];
     } catch (error) {
       console.error('Redis pipeline failed:', error);

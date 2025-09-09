@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { spawn } from 'child_process';
+import { type NextRequest, NextResponse } from 'next/server';
+import { spawn } from 'node:child_process';
 
 export async function POST(request: NextRequest): Promise<Response> {
   try {
@@ -24,7 +24,7 @@ export async function POST(request: NextRequest): Promise<Response> {
       
       // Envia comando para obter clima
       const command = `iremaltunay-55-deneme-1 - get_weather_by_city(city_name: "${location}", country_code: "BR", units: "metric")`;
-      claudeProcess.stdin.write(command + '\n');
+      claudeProcess.stdin.write(`${command}\n`);
       claudeProcess.stdin.end();
       
       claudeProcess.stdout.on('data', (data) => {

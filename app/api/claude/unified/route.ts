@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 import { claudeUnified, type ChatRequest } from '@/lib/ai/claude-unified';
 import { z } from 'zod';
 

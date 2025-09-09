@@ -3,7 +3,7 @@
  * Resolve o problema de DUMMY_PASSWORD e adiciona validações extras
  */
 
-import { createHash, randomBytes } from 'crypto';
+import { createHash, randomBytes } from 'node:crypto';
 import { z } from 'zod';
 import { appConfig } from '@/lib/config/app-config';
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, FormEvent } from 'react';
+import { useState, useEffect, type FormEvent } from 'react';
 import { useClaudeSDK } from '@/hooks/use-claude-sdk';
 import { StreamingMarkdown } from './streaming-markdown';
 import '@/styles/slider.css';
@@ -25,7 +25,7 @@ export function ClaudeChat({ sessionId: initialSessionId }: ClaudeChatProps = {}
     setIsMounted(true);
     const savedSpeed = localStorage.getItem('streamSpeed');
     if (savedSpeed) {
-      setStreamSpeed(parseInt(savedSpeed));
+      setStreamSpeed(Number.parseInt(savedSpeed));
     }
     
     // Carrega sessões recentes do localStorage
@@ -86,7 +86,7 @@ export function ClaudeChat({ sessionId: initialSessionId }: ClaudeChatProps = {}
     if (sessionId && messages.length > 0) {
       const currentSession = {
         id: sessionId,
-        title: messages[0]?.content?.substring(0, 30) + '...' || 'Nova conversa',
+        title: `${messages[0]?.content?.substring(0, 30)}...` || 'Nova conversa',
         date: new Date().toISOString()
       };
       
@@ -148,7 +148,7 @@ export function ClaudeChat({ sessionId: initialSessionId }: ClaudeChatProps = {}
       {/* Overlay para mobile */}
       {sidebarOpen && (
         <div 
-          className="md:hidden fixed inset-0 bg-black bg-black/50 z-10"
+          className="md:hidden fixed inset-0 bg-black/50 z-10"
           onClick={() => setSidebarOpen(false)}
         />
       )}
@@ -201,7 +201,7 @@ export function ClaudeChat({ sessionId: initialSessionId }: ClaudeChatProps = {}
                 min="10"
                 max="200"
                 value={streamSpeed}
-                onChange={(e) => handleSpeedChange(parseInt(e.target.value))}
+                onChange={(e) => handleSpeedChange(Number.parseInt(e.target.value))}
                 className="speed-slider"
                 data-speed={isMounted ? (streamSpeed > 100 ? 'slow' : streamSpeed < 50 ? 'fast' : 'normal') : 'normal'}
               />
@@ -307,9 +307,9 @@ export function ClaudeChat({ sessionId: initialSessionId }: ClaudeChatProps = {}
           <div className="flex justify-start">
             <div className="bg-gray-100 rounded-lg px-4 py-2">
               <div className="flex space-x-2">
-                <div className="size-2 bg-gray-500 rounded-full animate-bounce"></div>
-                <div className="size-2 bg-gray-500 rounded-full animate-bounce delay-100"></div>
-                <div className="size-2 bg-gray-500 rounded-full animate-bounce delay-200"></div>
+                <div className="size-2 bg-gray-500 rounded-full animate-bounce" />
+                <div className="size-2 bg-gray-500 rounded-full animate-bounce delay-100" />
+                <div className="size-2 bg-gray-500 rounded-full animate-bounce delay-200" />
               </div>
             </div>
           </div>
@@ -332,9 +332,9 @@ export function ClaudeChat({ sessionId: initialSessionId }: ClaudeChatProps = {}
           >
             {isLoading ? (
               <div className="flex items-center space-x-2">
-                <div className="size-2 bg-white rounded-full animate-pulse"></div>
-                <div className="size-2 bg-white rounded-full animate-pulse delay-75"></div>
-                <div className="size-2 bg-white rounded-full animate-pulse delay-150"></div>
+                <div className="size-2 bg-white rounded-full animate-pulse" />
+                <div className="size-2 bg-white rounded-full animate-pulse delay-75" />
+                <div className="size-2 bg-white rounded-full animate-pulse delay-150" />
               </div>
             ) : (
               'Enviar'

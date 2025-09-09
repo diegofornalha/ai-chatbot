@@ -3,8 +3,8 @@
  * Common utilities for testing across the application
  */
 
-import { render, RenderOptions } from '@testing-library/react';
-import { ReactElement, ReactNode } from 'react';
+import { render, type RenderOptions } from '@testing-library/react';
+import type { ReactElement, ReactNode } from 'react';
 
 // Test data factories
 export const createMockUser = (overrides: Partial<any> = {}) => ({
@@ -47,7 +47,7 @@ export const createMockArtifact = (overrides: Partial<any> = {}) => ({
 });
 
 export const createMockChatMessage = (overrides: Partial<any> = {}) => ({
-  id: 'msg-' + Date.now(),
+  id: `msg-${Date.now()}`,
   role: 'user',
   content: 'Hello, Claude!',
   timestamp: new Date(),
@@ -87,7 +87,7 @@ export const createMockRequest = (overrides: RequestInit = {}) => {
   });
 };
 
-export const createMockResponse = (data: any = {}, status: number = 200, headers: HeadersInit = {}) => {
+export const createMockResponse = (data: any = {}, status = 200, headers: HeadersInit = {}) => {
   const defaultHeaders = {
     'content-type': 'application/json',
     ...headers,
@@ -223,9 +223,9 @@ export const expectToThrowAsync = async (fn: () => Promise<any>, expectedError?:
 
   if (expectedError) {
     if (typeof expectedError === 'string') {
-      expect(thrownError!.message).toContain(expectedError);
+      expect(thrownError?.message).toContain(expectedError);
     } else {
-      expect(thrownError!.message).toMatch(expectedError);
+      expect(thrownError?.message).toMatch(expectedError);
     }
   }
 
@@ -281,7 +281,7 @@ export const createMockReadableStream = (chunks: string[]) => {
 };
 
 // Performance testing helpers
-export const measurePerformance = async (fn: () => Promise<any>, iterations: number = 1) => {
+export const measurePerformance = async (fn: () => Promise<any>, iterations = 1) => {
   const times: number[] = [];
   
   for (let i = 0; i < iterations; i++) {

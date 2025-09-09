@@ -4,8 +4,7 @@ import React, { useState } from 'react';
 import { ChatMessage } from './ChatMessage';
 import { MessageInput } from './MessageInput';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { Bot, RefreshCw, Settings, Download, Trash2, PlayCircle } from 'lucide-react';
+import { Bot, RefreshCw, Settings, Trash2, PlayCircle } from 'lucide-react';
 
 // Histórico de demonstração
 const DEMO_HISTORY = [

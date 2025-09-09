@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { spawn } from 'child_process';
+import { type NextRequest, NextResponse } from 'next/server';
+import { spawn } from 'node:child_process';
 
 export async function POST(req: NextRequest) {
   try {
@@ -286,7 +286,7 @@ O mercado brasileiro de insurtech em 2025 está em expansão acelerada, com inve
       async start(controller) {
         try {
           // Usa arquivo temporário para evitar problemas de escape
-          const fs = require('fs');
+          const fs = require('node:fs');
           const tmpFile = `/tmp/claude-input-${Date.now()}.txt`;
           fs.writeFileSync(tmpFile, userContent);
           
@@ -318,7 +318,7 @@ O mercado brasileiro de insurtech em 2025 está em expansão acelerada, com inve
           claudeProcess.stdout.on('data', (data) => {
             const text = data.toString();
             buffer += text;
-            console.log('✅ [API] Resposta do Claude:', text.substring(0, 100) + '...');
+            console.log('✅ [API] Resposta do Claude:', `${text.substring(0, 100)}...`);
             
             // Envia chunks conforme recebe
             const chunk = {

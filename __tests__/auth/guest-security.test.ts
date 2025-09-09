@@ -23,7 +23,6 @@ import {
   validateGuestRequest,
   cleanupExpiredGuestSessions,
   guestLimitations,
-  type GuestUser,
 } from '@/lib/security/guest-security';
 
 // Mock dependencies
@@ -74,7 +73,7 @@ describe('Guest Security Module', () => {
       });
 
       it('should work with missing AUTH_SECRET', () => {
-        delete process.env.AUTH_SECRET;
+        process.env.AUTH_SECRET = undefined;
         
         const token = generateGuestToken('test-user');
         expect(token).toBeDefined();
@@ -130,9 +129,9 @@ describe('Guest Security Module', () => {
         const match = email.match(/^guest-(\d+)-([a-f0-9]+)@localhost$/);
         
         expect(match).toBeTruthy();
-        expect(match![1]).toBeTruthy(); // timestamp
-        expect(match![2]).toBeTruthy(); // random hex
-        expect(match![2]).toHaveLength(8); // 4 bytes = 8 hex chars
+        expect(match?.[1]).toBeTruthy(); // timestamp
+        expect(match?.[2]).toBeTruthy(); // random hex
+        expect(match?.[2]).toHaveLength(8); // 4 bytes = 8 hex chars
       });
     });
 
@@ -571,7 +570,7 @@ describe('Guest Security Module', () => {
 
     it('should handle undefined environment variables', () => {
       const originalSecret = process.env.AUTH_SECRET;
-      delete process.env.AUTH_SECRET;
+      process.env.AUTH_SECRET = undefined;
       
       const token = generateGuestToken('test');
       expect(token).toBeDefined();

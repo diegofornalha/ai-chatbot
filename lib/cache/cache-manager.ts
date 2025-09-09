@@ -4,7 +4,7 @@
  */
 
 import { redisClient, isRedisAvailable } from './redis-client';
-import { createHash } from 'crypto';
+import { createHash } from 'node:crypto';
 
 export interface CacheOptions {
   ttl?: number; // Time to live in seconds
@@ -477,16 +477,16 @@ export class AICacheManager {
     prompt: string,
     response: any,
     model: string,
-    ttl: number = this.DEFAULT_TTL
+    ttl: number = AICacheManager.DEFAULT_TTL
   ): Promise<boolean> {
-    const key = this.generateResponseKey(prompt, model);
+    const key = AICacheManager.generateResponseKey(prompt, model);
     return cacheManager.set(key, {
       response,
       model,
       timestamp: Date.now(),
     }, {
       ttl,
-      prefix: this.PREFIX,
+      prefix: AICacheManager.PREFIX,
       compress: true,
     });
   }
@@ -498,8 +498,8 @@ export class AICacheManager {
     prompt: string,
     model: string
   ): Promise<any | null> {
-    const key = this.generateResponseKey(prompt, model);
-    const cached = await cacheManager.get(key, { prefix: this.PREFIX });
+    const key = AICacheManager.generateResponseKey(prompt, model);
+    const cached = await cacheManager.get(key, { prefix: AICacheManager.PREFIX });
     return cached?.response || null;
   }
 
@@ -509,12 +509,12 @@ export class AICacheManager {
   static async cacheConversation(
     conversationId: string,
     context: any,
-    ttl: number = this.DEFAULT_TTL
+    ttl: number = AICacheManager.DEFAULT_TTL
   ): Promise<boolean> {
     const key = `conversation:${conversationId}`;
     return cacheManager.set(key, context, {
       ttl,
-      prefix: this.PREFIX,
+      prefix: AICacheManager.PREFIX,
       compress: true,
     });
   }
@@ -524,14 +524,14 @@ export class AICacheManager {
    */
   static async getCachedConversation(conversationId: string): Promise<any | null> {
     const key = `conversation:${conversationId}`;
-    return cacheManager.get(key, { prefix: this.PREFIX });
+    return cacheManager.get(key, { prefix: AICacheManager.PREFIX });
   }
 
   /**
    * Clear AI cache
    */
   static async clearCache(): Promise<void> {
-    return cacheManager.clear(this.PREFIX);
+    return cacheManager.clear(AICacheManager.PREFIX);
   }
 
   private static generateResponseKey(prompt: string, model: string): string {

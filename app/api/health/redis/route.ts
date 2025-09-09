@@ -3,7 +3,7 @@
  * Provides comprehensive Redis system health information
  */
 
-import { NextRequest, NextResponse } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 import { 
   performHealthCheck, 
   getStatusSummary, 
@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
     const checkType = searchParams.get('type') || 'summary';
 
     switch (checkType) {
-      case 'full':
+      case 'full': {
         // Full comprehensive health check
         const fullHealth = await performHealthCheck({
           timeout: 5000,
@@ -35,8 +35,9 @@ export async function GET(request: NextRequest) {
             'X-Health-Timestamp': fullHealth.timestamp.toString(),
           },
         });
+      }
 
-      case 'system':
+      case 'system': {
         // System-wide status including all components
         const systemStatus = await getSystemStatus();
         
@@ -48,9 +49,10 @@ export async function GET(request: NextRequest) {
             'X-Health-Status': systemStatus.overall,
           },
         });
+      }
 
       case 'summary':
-      default:
+      default: {
         // Quick status summary
         const summary = await getStatusSummary();
         
@@ -86,6 +88,7 @@ export async function GET(request: NextRequest) {
             'X-Health-Status': summary.status,
           },
         });
+      }
     }
   } catch (error) {
     console.error('Health check API error:', error);

@@ -1,11 +1,10 @@
 import React from 'react'
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Button } from '@/components/ui/button'
 import { Plus, X, MessageSquare, ArrowLeft } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { Session } from '@/lib/stores/chatStore'
+import type { Session } from '@/lib/stores/chatStore'
 import { cn } from '@/lib/utils'
-import SessionWrapper from './SessionWrapper'
+import { SessionWrapper } from './SessionWrapper'
 
 interface SessionTabsProps {
   sessions: Session[]
@@ -57,7 +56,7 @@ export function SessionTabs({
                 )}
                 onClick={() => onSessionSelect(session.id)}
               >
-                <MessageSquare className="h-4 w-4" />
+                <MessageSquare className="size-4" />
                 <span className="max-w-[150px] truncate text-sm">
                   {session.title}
                 </span>
@@ -67,13 +66,13 @@ export function SessionTabs({
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="h-5 w-5 opacity-0 transition-opacity group-hover:opacity-100"
+                  className="size-5 opacity-0 transition-opacity group-hover:opacity-100"
                   onClick={(e) => {
                     e.stopPropagation()
                     onSessionClose(session.id)
                   }}
                 >
-                  <X className="h-3 w-3" />
+                  <X className="size-3" />
                 </Button>
               </div>
             </SessionWrapper>
@@ -88,7 +87,7 @@ export function SessionTabs({
         className="shrink-0"
         title="Voltar para o projeto"
       >
-        <ArrowLeft className="h-4 w-4" />
+        <ArrowLeft className="size-4" />
       </Button>
       
       <Button
@@ -97,7 +96,7 @@ export function SessionTabs({
         onClick={onNewSession}
         className="shrink-0"
       >
-        <Plus className="mr-2 h-4 w-4" />
+        <Plus className="mr-2 size-4" />
         Nova Sessão
       </Button>
     </div>

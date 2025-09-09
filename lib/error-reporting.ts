@@ -1,4 +1,4 @@
-import { ErrorInfo } from 'react';
+import type { ErrorInfo } from 'react';
 
 export interface ErrorReport {
   errorId: string;
@@ -202,14 +202,14 @@ export class ValidationError extends Error {
 }
 
 export class AuthenticationError extends Error {
-  constructor(message: string = 'Authentication failed') {
+  constructor(message = 'Authentication failed') {
     super(message);
     this.name = 'AuthenticationError';
   }
 }
 
 export class AuthorizationError extends Error {
-  constructor(message: string = 'Access denied') {
+  constructor(message = 'Access denied') {
     super(message);
     this.name = 'AuthorizationError';
   }
@@ -219,9 +219,9 @@ export class AuthorizationError extends Error {
 export class ErrorRecovery {
   static async withRetry<T>(
     operation: () => Promise<T>,
-    maxAttempts: number = 3,
-    delay: number = 1000,
-    backoffMultiplier: number = 2
+    maxAttempts = 3,
+    delay = 1000,
+    backoffMultiplier = 2
   ): Promise<T> {
     let lastError: Error;
     
@@ -255,7 +255,7 @@ export class ErrorRecovery {
   static async withTimeout<T>(
     operation: () => Promise<T>,
     timeoutMs: number,
-    timeoutMessage: string = 'Operation timed out'
+    timeoutMessage = 'Operation timed out'
   ): Promise<T> {
     const timeoutPromise = new Promise<never>((_, reject) => {
       setTimeout(() => reject(new Error(timeoutMessage)), timeoutMs);
@@ -266,8 +266,8 @@ export class ErrorRecovery {
 
   static async withCircuitBreaker<T>(
     operation: () => Promise<T>,
-    failureThreshold: number = 5,
-    resetTimeout: number = 60000
+    failureThreshold = 5,
+    resetTimeout = 60000
   ): Promise<T> {
     // Simple circuit breaker implementation
     const key = operation.toString();
@@ -300,35 +300,35 @@ class CircuitBreaker {
   }>();
 
   static getState(key: string) {
-    if (!this.states.has(key)) {
-      this.states.set(key, {
+    if (!CircuitBreaker.states.has(key)) {
+      CircuitBreaker.states.set(key, {
         failures: 0,
         isOpen: false,
         lastFailureTime: 0,
       });
     }
-    return this.states.get(key)!;
+    return CircuitBreaker.states.get(key)!;
   }
 
   static recordSuccess(key: string) {
-    const state = this.getState(key);
+    const state = CircuitBreaker.getState(key);
     state.failures = 0;
     state.isOpen = false;
   }
 
   static recordFailure(key: string) {
-    const state = this.getState(key);
+    const state = CircuitBreaker.getState(key);
     state.failures++;
     state.lastFailureTime = Date.now();
   }
 
   static openCircuit(key: string) {
-    const state = this.getState(key);
+    const state = CircuitBreaker.getState(key);
     state.isOpen = true;
   }
 
   static getFailureCount(key: string) {
-    return this.getState(key).failures;
+    return CircuitBreaker.getState(key).failures;
   }
 }
 

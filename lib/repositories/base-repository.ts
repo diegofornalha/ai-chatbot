@@ -3,7 +3,7 @@
  * Facilita manutenção e testes
  */
 
-import { z } from 'zod';
+import type { z } from 'zod';
 
 export interface QueryOptions {
   where?: Record<string, any>;

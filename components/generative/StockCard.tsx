@@ -19,7 +19,7 @@ interface StockCardProps {
 }
 
 export function StockCard({ data }: StockCardProps) {
-  const isPositive = parseFloat(data.change) >= 0;
+  const isPositive = Number.parseFloat(data.change) >= 0;
 
   return (
     <Card className="p-6 w-full max-w-md">
@@ -33,16 +33,16 @@ export function StockCard({ data }: StockCardProps) {
               isPositive ? "text-green-600" : "text-red-600"
             )}>
               {isPositive ? (
-                <TrendingUp className="h-4 w-4" />
+                <TrendingUp className="size-4" />
               ) : (
-                <TrendingDown className="h-4 w-4" />
+                <TrendingDown className="size-4" />
               )}
               <span>{isPositive ? '+' : ''}{data.change}</span>
               <span>({isPositive ? '+' : ''}{data.changePercent}%)</span>
             </div>
           </div>
         </div>
-        <DollarSign className="h-8 w-8 text-muted-foreground" />
+        <DollarSign className="size-8 text-muted-foreground" />
       </div>
 
       <div className="mt-4 pt-4 border-t grid grid-cols-2 gap-4">

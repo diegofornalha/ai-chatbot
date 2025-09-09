@@ -3,7 +3,7 @@
  * Protection against API abuse with Redis backend and memory fallback
  */
 
-import { NextRequest, NextResponse } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 import { appConfig } from '@/lib/config/app-config';
 
 interface RateLimitEntry {

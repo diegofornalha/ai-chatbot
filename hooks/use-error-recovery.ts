@@ -54,7 +54,7 @@ export function useErrorRecovery(options: UseErrorRecoveryOptions = {}) {
     operation: () => Promise<T>,
     operationName?: string
   ): Promise<T> => {
-    let lastError: Error;
+    let lastError: Error = new Error('Operation failed');
     
     setState(prev => ({ ...prev, isLoading: true, error: null }));
 
@@ -137,7 +137,7 @@ export function useErrorRecovery(options: UseErrorRecoveryOptions = {}) {
     
     toast({
       type: 'error',
-      description: `Failed after ${maxRetries} attempts: ${lastError!.message}`,
+      description: `Failed after ${maxRetries} attempts: ${lastError?.message}`,
     });
 
     throw lastError!;

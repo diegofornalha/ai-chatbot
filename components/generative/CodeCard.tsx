@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Code2, Copy, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -17,7 +17,7 @@ interface CodeCardProps {
 }
 
 export function CodeCard({ data }: CodeCardProps) {
-  const [copied, setCopied] = React.useState(false);
+  const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(data.code);
@@ -38,7 +38,7 @@ export function CodeCard({ data }: CodeCardProps) {
     <Card className="w-full max-w-2xl overflow-hidden">
       <div className="border-b bg-muted/30 px-4 py-2 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Code2 className={cn("h-4 w-4", getLanguageColor(data.language))} />
+          <Code2 className={cn("size-4", getLanguageColor(data.language))} />
           <span className="text-sm font-medium capitalize">{data.language}</span>
         </div>
         <Button
@@ -48,9 +48,9 @@ export function CodeCard({ data }: CodeCardProps) {
           className="h-7 px-2"
         >
           {copied ? (
-            <Check className="h-3 w-3" />
+            <Check className="size-3" />
           ) : (
-            <Copy className="h-3 w-3" />
+            <Copy className="size-3" />
           )}
         </Button>
       </div>

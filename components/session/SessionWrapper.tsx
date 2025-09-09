@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Session } from '@/lib/stores/chatStore';
+import type { Session } from '@/lib/stores/chatStore';
 
 interface SessionWrapperProps {
   session: Session;

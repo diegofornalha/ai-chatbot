@@ -117,7 +117,7 @@ export function StreamingMarkdown({
           <Markdown>{displayedContent}</Markdown>
         )}
         {showCursor && (
-          <span className="animate-pulse inline-block w-[2px] h-4 ml-[1px] bg-current align-middle" />
+          <span className="animate-pulse inline-block w-[2px] h-4 ml-px bg-current align-middle" />
         )}
       </div>
     </div>

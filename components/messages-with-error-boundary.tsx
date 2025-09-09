@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useCallback } from 'react';
 import { ErrorBoundary } from '@/components/error-boundary';
 import { InlineErrorFallback } from '@/components/error-fallbacks';
 import dynamic from 'next/dynamic';
@@ -36,7 +36,7 @@ interface MessagesWithErrorBoundaryProps {
 }
 
 export function MessagesWithErrorBoundary(props: MessagesWithErrorBoundaryProps) {
-  const handleMessagesError = React.useCallback((error: Error, errorInfo: React.ErrorInfo, errorId: string) => {
+  const handleMessagesError = useCallback((error: Error, errorInfo: React.ErrorInfo, errorId: string) => {
     logError(error, errorInfo, {
       component: 'Messages',
       chatId: props.chatId,
@@ -90,7 +90,7 @@ export function MessageWithErrorBoundary({
   isReadonly,
   onMessageUpdate,
 }: MessageWithErrorBoundaryProps) {
-  const handleMessageError = React.useCallback((error: Error, errorInfo: React.ErrorInfo, errorId: string) => {
+  const handleMessageError = useCallback((error: Error, errorInfo: React.ErrorInfo, errorId: string) => {
     logError(error, errorInfo, {
       component: 'Message',
       messageId: message.id,
@@ -173,7 +173,7 @@ export function MessagePartErrorBoundary({ children, partType }: {
   children: React.ReactNode;
   partType: string;
 }) {
-  const handlePartError = React.useCallback((error: Error, errorInfo: React.ErrorInfo, errorId: string) => {
+  const handlePartError = useCallback((error: Error, errorInfo: React.ErrorInfo, errorId: string) => {
     logError(error, errorInfo, {
       component: 'MessagePart',
       partType,

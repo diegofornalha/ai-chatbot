@@ -4,7 +4,6 @@
  */
 
 import { redisClient, isRedisAvailable } from './redis-client';
-import { cacheManager } from './cache-manager';
 import { nanoid } from 'nanoid';
 
 export interface SessionData {
@@ -486,7 +485,7 @@ export class GuestSessionManager {
     return sessionManager.createSession(undefined, {
       ...initialData,
       type: 'guest',
-    }, { ttl, prefix: this.GUEST_PREFIX });
+    }, { ttl, prefix: GuestSessionManager.GUEST_PREFIX });
   }
 
   /**

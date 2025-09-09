@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Loader2, ExternalLink, Brain, Sparkles, Clock, TrendingUp, Search } from 'lucide-react';
+import { ExternalLink, Brain, Sparkles, Clock, } from 'lucide-react';
 
 interface SmartLoadingStateProps {
   isLoading: boolean;

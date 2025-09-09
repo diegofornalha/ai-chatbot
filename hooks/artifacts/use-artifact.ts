@@ -48,7 +48,7 @@ export function useArtifact() {
     }
   }, [artifacts]);
 
-  const createArtifact = useCallback((title: string = 'Novo Documento', type: Artifact['type'] = 'text') => {
+  const createArtifact = useCallback((title = 'Novo Documento', type: Artifact['type'] = 'text') => {
     const newArtifact: Artifact = {
       id: `artifact-${Date.now()}`,
       title,

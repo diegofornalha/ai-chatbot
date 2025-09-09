@@ -1,4 +1,4 @@
-import type { LanguageModelV2Message, LanguageModelV2 } from '@ai-sdk/provider';
+import type { LanguageModelV2Message, } from '@ai-sdk/provider';
 // import { createEventSourceResponseHandler } from 'ai';
 
 interface ClaudeSDKProviderConfig {

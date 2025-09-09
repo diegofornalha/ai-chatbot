@@ -1,16 +1,14 @@
 'use client';
 
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { ChatMessage } from './ChatMessage';
 import { MessageInput } from './MessageInput';
 import { SessionTabs } from '../session/SessionTabs';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Settings, Download, RefreshCw, Trash2, Bot, Clock, DollarSign, Activity, ArrowDown } from 'lucide-react';
+import { Download, RefreshCw, Trash2, Bot, DollarSign, Activity, ArrowDown } from 'lucide-react';
 import useChatStore from '@/lib/stores/chatStore';
-import { cn } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
-import { useScrollManager } from '@/hooks/use-scroll-manager';
 
 interface ChatInterfaceProps {
   sessionData?: any;
@@ -111,7 +109,7 @@ export function ChatInterface({
 
   // Carregar sessão externa
   useEffect(() => {
-    if (sessionData && sessionData.messages) {
+    if (sessionData?.messages) {
       loadExternalSession(sessionData);
     }
   }, [sessionData, loadExternalSession]);
@@ -349,7 +347,7 @@ export function ChatInterface({
     if (!activeSession) return;
 
     const dataStr = JSON.stringify(activeSession, null, 2);
-    const dataUri = "data:application/json;charset=utf-8," + encodeURIComponent(dataStr);
+    const dataUri = `data:application/json;charset=utf-8,${encodeURIComponent(dataStr)}`;
     const exportFileDefaultName = `chat-session-${activeSession.id}.json`;
 
     const linkElement = document.createElement("a");
@@ -402,16 +400,6 @@ export function ChatInterface({
               </Button>
             )}
 
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => {
-                // TODO: Implement settings modal
-              }}
-              title="Configurações"
-            >
-              <Settings className="size-5" />
-            </Button>
           </div>
         </div>
 

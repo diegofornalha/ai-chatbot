@@ -4,7 +4,7 @@
  */
 
 import { redisClient, isRedisAvailable } from './redis-client';
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'node:events';
 
 export interface PubSubMessage<T = any> {
   id: string;
@@ -331,7 +331,7 @@ class PubSubManager {
    */
   public async getPersistentMessages(
     channel: string,
-    limit: number = 50
+    limit = 50
   ): Promise<PubSubMessage[]> {
     if (!isRedisAvailable() || !this.redisPublisher) {
       return [];

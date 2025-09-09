@@ -3,7 +3,7 @@
  * Resolve problemas de segurança e permite acesso controlado
  */
 
-import { NextRequest, NextResponse } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 import { appConfig } from '@/lib/config/app-config';
 
 /**

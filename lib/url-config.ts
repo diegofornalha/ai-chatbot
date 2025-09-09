@@ -1,4 +1,4 @@
-import { NextRequest } from 'next/server';
+import type { NextRequest } from 'next/server';
 
 /**
  * Configuração híbrida de URLs para suportar múltiplos subdomínios

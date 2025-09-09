@@ -3,7 +3,6 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { 
-  AlertCircle, 
   RefreshCw, 
   Home, 
   MessageSquare, 
@@ -48,25 +47,25 @@ export const ChatErrorFallback: React.FC<ErrorFallbackProps> = ({
     switch (errorType) {
       case 'network':
         return {
-          icon: <Wifi className="w-8 h-8 text-orange-500" />,
+          icon: <Wifi className="size-8 text-orange-500" />,
           title: 'Connection Issue',
           message: 'Unable to connect to the chat service. Please check your internet connection and try again.',
         };
       case 'rate_limit':
         return {
-          icon: <Clock className="w-8 h-8 text-yellow-500" />,
+          icon: <Clock className="size-8 text-yellow-500" />,
           title: 'Rate Limit Reached',
           message: 'Too many messages sent. Please wait a moment before sending another message.',
         };
       case 'auth':
         return {
-          icon: <Shield className="w-8 h-8 text-red-500" />,
+          icon: <Shield className="size-8 text-red-500" />,
           title: 'Authentication Error',
           message: 'Your session has expired. Please sign in again to continue chatting.',
         };
       default:
         return {
-          icon: <MessageSquare className="w-8 h-8 text-gray-500" />,
+          icon: <MessageSquare className="size-8 text-gray-500" />,
           title: 'Chat Error',
           message: 'An error occurred while processing your message. Please try sending it again.',
         };
@@ -90,7 +89,7 @@ export const ChatErrorFallback: React.FC<ErrorFallbackProps> = ({
       <div className="flex gap-3 w-full">
         {canRetry && (
           <Button onClick={resetError} className="flex-1 flex items-center gap-2">
-            <RefreshCw className="w-4 h-4" />
+            <RefreshCw className="size-4" />
             Retry {retryCount > 0 && `(${retryCount}/${maxRetries})`}
           </Button>
         )}
@@ -137,7 +136,7 @@ export const ArtifactErrorFallback: React.FC<ErrorFallbackProps> = ({
 
   return (
     <div className="flex flex-col items-center justify-center p-8 bg-muted/50 border border-border rounded-lg min-h-[200px]">
-      <Code className="w-10 h-10 text-orange-500 mb-4" />
+      <Code className="size-10 text-orange-500 mb-4" />
       
       <h3 className="text-xl font-semibold text-foreground mb-2">
         Artifact Error
@@ -150,7 +149,7 @@ export const ArtifactErrorFallback: React.FC<ErrorFallbackProps> = ({
       <div className="flex gap-3">
         {canRetry && (
           <Button onClick={resetError} className="flex items-center gap-2">
-            <RefreshCw className="w-4 h-4" />
+            <RefreshCw className="size-4" />
             Reload Artifact
           </Button>
         )}
@@ -160,7 +159,7 @@ export const ArtifactErrorFallback: React.FC<ErrorFallbackProps> = ({
           onClick={() => window.location.reload()}
           className="flex items-center gap-2"
         >
-          <RefreshCw className="w-4 h-4" />
+          <RefreshCw className="size-4" />
           Refresh Page
         </Button>
       </div>
@@ -214,28 +213,28 @@ export const AuthErrorFallback: React.FC<ErrorFallbackProps> = ({
     switch (errorType) {
       case 'network':
         return {
-          icon: <Wifi className="w-8 h-8 text-orange-500" />,
+          icon: <Wifi className="size-8 text-orange-500" />,
           title: 'Connection Failed',
           message: 'Unable to connect to authentication service. Please check your internet connection.',
           action: 'Retry',
         };
       case 'credentials':
         return {
-          icon: <Shield className="w-8 h-8 text-red-500" />,
+          icon: <Shield className="size-8 text-red-500" />,
           title: 'Invalid Credentials',
           message: 'The provided credentials are incorrect. Please check your email and password.',
           action: 'Try Again',
         };
       case 'session':
         return {
-          icon: <Clock className="w-8 h-8 text-yellow-500" />,
+          icon: <Clock className="size-8 text-yellow-500" />,
           title: 'Session Expired',
           message: 'Your session has expired for security reasons. Please sign in again.',
           action: 'Sign In Again',
         };
       default:
         return {
-          icon: <User className="w-8 h-8 text-gray-500" />,
+          icon: <User className="size-8 text-gray-500" />,
           title: 'Authentication Error',
           message: 'An error occurred during authentication. Please try again.',
           action: 'Retry',
@@ -260,7 +259,7 @@ export const AuthErrorFallback: React.FC<ErrorFallbackProps> = ({
       <div className="flex flex-col gap-3 w-full">
         {canRetry && (
           <Button onClick={resetError} className="flex items-center gap-2">
-            <RefreshCw className="w-4 h-4" />
+            <RefreshCw className="size-4" />
             {action} {retryCount > 0 && `(${retryCount}/${maxRetries})`}
           </Button>
         )}
@@ -270,7 +269,7 @@ export const AuthErrorFallback: React.FC<ErrorFallbackProps> = ({
           onClick={() => window.location.href = '/'}
           className="flex items-center gap-2"
         >
-          <Home className="w-4 h-4" />
+          <Home className="size-4" />
           Go Home
         </Button>
       </div>
@@ -301,7 +300,7 @@ export const NetworkErrorFallback: React.FC<ErrorFallbackProps> = ({
   return (
     <div className="flex items-center justify-center p-4 bg-orange-50 border border-orange-200 rounded-lg">
       <div className="flex items-center gap-3">
-        <Wifi className="w-5 h-5 text-orange-500" />
+        <Wifi className="size-5 text-orange-500" />
         <div className="flex-1">
           <p className="text-sm font-medium text-orange-800">Connection Issue</p>
           <p className="text-xs text-orange-600">
@@ -310,7 +309,7 @@ export const NetworkErrorFallback: React.FC<ErrorFallbackProps> = ({
         </div>
         {canRetry && (
           <Button size="sm" variant="ghost" onClick={resetError}>
-            <RefreshCw className="w-3 h-3" />
+            <RefreshCw className="size-3" />
           </Button>
         )}
       </div>
@@ -328,7 +327,7 @@ export const CriticalErrorFallback: React.FC<ErrorFallbackProps> = ({
   return (
     <div className="min-h-screen flex items-center justify-center bg-background px-4">
       <div className="max-w-lg w-full text-center">
-        <AlertTriangle className="w-16 h-16 text-red-500 mx-auto mb-6" />
+        <AlertTriangle className="size-16 text-red-500 mx-auto mb-6" />
         
         <h1 className="text-3xl font-bold text-foreground mb-4">
           Critical Error
@@ -340,7 +339,7 @@ export const CriticalErrorFallback: React.FC<ErrorFallbackProps> = ({
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
           <Button onClick={resetError} className="flex items-center gap-2">
-            <RefreshCw className="w-4 h-4" />
+            <RefreshCw className="size-4" />
             Retry
           </Button>
           
@@ -349,7 +348,7 @@ export const CriticalErrorFallback: React.FC<ErrorFallbackProps> = ({
             onClick={() => window.location.reload()}
             className="flex items-center gap-2"
           >
-            <RefreshCw className="w-4 h-4" />
+            <RefreshCw className="size-4" />
             Reload Page
           </Button>
         </div>
@@ -391,7 +390,7 @@ export const LoadingErrorFallback: React.FC<ErrorFallbackProps> = ({
   return (
     <div className="flex items-center justify-center p-6 bg-background">
       <div className="flex flex-col items-center gap-4">
-        <Zap className="w-8 h-8 text-yellow-500 animate-pulse" />
+        <Zap className="size-8 text-yellow-500 animate-pulse" />
         <div className="text-center">
           <p className="font-medium text-foreground">Loading Failed</p>
           <p className="text-sm text-muted-foreground">
@@ -400,7 +399,7 @@ export const LoadingErrorFallback: React.FC<ErrorFallbackProps> = ({
         </div>
         {canRetry && (
           <Button size="sm" onClick={resetError} className="flex items-center gap-2">
-            <RefreshCw className="w-3 h-3" />
+            <RefreshCw className="size-3" />
             Try Again
           </Button>
         )}
@@ -419,7 +418,7 @@ export const InlineErrorFallback: React.FC<ErrorFallbackProps> = ({
 
   return (
     <div className="inline-flex items-center gap-2 px-3 py-1 bg-red-50 border border-red-200 rounded text-sm">
-      <Bug className="w-3 h-3 text-red-500" />
+      <Bug className="size-3 text-red-500" />
       <span className="text-red-700">Error</span>
       {canRetry && (
         <button

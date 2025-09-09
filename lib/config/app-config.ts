@@ -147,9 +147,9 @@ class AppConfiguration {
       },
       
       ports: {
-        frontend: parseInt(process.env.PORT || '3000'),
-        backend: parseInt(process.env.BACKEND_PORT || '8001'),
-        websocket: parseInt(process.env.WS_PORT || '8002'),
+        frontend: Number.parseInt(process.env.PORT || '3000'),
+        backend: Number.parseInt(process.env.BACKEND_PORT || '8001'),
+        websocket: Number.parseInt(process.env.WS_PORT || '8002'),
       },
       
       features: {
@@ -162,8 +162,8 @@ class AppConfiguration {
       
       security: {
         rateLimit: {
-          windowMs: parseInt(process.env.RATE_LIMIT_WINDOW || '900000'),
-          maxRequests: parseInt(process.env.RATE_LIMIT_MAX || '100'),
+          windowMs: Number.parseInt(process.env.RATE_LIMIT_WINDOW || '900000'),
+          maxRequests: Number.parseInt(process.env.RATE_LIMIT_MAX || '100'),
         },
         cors: {
           origins: process.env.CORS_ORIGINS?.split(',') || ['http://localhost:3000'],
@@ -173,8 +173,8 @@ class AppConfiguration {
       
       ai: {
         defaultProvider: (process.env.NEXT_PUBLIC_AI_PROVIDER || 'claude-sdk') as any,
-        timeout: parseInt(process.env.AI_TIMEOUT || '30000'),
-        maxTokens: parseInt(process.env.AI_MAX_TOKENS || '4096'),
+        timeout: Number.parseInt(process.env.AI_TIMEOUT || '30000'),
+        maxTokens: Number.parseInt(process.env.AI_MAX_TOKENS || '4096'),
       },
     };
     

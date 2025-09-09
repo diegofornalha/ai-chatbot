@@ -1,5 +1,4 @@
-// Rota simplificada para Claude SDK no chat principal
-import { auth } from '@/app/(auth)/auth';
+
 
 const CLAUDE_API = process.env.CLAUDE_SDK_API_URL || 'http://localhost:8002';
 

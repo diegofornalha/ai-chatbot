@@ -6,7 +6,6 @@ import { auth } from '../(auth)/auth';
 import Script from 'next/script';
 import { DataStreamProvider } from '@/components/data-stream-provider';
 import { ErrorBoundary } from '@/components/error-boundary';
-import { NetworkErrorFallback } from '@/components/error-fallbacks';
 
 export const experimental_ppr = true;
 

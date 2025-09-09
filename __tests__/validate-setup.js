@@ -3,8 +3,8 @@
  * Validates that all test files and configurations are properly set up
  */
 
-const fs = require('fs');
-const path = require('path');
+const fs = require('node:fs');
+const path = require('node:path');
 
 const colors = {
   green: '\x1b[32m',
@@ -46,7 +46,7 @@ function validateTestSetup() {
   log('\n🧪 AI Chatbot Test Suite Validation', colors.cyan);
   log('=====================================', colors.cyan);
 
-  let allChecks = [];
+  const allChecks = [];
   
   // Configuration files
   log('\n📁 Configuration Files:', colors.yellow);
@@ -92,9 +92,9 @@ function validateTestSetup() {
     const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
     
     // Check test scripts
-    const hasTestScript = packageJson.scripts && packageJson.scripts.test;
-    const hasTestWatch = packageJson.scripts && packageJson.scripts['test:watch'];
-    const hasTestCoverage = packageJson.scripts && packageJson.scripts['test:coverage'];
+    const hasTestScript = packageJson.scripts?.test;
+    const hasTestWatch = packageJson.scripts?.['test:watch'];
+    const hasTestCoverage = packageJson.scripts?.['test:coverage'];
     
     if (hasTestScript && hasTestWatch && hasTestCoverage) {
       log('✅ Test scripts configured', colors.green);

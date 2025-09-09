@@ -3,7 +3,7 @@
  * In-memory only implementation without Redis dependencies
  */
 
-import { NextRequest, NextResponse } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 import { appConfig } from '@/lib/config/app-config';
 
 interface RateLimitEntry {

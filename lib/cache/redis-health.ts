@@ -129,7 +129,7 @@ class RedisHealthChecker {
     return healthStatus;
   }
 
-  private async checkConnection(timeout: number = 5000): Promise<HealthCheckResult> {
+  private async checkConnection(timeout = 5000): Promise<HealthCheckResult> {
     const startTime = Date.now();
     
     try {
@@ -242,8 +242,8 @@ class RedisHealthChecker {
       const info = await client.info('memory');
       
       const memoryInfo = this.parseRedisInfo(info);
-      const usedMemory = parseInt(memoryInfo.used_memory || '0');
-      const maxMemory = parseInt(memoryInfo.maxmemory || '0');
+      const usedMemory = Number.parseInt(memoryInfo.used_memory || '0');
+      const maxMemory = Number.parseInt(memoryInfo.maxmemory || '0');
       
       const duration = Date.now() - startTime;
       let status: 'pass' | 'warn' | 'fail' = 'pass';
@@ -265,7 +265,7 @@ class RedisHealthChecker {
           usedMemory,
           maxMemory,
           usedMemoryHuman: memoryInfo.used_memory_human,
-          fragmentation: parseFloat(memoryInfo.mem_fragmentation_ratio || '1'),
+          fragmentation: Number.parseFloat(memoryInfo.mem_fragmentation_ratio || '1'),
         },
       };
     } catch (error) {
@@ -285,7 +285,7 @@ class RedisHealthChecker {
       const info = await client.info('persistence');
       
       const persistenceInfo = this.parseRedisInfo(info);
-      const lastSave = parseInt(persistenceInfo.rdb_last_save_time || '0');
+      const lastSave = Number.parseInt(persistenceInfo.rdb_last_save_time || '0');
       const currentTime = Math.floor(Date.now() / 1000);
       const timeSinceLastSave = currentTime - lastSave;
 
@@ -306,7 +306,7 @@ class RedisHealthChecker {
         details: {
           rdbLastSave: lastSave,
           timeSinceLastSave,
-          rdbChangesSinceLastSave: parseInt(persistenceInfo.rdb_changes_since_last_save || '0'),
+          rdbChangesSinceLastSave: Number.parseInt(persistenceInfo.rdb_changes_since_last_save || '0'),
           aofEnabled: persistenceInfo.aof_enabled === '1',
         },
       };
@@ -439,30 +439,30 @@ class RedisHealthChecker {
       const stats = this.parseRedisInfo(statsInfo);
       const persistence = this.parseRedisInfo(persistenceInfo);
 
-      const keyspaceHits = parseInt(stats.keyspace_hits || '0');
-      const keyspaceMisses = parseInt(stats.keyspace_misses || '0');
+      const keyspaceHits = Number.parseInt(stats.keyspace_hits || '0');
+      const keyspaceMisses = Number.parseInt(stats.keyspace_misses || '0');
       const hitRate = keyspaceHits + keyspaceMisses > 0 ? keyspaceHits / (keyspaceHits + keyspaceMisses) : 0;
 
       return {
-        uptime: parseInt(server.uptime_in_seconds || '0'),
+        uptime: Number.parseInt(server.uptime_in_seconds || '0'),
         version: server.redis_version || 'unknown',
         memory: {
           used: memory.used_memory_human || '0',
           peak: memory.used_memory_peak_human || '0',
-          fragmentation: parseFloat(memory.mem_fragmentation_ratio || '1'),
+          fragmentation: Number.parseFloat(memory.mem_fragmentation_ratio || '1'),
         },
         stats: {
-          totalConnections: parseInt(stats.total_connections_received || '0'),
-          commandsProcessed: parseInt(stats.total_commands_processed || '0'),
+          totalConnections: Number.parseInt(stats.total_connections_received || '0'),
+          commandsProcessed: Number.parseInt(stats.total_commands_processed || '0'),
           keyspaceHits,
           keyspaceMisses,
           hitRate,
         },
         persistence: {
-          rdbLastSave: parseInt(persistence.rdb_last_save_time || '0'),
-          rdbChanges: parseInt(persistence.rdb_changes_since_last_save || '0'),
+          rdbLastSave: Number.parseInt(persistence.rdb_last_save_time || '0'),
+          rdbChanges: Number.parseInt(persistence.rdb_changes_since_last_save || '0'),
           aofEnabled: persistence.aof_enabled === '1',
-          aofLastRewrite: parseInt(persistence.aof_last_rewrite_time_sec || '0'),
+          aofLastRewrite: Number.parseInt(persistence.aof_last_rewrite_time_sec || '0'),
         },
       };
     } catch (error) {
@@ -550,7 +550,7 @@ class RedisHealthChecker {
   /**
    * Start periodic health checks
    */
-  public startPeriodicHealthChecks(intervalMs: number = 60000): void {
+  public startPeriodicHealthChecks(intervalMs = 60000): void {
     if (this.checkInterval) {
       clearInterval(this.checkInterval);
     }

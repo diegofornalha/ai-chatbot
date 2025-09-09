@@ -4,7 +4,6 @@
  */
 
 import { server } from './mocks/server';
-import nextMocks from './mocks/next-mocks';
 import testHelpers from './helpers/test-helpers';
 
 // Global test setup utilities
@@ -209,7 +208,7 @@ export const setupRateLimitTests = () => {
 
 // File upload test setup
 export const setupFileUploadTests = () => {
-  const createMockFile = (name: string, content: string, type: string = 'text/plain') => {
+  const createMockFile = (name: string, content: string, type = 'text/plain') => {
     const file = new File([content], name, { type });
     return file;
   };
@@ -241,7 +240,7 @@ export const setupFileUploadTests = () => {
 
 // Streaming test setup
 export const setupStreamingTests = () => {
-  const createMockStream = (chunks: string[], delay: number = 10) => {
+  const createMockStream = (chunks: string[], delay = 10) => {
     let index = 0;
     
     return new ReadableStream({
@@ -310,7 +309,7 @@ export const setupPerformanceTests = () => {
 export const setupConcurrencyTests = () => {
   const runConcurrently = async <T>(
     tasks: Array<() => Promise<T>>,
-    concurrency: number = 5
+    concurrency = 5
   ): Promise<T[]> => {
     const results: T[] = [];
     const executing: Promise<void>[] = [];

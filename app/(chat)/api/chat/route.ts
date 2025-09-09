@@ -13,8 +13,8 @@ import {
   createStreamId,
   deleteChatById,
   getChatById,
+  getMessagesByChatId,
   getMessageCountByUserId,
-  getMessagesByChatById,
   saveChat,
   saveMessages,
   updateChatLastContextById,
@@ -30,7 +30,6 @@ import { myProvider } from '@/lib/ai/providers';
 import { entitlementsByUserType } from '@/lib/ai/entitlements';
 import { postRequestBodySchema, type PostRequestBody } from './schema';
 import { geolocation } from '@vercel/functions';
-import { after } from 'next/server';
 import { ChatSDKError } from '@/lib/errors';
 import type { ChatMessage } from '@/lib/types';
 import type { ChatModel } from '@/lib/ai/models';
@@ -93,7 +92,7 @@ export async function POST(request: Request) {
         visibility: selectedVisibilityType,
       });
     } else {
-      if (chat.userId !== session.user.id) {
+      if (!chat || chat.userId !== session.user.id) {
         return new ChatSDKError('forbidden:chat').toResponse();
       }
     }

@@ -18,7 +18,6 @@ import {
   redisClient,
   isRedisAvailable,
   getRedisHealth,
-  type RedisConnectionState,
 } from '@/lib/cache/redis-client';
 
 // Mock ioredis
@@ -85,10 +84,10 @@ describe('Redis Client', () => {
     mockClearTimeout.mockRestore();
     
     // Clean up environment
-    delete process.env.REDIS_HOST;
-    delete process.env.REDIS_PORT;
-    delete process.env.REDIS_PASSWORD;
-    delete process.env.REDIS_DB;
+    process.env.REDIS_HOST = undefined;
+    process.env.REDIS_PORT = undefined;
+    process.env.REDIS_PASSWORD = undefined;
+    process.env.REDIS_DB = undefined;
   });
 
   describe('Client Initialization', () => {
@@ -108,9 +107,9 @@ describe('Redis Client', () => {
     });
 
     it('should use default configuration when env vars missing', () => {
-      delete process.env.REDIS_HOST;
-      delete process.env.REDIS_PORT;
-      delete process.env.REDIS_PASSWORD;
+      process.env.REDIS_HOST = undefined;
+      process.env.REDIS_PORT = undefined;
+      process.env.REDIS_PASSWORD = undefined;
 
       // Create new instance to test defaults
       const RedisClientClass = require('@/lib/cache/redis-client').redisClient.constructor;
@@ -684,9 +683,9 @@ describe('Redis Client', () => {
       });
 
       it('should handle missing environment variables gracefully', () => {
-        delete process.env.REDIS_HOST;
-        delete process.env.REDIS_PORT;
-        delete process.env.REDIS_PASSWORD;
+        process.env.REDIS_HOST = undefined;
+        process.env.REDIS_PORT = undefined;
+        process.env.REDIS_PASSWORD = undefined;
 
         // Should still create client with defaults
         expect(Redis).toHaveBeenCalled();

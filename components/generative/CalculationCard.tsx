@@ -18,7 +18,7 @@ export function CalculationCard({ data }: CalculationCardProps) {
   return (
     <Card className="p-4 w-full max-w-sm">
       <div className="flex items-center gap-3">
-        <Calculator className="h-6 w-6 text-primary" />
+        <Calculator className="size-6 text-primary" />
         <div className="flex-1">
           <p className="text-sm text-muted-foreground font-mono">{data.expression}</p>
           {data.error ? (

@@ -2,7 +2,6 @@ import { describe, it, expect, jest, beforeEach } from '@jest/globals';
 import { DELETE } from '@/app/(chat)/api/chat/route';
 import { auth } from '@/lib/auth';
 import { getChatById, deleteChatById } from '@/lib/db/queries';
-import { ChatSDKError } from '@/lib/errors';
 
 // Mock dependencies
 jest.mock('@/lib/auth');

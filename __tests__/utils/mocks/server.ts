@@ -219,7 +219,7 @@ export const simulateNetworkError = (url: string) => {
 };
 
 // Helper function to simulate slow responses
-export const simulateSlowResponse = (url: string, delay: number = 5000) => {
+export const simulateSlowResponse = (url: string, delay = 5000) => {
   server.use(
     http.get(url, async () => {
       await new Promise(resolve => setTimeout(resolve, delay));

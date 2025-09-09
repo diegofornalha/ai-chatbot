@@ -18,7 +18,6 @@ import {
   type CreateArtifactDTO,
   type UpdateArtifactDTO,
 } from '@/lib/repositories/artifact-repository';
-import type { Artifact } from '@/hooks/artifacts/use-artifact';
 
 // Mock the artifact hook to define the Artifact type structure
 jest.mock('@/hooks/artifacts/use-artifact', () => ({
@@ -535,12 +534,12 @@ describe('Artifact Repository', () => {
         const duplicate = await repository.duplicateArtifact(original.id);
         
         expect(duplicate).not.toBeNull();
-        expect(duplicate!.id).not.toBe(original.id);
-        expect(duplicate!.title).toBe(`${original.title} (cópia)`);
-        expect(duplicate!.content).toBe(original.content);
-        expect(duplicate!.type).toBe(original.type);
-        expect(duplicate!.metadata).toEqual(original.metadata);
-        expect(duplicate!.userId).toBe(original.userId);
+        expect(duplicate?.id).not.toBe(original.id);
+        expect(duplicate?.title).toBe(`${original.title} (cópia)`);
+        expect(duplicate?.content).toBe(original.content);
+        expect(duplicate?.type).toBe(original.type);
+        expect(duplicate?.metadata).toEqual(original.metadata);
+        expect(duplicate?.userId).toBe(original.userId);
       });
 
       it('should return null for non-existent artifact', async () => {
@@ -553,11 +552,11 @@ describe('Artifact Repository', () => {
         const duplicate = await repository.duplicateArtifact(original.id);
         
         // Update duplicate
-        await repository.update(duplicate!.id, { content: 'Updated content' });
+        await repository.update(duplicate?.id, { content: 'Updated content' });
         
         // Original should be unchanged
         const originalAfter = await repository.findById(original.id);
-        expect(originalAfter!.content).toBe(original.content);
+        expect(originalAfter?.content).toBe(original.content);
       });
     });
 

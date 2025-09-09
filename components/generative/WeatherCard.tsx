@@ -41,15 +41,15 @@ export function WeatherCard({ data }: WeatherCardProps) {
   const getWeatherIcon = (condition: string) => {
     switch (condition.toLowerCase()) {
       case 'ensolarado':
-        return <Sun className="h-8 w-8 text-yellow-500" />;
+        return <Sun className="size-8 text-yellow-500" />;
       case 'nublado':
-        return <Cloud className="h-8 w-8 text-gray-500" />;
+        return <Cloud className="size-8 text-gray-500" />;
       case 'chuvoso':
-        return <CloudRain className="h-8 w-8 text-blue-500" />;
+        return <CloudRain className="size-8 text-blue-500" />;
       case 'parcialmente nublado':
-        return <CloudSun className="h-8 w-8 text-yellow-600" />;
+        return <CloudSun className="size-8 text-yellow-600" />;
       default:
-        return <Sun className="h-8 w-8 text-yellow-500" />;
+        return <Sun className="size-8 text-yellow-500" />;
     }
   };
 
@@ -71,11 +71,11 @@ export function WeatherCard({ data }: WeatherCardProps) {
 
       <div className="grid grid-cols-2 gap-3 mt-4">
         <div className="flex items-center gap-2">
-          <Droplets className="h-4 w-4 text-blue-500" />
+          <Droplets className="size-4 text-blue-500" />
           <span className="text-sm">Umidade: {data.humidity}%</span>
         </div>
         <div className="flex items-center gap-2">
-          <Wind className="h-4 w-4 text-gray-500" />
+          <Wind className="size-4 text-gray-500" />
           <span className="text-sm">Vento: {data.windSpeed.toFixed(1)} m/s</span>
         </div>
         {data.pressure && (
@@ -98,9 +98,9 @@ export function WeatherCard({ data }: WeatherCardProps) {
           >
             <h4 className="text-sm font-semibold">Previsão Detalhada</h4>
             {isForecastOpen ? (
-              <ChevronUp className="h-4 w-4 text-muted-foreground" />
+              <ChevronUp className="size-4 text-muted-foreground" />
             ) : (
-              <ChevronDown className="h-4 w-4 text-muted-foreground" />
+              <ChevronDown className="size-4 text-muted-foreground" />
             )}
           </button>
           {isForecastOpen && (

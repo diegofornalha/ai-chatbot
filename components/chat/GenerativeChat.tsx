@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useEffect, useState, useCallback, useMemo } from 'react';
+import React, { useRef, useState, } from 'react';
 import { ChatMessage } from './ChatMessage';
 import { MessageInput } from './MessageInput';
 import { ToolRenderer } from '../generative/ToolRenderer';
@@ -193,7 +193,7 @@ ${m.content}`
               try {
                 const data = JSON.parse(line.slice(6));
                 if (data.type === 'text_chunk') {
-                  console.log('📦 [DEBUG] Chunk:', data.content?.substring(0, 50) + '...');
+                  console.log('📦 [DEBUG] Chunk:', `${data.content?.substring(0, 50)}...`);
                 }
                 
                 if (data.session_id && !sessionId) {
@@ -271,7 +271,7 @@ ${m.content}`
               ? {
                   ...msg,
                   tool: {
-                    name: toolPending!.name,
+                    name: toolPending?.name,
                     type: result.type,
                     data: result.data,
                     loading: false

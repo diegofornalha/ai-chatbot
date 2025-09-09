@@ -12,7 +12,7 @@
  */
 
 import { describe, it, expect, beforeEach, afterEach, jest } from '@jest/globals';
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, } from 'next/server';
 import {
   rateLimit,
   createRateLimiter,
@@ -20,7 +20,6 @@ import {
   applyRateLimit,
   getRateLimitBackend,
   getRateLimitStats,
-  type RateLimitResult,
 } from '@/lib/middleware/rate-limit';
 
 // Mock dependencies

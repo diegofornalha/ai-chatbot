@@ -15,9 +15,6 @@ module.exports = {
   // Setup files
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   
-  // Module file extensions
-  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
-  
   // Transform files
   transform: {
     '^.+\\.(ts|tsx)$': ['ts-jest', {
@@ -27,15 +24,6 @@ module.exports = {
     '^.+\\.(js|jsx)$': ['babel-jest', {
       presets: ['next/babel']
     }]
-  },
-  
-  // Module name mapping for path aliases
-  moduleNameMapping: {
-    '^@/(.*)$': '<rootDir>/$1',
-    '^@/lib/(.*)$': '<rootDir>/lib/$1',
-    '^@/components/(.*)$': '<rootDir>/components/$1',
-    '^@/hooks/(.*)$': '<rootDir>/hooks/$1',
-    '^@/app/(.*)$': '<rootDir>/app/$1',
   },
   
   // Coverage configuration

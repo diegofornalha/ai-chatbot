@@ -1,6 +1,6 @@
 'use client';
 
-import React, { ErrorInfo, ReactNode, Component } from 'react';
+import React, { type ErrorInfo, type ReactNode, Component, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { AlertCircle, RefreshCw, Home, Bug } from 'lucide-react';
 import { toast } from '@/components/toast';
@@ -363,7 +363,7 @@ export function withErrorBoundary<P extends object>(
 
 // Hook for manually triggering error boundaries (useful for async errors)
 export function useErrorHandler() {
-  return React.useCallback((error: Error) => {
+  return useCallback((error: Error) => {
     // Re-throw error to trigger error boundary
     setTimeout(() => {
       throw error;

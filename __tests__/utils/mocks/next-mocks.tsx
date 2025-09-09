@@ -33,13 +33,13 @@ export const mockUseSearchParams = (params: Record<string, string> = {}) => {
   return searchParams;
 };
 
-export const mockUsePathname = (pathname: string = '/') => pathname;
+export const mockUsePathname = (pathname = '/') => pathname;
 
 export const mockUseParams = (params: Record<string, string> = {}) => params;
 
 // Mock Next.js Image component
 export const mockImage = ({ src, alt, ...props }: any) => {
-  return <img src={src} alt={alt} {...props} />;
+  return <img src={src} alt={alt} {...props}/>;
 };
 
 // Mock Next.js Link component
@@ -69,7 +69,7 @@ export const mockHead = ({ children }: { children: React.ReactNode }) => {
 
 // Mock Next.js Script component
 export const mockScript = ({ src, strategy, onLoad, onError, ...props }: any) => {
-  return <script src={src} {...props} />;
+  return <script src={src} {...props}/>;
 };
 
 // Mock Next.js metadata API

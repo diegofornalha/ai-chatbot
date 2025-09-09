@@ -1,8 +1,8 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { RefreshCw, Loader2, AlertCircle, CheckCircle } from 'lucide-react';
+import { RefreshCw, Loader2, AlertCircle, } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useErrorRecovery } from '@/hooks/use-error-recovery';
 
@@ -53,7 +53,7 @@ export function RetryButton({
     if (isLoading) {
       return (
         <>
-          <Loader2 className="w-4 h-4 animate-spin" />
+          <Loader2 className="size-4 animate-spin" />
           {showProgress && attempt > 0 && (
             <span>Retry {attempt}/{maxRetries}</span>
           )}
@@ -65,7 +65,7 @@ export function RetryButton({
     if (error && !canRetry) {
       return (
         <>
-          <AlertCircle className="w-4 h-4" />
+          <AlertCircle className="size-4" />
           <span>Failed</span>
         </>
       );
@@ -74,7 +74,7 @@ export function RetryButton({
     if (error && canRetry) {
       return (
         <>
-          <RefreshCw className="w-4 h-4" />
+          <RefreshCw className="size-4" />
           <span>Retry {showProgress ? `(${attempt}/${maxRetries})` : ''}</span>
         </>
       );
@@ -82,7 +82,7 @@ export function RetryButton({
 
     return (
       <>
-        <RefreshCw className="w-4 h-4" />
+        <RefreshCw className="size-4" />
         <span>{children}</span>
       </>
     );
@@ -189,7 +189,7 @@ export function RetrySection({
       className
     )}>
       <div className="flex items-center gap-2 mb-4">
-        {displayError && <AlertCircle className="w-5 h-5 text-destructive" />}
+        {displayError && <AlertCircle className="size-5 text-destructive" />}
         <h3 className="text-lg font-semibold">{title}</h3>
       </div>
 
@@ -208,7 +208,7 @@ export function RetrySection({
       {isLoading && attempt > 0 && (
         <div className="mb-4">
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <Loader2 className="w-4 h-4 animate-spin" />
+            <Loader2 className="size-4 animate-spin" />
             <span>Attempt {attempt} of {maxRetries}</span>
           </div>
         </div>
@@ -237,11 +237,11 @@ export function AutoRetryWrapper({
   maxAutoRetries?: number;
   error?: Error | null;
 }) {
-  const [autoRetryCount, setAutoRetryCount] = React.useState(0);
-  const [isAutoRetrying, setIsAutoRetrying] = React.useState(false);
-  const timeoutRef = React.useRef<NodeJS.Timeout>();
+  const [autoRetryCount, setAutoRetryCount] = useState(0);
+  const [isAutoRetrying, setIsAutoRetrying] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout>();
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (error && autoRetryCount < maxAutoRetries) {
       setIsAutoRetrying(true);
       timeoutRef.current = setTimeout(async () => {
@@ -272,7 +272,7 @@ export function AutoRetryWrapper({
             <p className="text-sm text-orange-600">
               {isAutoRetrying ? (
                 <span className="flex items-center gap-2">
-                  <Loader2 className="w-3 h-3 animate-spin" />
+                  <Loader2 className="size-3 animate-spin" />
                   Reconnecting... (attempt {autoRetryCount + 1}/{maxAutoRetries})
                 </span>
               ) : autoRetryCount >= maxAutoRetries ? (

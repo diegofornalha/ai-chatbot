@@ -23,7 +23,7 @@ export function SearchCard({ data }: SearchCardProps) {
   return (
     <Card className="p-4 w-full max-w-2xl">
       <div className="flex items-center gap-2 mb-4">
-        <Search className="h-5 w-5 text-primary" />
+        <Search className="size-5 text-primary" />
         <h3 className="text-lg font-semibold">Resultados para: "{data.query}"</h3>
       </div>
       
@@ -40,7 +40,7 @@ export function SearchCard({ data }: SearchCardProps) {
                 <h4 className="font-medium text-primary group-hover:underline">
                   {result.title}
                 </h4>
-                <ExternalLink className="h-4 w-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+                <ExternalLink className="size-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
               <p className="text-sm text-muted-foreground mt-1">
                 {result.snippet}

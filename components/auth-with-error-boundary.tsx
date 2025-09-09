@@ -2,7 +2,7 @@
 
 import React, { useCallback, useState, Children, isValidElement, cloneElement } from 'react';
 import { ErrorBoundary } from '@/components/error-boundary';
-import { AuthErrorFallback, NetworkErrorFallback } from '@/components/error-fallbacks';
+import { AuthErrorFallback, } from '@/components/error-fallbacks';
 import { AuthForm } from './auth-form';
 import { logError, ErrorRecovery, NetworkError, AuthenticationError } from '@/lib/error-reporting';
 

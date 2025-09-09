@@ -4,7 +4,7 @@
  * Ensures application resilience and data continuity
  */
 
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'node:events';
 import { redisClient, isRedisAvailable } from './redis-client';
 
 export interface FallbackOptions {

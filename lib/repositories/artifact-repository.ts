@@ -198,7 +198,7 @@ export class ArtifactRepository extends BaseRepository<Artifact, CreateArtifactD
     return stats;
   }
   
-  async cleanupOldArtifacts(daysOld: number = 30): Promise<number> {
+  async cleanupOldArtifacts(daysOld = 30): Promise<number> {
     const cutoffDate = new Date();
     cutoffDate.setDate(cutoffDate.getDate() - daysOld);
     

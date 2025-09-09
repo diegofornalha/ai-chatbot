@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Dialog,
   DialogContent,
@@ -21,7 +21,7 @@ import {
   Shield,
   Zap
 } from 'lucide-react'
-import { SessionConfig } from '@/stores/chatStore'
+import type { SessionConfig } from '@/stores/chatStore'
 
 interface SessionConfigModalProps {
   open: boolean
@@ -94,7 +94,7 @@ export function SessionConfigModal({
   onConfirm,
   initialConfig
 }: SessionConfigModalProps) {
-  const [config, setConfig] = React.useState<SessionConfig>(
+  const [config, setConfig] = useState<SessionConfig>(
     initialConfig || {
       systemPrompt: '',
       allowedTools: [],
@@ -150,7 +150,7 @@ export function SessionConfigModal({
                     className="h-auto flex-col gap-2 p-4"
                     onClick={() => handleTemplateSelect(template)}
                   >
-                    <Icon className="h-8 w-8" />
+                    <Icon className="size-8" />
                     <span className="text-sm font-medium">{template.name}</span>
                   </Button>
                 )
@@ -184,7 +184,7 @@ export function SessionConfigModal({
                       className="justify-start"
                       onClick={() => handleToolToggle(tool.id)}
                     >
-                      <Icon className="mr-2 h-4 w-4" />
+                      <Icon className="mr-2 size-4" />
                       {tool.label}
                     </Button>
                   )
@@ -202,7 +202,7 @@ export function SessionConfigModal({
                 min={1}
                 max={100}
                 value={config.maxTurns}
-                onChange={(e) => setConfig({ ...config, maxTurns: parseInt(e.target.value) })}
+                onChange={(e) => setConfig({ ...config, maxTurns: Number.parseInt(e.target.value) })}
               />
             </div>
 
@@ -224,7 +224,7 @@ export function SessionConfigModal({
                   size="sm"
                   onClick={() => setConfig({ ...config, permissionMode: 'acceptEdits' })}
                 >
-                  <Shield className="mr-2 h-4 w-4" />
+                  <Shield className="mr-2 size-4" />
                   Aceitar Edições
                 </Button>
                 <Button
@@ -232,7 +232,7 @@ export function SessionConfigModal({
                   size="sm"
                   onClick={() => setConfig({ ...config, permissionMode: 'ask' })}
                 >
-                  <Shield className="mr-2 h-4 w-4" />
+                  <Shield className="mr-2 size-4" />
                   Perguntar
                 </Button>
                 <Button
@@ -240,7 +240,7 @@ export function SessionConfigModal({
                   size="sm"
                   onClick={() => setConfig({ ...config, permissionMode: 'deny' })}
                 >
-                  <Shield className="mr-2 h-4 w-4" />
+                  <Shield className="mr-2 size-4" />
                   Negar
                 </Button>
               </div>

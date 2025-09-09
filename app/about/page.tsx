@@ -1,4 +1,4 @@
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 import { appConfig } from '@/lib/config/app-config';
 
 // Revalidar a cada 1 hora (ISR)
