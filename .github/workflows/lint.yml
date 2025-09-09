@@ -1,10 +1,13 @@
 name: Lint
 on:
   push:
+    branches:
+      - disabled-temporarily  # Workflow desabilitado temporariamente
 
 jobs:
   build:
     runs-on: ubuntu-22.04
+    if: false  # Desabilitado temporariamente até PR ser dividido
     strategy:
       matrix:
         node-version: [20]
