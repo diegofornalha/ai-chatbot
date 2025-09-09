@@ -358,7 +358,7 @@ export function ChatInterface({
               href="/"
               className="flex items-center gap-3 hover:opacity-80 transition-opacity"
             >
-              <Bot className="h-6 w-6 text-primary" />
+              <Bot className="size-6 text-primary" />
               <div className="flex flex-col">
                 <h1 className="text-xl font-semibold">Claude Chat</h1>
               </div>
@@ -378,7 +378,7 @@ export function ChatInterface({
               disabled={!activeSession}
               title="Exportar sessão"
             >
-              <Download className="h-5 w-5" />
+              <Download className="size-5" />
             </Button>
 
             {!readOnly && (
@@ -388,7 +388,7 @@ export function ChatInterface({
                 onClick={() => window.location.reload()}
                 title="Atualizar página"
               >
-                <RefreshCw className="h-5 w-5" />
+                <RefreshCw className="size-5" />
               </Button>
             )}
 
@@ -398,7 +398,7 @@ export function ChatInterface({
               onClick={() => console.log("Configurações em desenvolvimento")}
               title="Configurações"
             >
-              <Settings className="h-5 w-5" />
+              <Settings className="size-5" />
             </Button>
           </div>
         </div>
@@ -426,7 +426,7 @@ export function ChatInterface({
               <div className="mx-auto max-w-4xl">
                 {activeSession?.messages.length === 0 && !isStreaming && (
                   <Card className="p-8 text-center">
-                    <Bot className="mx-auto h-12 w-12 text-muted-foreground" />
+                    <Bot className="mx-auto size-12 text-muted-foreground" />
                     <h2 className="mt-4 text-lg font-medium">
                       Comece uma conversa
                     </h2>
@@ -450,8 +450,8 @@ export function ChatInterface({
                 {isProcessing && !streamingContent && (
                   <div className="flex items-center justify-start mb-6">
                     <div className="flex gap-3">
-                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-muted">
-                        <Bot className="h-5 w-5" />
+                      <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-muted">
+                        <Bot className="size-5" />
                       </div>
                       <div className="text-sm text-muted-foreground">
                         Processando resposta...
@@ -483,7 +483,7 @@ export function ChatInterface({
                       className="rounded-full shadow-lg"
                       title="Voltar ao final"
                     >
-                      <ArrowDown className="h-5 w-5" />
+                      <ArrowDown className="size-5" />
                     </Button>
                   </div>
                 )}
@@ -511,7 +511,7 @@ export function ChatInterface({
               <div className="mx-auto flex max-w-4xl items-center justify-between text-xs text-muted-foreground">
                 <div className="flex items-center gap-4">
                   <span className="flex items-center gap-1">
-                    <Activity className="h-3 w-3" />
+                    <Activity className="size-3" />
                     {activeSession.messages.length} mensagens
                   </span>
                   <span className="flex items-center gap-1">
