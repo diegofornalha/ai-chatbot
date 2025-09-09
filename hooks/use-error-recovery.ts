@@ -126,21 +126,22 @@ export function useErrorRecovery(options: UseErrorRecoveryOptions = {}) {
     }
 
     // All retries failed
+    const finalError = lastError || new Error('Operation failed after retries');
     setState({
       isLoading: false,
-      error: lastError!,
+      error: finalError,
       attempt: maxRetries,
       canRetry: false,
     });
 
-    onMaxRetriesExceeded?.(lastError!);
+    onMaxRetriesExceeded?.(finalError);
     
     toast({
       type: 'error',
-      description: `Failed after ${maxRetries} attempts: ${lastError?.message}`,
+      description: `Failed after ${maxRetries} attempts: ${finalError.message}`,
     });
 
-    throw lastError!;
+    throw finalError;
   }, [maxRetries, baseDelay, backoffMultiplier, timeout, onError, onSuccess, onMaxRetriesExceeded]);
 
   const reset = useCallback(() => {

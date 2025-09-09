@@ -105,8 +105,8 @@ export function WeatherCard({ data }: WeatherCardProps) {
           </button>
           {isForecastOpen && (
             <div className="space-y-2 mt-3">
-              {data.previsao.map((item, index) => (
-              <div key={index} className="flex items-center justify-between text-sm">
+              {data.previsao.map((item) => (
+              <div key={`forecast-${item.hora}`} className="flex items-center justify-between text-sm">
                 <span className="font-medium">{item.hora}</span>
                 <div className="flex items-center gap-3">
                   <span>{item.temp}°C</span>
@@ -130,8 +130,8 @@ export function WeatherCard({ data }: WeatherCardProps) {
         <div className="mt-6 pt-4 border-t">
           <h4 className="text-sm font-semibold mb-3">Previsão Horária</h4>
           <div className="flex justify-between">
-            {data.forecast.map((item, index) => (
-              <div key={index} className="text-center">
+            {data.forecast.map((item) => (
+              <div key={`hour-${item.hour}`} className="text-center">
                 <p className="text-xs text-muted-foreground">{item.hour}</p>
                 <p className="text-sm font-semibold mt-1">{item.temp}°</p>
               </div>

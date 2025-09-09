@@ -152,7 +152,7 @@ export function processMCPResponse(text: string): {
   }
   
   // Converte resultado para formato UI se for clima
-  let uiData;
+  let uiData: any = undefined;
   if (mcpCall?.tool === 'get_weather_by_city' && mcpResult) {
     uiData = {
       type: 'weather',

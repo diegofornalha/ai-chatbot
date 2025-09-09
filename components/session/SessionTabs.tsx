@@ -46,12 +46,13 @@ export function SessionTabs({
               session={session}
               isActive={activeSessionId === session.id}
             >
-              <div
+              <button
+                type="button"
                 className={cn(
                   "group flex items-center gap-2 rounded-lg px-3 py-1.5",
                   "border bg-background transition-all",
                   "hover:bg-accent hover:text-accent-foreground",
-                  "cursor-pointer",
+                  "cursor-pointer w-full text-left",
                   activeSessionId === session.id && "bg-primary text-primary-foreground"
                 )}
                 onClick={() => onSessionSelect(session.id)}
@@ -74,7 +75,7 @@ export function SessionTabs({
                 >
                   <X className="size-3" />
                 </Button>
-              </div>
+              </button>
             </SessionWrapper>
           ))}
         </div>

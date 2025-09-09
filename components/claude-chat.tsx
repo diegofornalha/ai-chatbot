@@ -152,7 +152,7 @@ export function ClaudeChat({ sessionId: initialSessionId }: ClaudeChatProps = {}
         <button
           type="button"
           aria-label="Close sidebar" 
-          className="md:hidden fixed inset-0 bg-black/50 z-10 w-full h-full cursor-default"
+          className="md:hidden fixed inset-0 bg-black/50 z-10 size-full cursor-default"
           onClick={() => setSidebarOpen(false)}
         />
       )}
