@@ -263,7 +263,7 @@ export function SessionErrorBoundary({ children }: { children: React.ReactNode }
                 Retry
               </button>
               <button
-                onClick={() => window.location.href = '/login'}
+                onClick={() => { window.location.href = '/login'; }}
                 className="px-3 py-1 bg-gray-600 text-white rounded text-sm hover:bg-gray-700"
               >
                 Sign In
