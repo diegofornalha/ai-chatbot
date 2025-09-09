@@ -14,11 +14,11 @@ import {
   deleteChatById,
   getChatById,
   getMessageCountByUserId,
-  getMessagesByChatId,
+  getMessagesByChatById,
   saveChat,
   saveMessages,
+  updateChatLastContextById,
 } from '@/lib/db/queries';
-import { updateChatLastContextById } from '@/lib/db/queries';
 import { convertToUIMessages, generateUUID } from '@/lib/utils';
 import { generateTitleFromUserMessage } from '../../actions';
 import { createDocument } from '@/lib/ai/tools/create-document';
@@ -185,7 +185,8 @@ export async function POST(request: Request) {
           })),
         });
 
-        if (finalUsage) {
+        // Ensure finalUsage is defined before using it
+        if (finalUsage && Object.keys(finalUsage).length > 0) {
           try {
             await updateChatLastContextById({
               chatId: id,

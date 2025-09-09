@@ -16,8 +16,9 @@ describe('useMessages Hook', () => {
       sessionId = result.current.createSession();
     });
 
-    expect(result.current.sessions.has(sessionId!)).toBe(true);
-    expect(result.current.activeSessionId).toBe(sessionId!);
+    expect(sessionId).toBeDefined();
+    expect(result.current.sessions.has(sessionId)).toBe(true);
+    expect(result.current.activeSessionId).toBe(sessionId);
   });
 
   it('should add message to session', () => {
@@ -50,13 +51,14 @@ describe('useMessages Hook', () => {
       });
     });
 
-    expect(result.current.sessions.has(sessionId!)).toBe(true);
+    expect(sessionId).toBeDefined();
+    expect(result.current.sessions.has(sessionId)).toBe(true);
 
     act(() => {
-      result.current.deleteSession(sessionId!);
+      result.current.deleteSession(sessionId);
     });
 
-    expect(result.current.sessions.has(sessionId!)).toBe(false);
+    expect(result.current.sessions.has(sessionId)).toBe(false);
   });
 
   it('should update session metrics', () => {

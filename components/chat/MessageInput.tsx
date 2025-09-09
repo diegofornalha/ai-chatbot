@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { forwardRef, useState, useRef, useEffect } from 'react';
 import { Send, Square } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -16,7 +16,7 @@ interface MessageInputProps {
   className?: string;
 }
 
-export const MessageInput = React.forwardRef<HTMLTextAreaElement, MessageInputProps>(({
+export const MessageInput = forwardRef<HTMLTextAreaElement, MessageInputProps>(({
   onSendMessage,
   onInterrupt,
   isLoading = false,
@@ -26,8 +26,8 @@ export const MessageInput = React.forwardRef<HTMLTextAreaElement, MessageInputPr
   onBlur,
   className
 }, ref) => {
-  const [message, setMessage] = React.useState('');
-  const internalRef = React.useRef<HTMLTextAreaElement>(null);
+  const [message, setMessage] = useState('');
+  const internalRef = useRef<HTMLTextAreaElement>(null);
   const textareaRef = ref || internalRef;
 
   const handleSend = () => {
@@ -55,7 +55,7 @@ export const MessageInput = React.forwardRef<HTMLTextAreaElement, MessageInputPr
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     adjustHeight();
   }, [message]);
 
@@ -98,10 +98,10 @@ export const MessageInput = React.forwardRef<HTMLTextAreaElement, MessageInputPr
                 variant="destructive"
                 size="icon"
                 onClick={onInterrupt}
-                className="h-[52px] w-[52px]"
+                className="size-[52px]"
                 title="Interromper"
               >
-                <Square className="h-5 w-5" />
+                <Square className="size-5" />
               </Button>
             ) : (
               <Button
@@ -110,10 +110,10 @@ export const MessageInput = React.forwardRef<HTMLTextAreaElement, MessageInputPr
                 size="icon"
                 onClick={handleSend}
                 disabled={disabled || !message.trim()}
-                className="h-[52px] w-[52px]"
+                className="size-[52px]"
                 title="Enviar"
               >
-                <Send className="h-5 w-5" />
+                <Send className="size-5" />
               </Button>
             )}
           </div>

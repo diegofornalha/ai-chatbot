@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { marked } from 'marked';
 import DOMPurify from 'isomorphic-dompurify';
 import { Copy, Check, User, Bot } from 'lucide-react';
@@ -23,9 +23,9 @@ export function ChatMessage({
   tokens, 
   cost,
 }: ChatMessageProps) {
-  const [copied, setCopied] = React.useState(false);
+  const [copied, setCopied] = useState(false);
 
-  const handleCopy = React.useCallback(async () => {
+  const handleCopy = useCallback(async () => {
     await navigator.clipboard.writeText(content);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
@@ -34,15 +34,15 @@ export function ChatMessage({
   const getIcon = () => {
     switch (role) {
       case 'user':
-        return <User className="h-5 w-5" />;
+        return <User className="size-5" />;
       case 'assistant':
-        return <Bot className="h-5 w-5" />;
+        return <Bot className="size-5" />;
       default:
         return null;
     }
   };
 
-  const renderContent = React.useMemo(() => {
+  const renderContent = useMemo(() => {
     if (role === 'user') {
       return <p className="whitespace-pre-wrap">{content}</p>;
     }
@@ -105,12 +105,12 @@ export function ChatMessage({
                   variant="ghost"
                   size="icon"
                   onClick={handleCopy}
-                  className="h-8 w-8"
+                  className="size-8"
                 >
                   {copied ? (
                     <Check className="h-4 w-4 text-green-500" />
                   ) : (
-                    <Copy className="h-4 w-4" />
+                    <Copy className="size-4" />
                   )}
                 </Button>
               </div>
