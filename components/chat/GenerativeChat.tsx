@@ -320,8 +320,8 @@ ${m.content}`
               className="relative hover:opacity-80 transition-opacity"
               title="Recarregar página"
             >
-              <Bot className="h-6 w-6 text-primary" />
-              <Sparkles className="h-3 w-3 text-yellow-500 absolute -top-1 -right-1" />
+              <Bot className="size-6 text-primary" />
+              <Sparkles className="size-3 text-yellow-500 absolute -top-1 -right-1" />
             </button>
             <h1 className="text-xl font-semibold">Chat</h1>
           </div>
@@ -332,7 +332,7 @@ ${m.content}`
               onClick={clearMessages}
               title="Limpar conversa"
             >
-              <Trash2 className="h-5 w-5" />
+              <Trash2 className="size-5" />
             </Button>
           </div>
         </div>
@@ -351,7 +351,7 @@ ${m.content}`
         <div className="mx-auto max-w-4xl space-y-4">
           {messages.length === 0 ? (
             <div className="text-center py-12">
-              <Sparkles className="h-12 w-12 text-yellow-500 mx-auto mb-4" />
+              <Sparkles className="size-12 text-yellow-500 mx-auto mb-4" />
               <p className="text-muted-foreground mb-6">
                 Experimente perguntar o que quiser!
               </p>

@@ -108,7 +108,7 @@ export function ChatMessage({
                   className="size-8"
                 >
                   {copied ? (
-                    <Check className="h-4 w-4 text-green-500" />
+                    <Check className="size-4 text-green-500" />
                   ) : (
                     <Copy className="size-4" />
                   )}

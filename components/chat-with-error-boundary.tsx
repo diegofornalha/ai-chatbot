@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useCallback } from 'react';
 import { ErrorBoundary } from '@/components/error-boundary';
 import { ChatErrorFallback } from '@/components/error-fallbacks';
 import { Chat } from './chat';
@@ -29,7 +29,7 @@ interface ChatWithErrorBoundaryProps {
 }
 
 export function ChatWithErrorBoundary(props: ChatWithErrorBoundaryProps) {
-  const handleChatError = React.useCallback((error: Error, errorInfo: React.ErrorInfo, errorId: string) => {
+  const handleChatError = useCallback((error: Error, errorInfo: React.ErrorInfo, errorId: string) => {
     // Log chat-specific errors with context
     logError(error, errorInfo, {
       component: 'Chat',

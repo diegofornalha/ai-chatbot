@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { ChatMessage } from './ChatMessage';
 import { MessageInput } from './MessageInput';
 import { Button } from '@/components/ui/button';
@@ -48,10 +48,10 @@ const DEMO_HISTORY = [
 ];
 
 export function DemoChat() {
-  const [messages, setMessages] = React.useState<typeof DEMO_HISTORY>([]);
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [isRunningDemo, setIsRunningDemo] = React.useState(false);
-  const [sessionId, setSessionId] = React.useState<string | null>(null);
+  const [messages, setMessages] = useState<typeof DEMO_HISTORY>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isRunningDemo, setIsRunningDemo] = useState(false);
+  const [sessionId, setSessionId] = useState<string | null>(null);
   
   
   const handleSend = async (input: string) => {
@@ -227,7 +227,7 @@ export function DemoChat() {
       <header className="border-b bg-background/95 backdrop-blur">
         <div className="flex items-center justify-between px-4 py-3">
           <div className="flex items-center gap-3">
-            <Bot className="h-6 w-6 text-primary" />
+            <Bot className="size-6 text-primary" />
             <h1 className="text-xl font-semibold">Claude Chat</h1>
           </div>
           <div className="flex items-center gap-2">
@@ -237,7 +237,7 @@ export function DemoChat() {
               onClick={clearMessages}
               title="Limpar conversa"
             >
-              <Trash2 className="h-5 w-5" />
+              <Trash2 className="size-5" />
             </Button>
             <Button 
               variant="ghost" 
@@ -245,7 +245,7 @@ export function DemoChat() {
               onClick={reloadHistorico}
               title="Recarregar histórico original"
             >
-              <RefreshCw className="h-5 w-5" />
+              <RefreshCw className="size-5" />
             </Button>
             <Button 
               variant="ghost" 
@@ -254,10 +254,10 @@ export function DemoChat() {
               disabled={isRunningDemo}
               title="Executar nova demonstração"
             >
-              <PlayCircle className={`h-5 w-5 ${isRunningDemo ? 'animate-pulse' : ''}`} />
+              <PlayCircle className={`size-5 ${isRunningDemo ? 'animate-pulse' : ''}`} />
             </Button>
             <Button variant="ghost" size="icon">
-              <Settings className="h-5 w-5" />
+              <Settings className="size-5" />
             </Button>
           </div>
         </div>

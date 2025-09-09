@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { ErrorBoundary } from '@/components/error-boundary';
 import { ArtifactErrorFallback, LoadingErrorFallback } from '@/components/error-fallbacks';
 import { Artifact } from './artifact';
@@ -30,7 +30,7 @@ interface ArtifactWithErrorBoundaryProps {
 }
 
 export function ArtifactWithErrorBoundary(props: ArtifactWithErrorBoundaryProps) {
-  const handleArtifactError = React.useCallback((error: Error, errorInfo: React.ErrorInfo, errorId: string) => {
+  const handleArtifactError = useCallback((error: Error, errorInfo: React.ErrorInfo, errorId: string) => {
     logError(error, errorInfo, {
       component: 'Artifact',
       chatId: props.chatId,
@@ -64,7 +64,7 @@ export function ArtifactContentErrorBoundary({
   artifactType: string;
   documentId?: string;
 }) {
-  const handleContentError = React.useCallback((error: Error, errorInfo: React.ErrorInfo, errorId: string) => {
+  const handleContentError = useCallback((error: Error, errorInfo: React.ErrorInfo, errorId: string) => {
     logError(error, errorInfo, {
       component: 'ArtifactContent',
       artifactType,
@@ -138,7 +138,7 @@ export function DocumentLoadingErrorBoundary({
   children: React.ReactNode;
   documentId?: string;
 }) {
-  const handleDocumentError = React.useCallback(async (error: Error, errorInfo: React.ErrorInfo, errorId: string) => {
+  const handleDocumentError = useCallback(async (error: Error, errorInfo: React.ErrorInfo, errorId: string) => {
     // Enhanced error handling for document loading
     await logError(error, errorInfo, {
       component: 'DocumentLoading',
@@ -182,16 +182,16 @@ export function ArtifactEditorErrorBoundary({
   documentId?: string;
   content?: string;
 }) {
-  const [lastGoodContent, setLastGoodContent] = React.useState<string>('');
+  const [lastGoodContent, setLastGoodContent] = useState<string>('');
 
   // Track last known good content
-  React.useEffect(() => {
+  useEffect(() => {
     if (content && content !== lastGoodContent) {
       setLastGoodContent(content);
     }
   }, [content, lastGoodContent]);
 
-  const handleEditorError = React.useCallback(async (error: Error, errorInfo: React.ErrorInfo, errorId: string) => {
+  const handleEditorError = useCallback(async (error: Error, errorInfo: React.ErrorInfo, errorId: string) => {
     await logError(error, errorInfo, {
       component: 'ArtifactEditor',
       documentId,
