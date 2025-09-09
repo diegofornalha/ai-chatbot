@@ -153,7 +153,7 @@ const DefaultErrorFallback: React.FC<ErrorFallbackProps> = ({
           )}
           
           <Button
-            onClick={() => window.location.href = '/'}
+            onClick={() => { window.location.href = '/'; }}
             variant="outline"
             className="flex items-center gap-2"
           >

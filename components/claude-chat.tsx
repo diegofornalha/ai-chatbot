@@ -149,8 +149,10 @@ export function ClaudeChat({ sessionId: initialSessionId }: ClaudeChatProps = {}
       
       {/* Overlay para mobile */}
       {sidebarOpen && (
-        <div 
-          className="md:hidden fixed inset-0 bg-black/50 z-10"
+        <button
+          type="button"
+          aria-label="Close sidebar" 
+          className="md:hidden fixed inset-0 bg-black/50 z-10 w-full h-full cursor-default"
           onClick={() => setSidebarOpen(false)}
         />
       )}
@@ -283,7 +285,7 @@ export function ClaudeChat({ sessionId: initialSessionId }: ClaudeChatProps = {}
         
         {messages.map((message, index) => (
           <div
-            key={index}
+            key={`msg-${index}-${message.role}-${message.content.substring(0, 10)}`}
             className={`flex ${
               message.role === 'user' ? 'justify-end' : 'justify-start'
             }`}

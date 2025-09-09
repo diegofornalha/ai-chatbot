@@ -462,7 +462,6 @@ export function ChatInterface({
 
                 {isStreaming && streamingContent && (
                   <ChatMessage
-                    role="assistant"
                     content={streamingContent}
                   />
                 )}

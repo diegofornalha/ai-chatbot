@@ -29,7 +29,7 @@ export function SearchCard({ data }: SearchCardProps) {
       
       <div className="space-y-3">
         {data.results.map((result, index) => (
-          <div key={index} className="border rounded-lg p-3 hover:bg-muted/50 transition-colors">
+          <div key={`search-result-${result.url}`} className="border rounded-lg p-3 hover:bg-muted/50 transition-colors">
             <a 
               href={result.url}
               target="_blank"

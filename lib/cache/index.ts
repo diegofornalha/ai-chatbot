@@ -247,7 +247,7 @@ export async function getSystemStatus(): Promise<{
       _fallbackManager.getStats(),
     ]);
 
-    let redisStatus;
+    let redisStatus: any;
     try {
       redisStatus = await _redisHealthChecker.performHealthCheck();
     } catch (error) {

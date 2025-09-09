@@ -138,9 +138,9 @@ export function SmartLoadingState({
 
       {/* Cards de Sugestões */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-        {quickSuggestions.map((suggestion, index) => (
+        {quickSuggestions.map((suggestion) => (
           <QuickActionCard 
-            key={index}
+            key={`suggestion-${suggestion.text}`}
             icon={suggestion.icon}
             title={suggestion.text}
             description="Clique para consultar em nova aba"
