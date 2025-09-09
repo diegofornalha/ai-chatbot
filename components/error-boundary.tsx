@@ -130,7 +130,7 @@ const DefaultErrorFallback: React.FC<ErrorFallbackProps> = ({
   return (
     <div className="flex flex-col items-center justify-center min-h-[200px] p-6 bg-background border border-destructive/20 rounded-lg">
       <div className="flex flex-col items-center text-center max-w-md">
-        <AlertCircle className="w-12 h-12 text-destructive mb-4" />
+        <AlertCircle className="size-12 text-destructive mb-4" />
         
         <h2 className="text-xl font-semibold text-foreground mb-2">
           {getErrorTitle()}
@@ -147,7 +147,7 @@ const DefaultErrorFallback: React.FC<ErrorFallbackProps> = ({
               className="flex items-center gap-2"
               variant="default"
             >
-              <RefreshCw className="w-4 h-4" />
+              <RefreshCw className="size-4" />
               Retry {retryCount > 0 && `(${retryCount}/${maxRetries})`}
             </Button>
           )}
@@ -157,7 +157,7 @@ const DefaultErrorFallback: React.FC<ErrorFallbackProps> = ({
             variant="outline"
             className="flex items-center gap-2"
           >
-            <Home className="w-4 h-4" />
+            <Home className="size-4" />
             Go Home
           </Button>
         </div>
@@ -182,7 +182,7 @@ const DefaultErrorFallback: React.FC<ErrorFallbackProps> = ({
               size="sm"
               className="mt-2 flex items-center gap-2 text-xs"
             >
-              <Bug className="w-3 h-3" />
+              <Bug className="size-3" />
               Report Error
             </Button>
           </details>
@@ -203,11 +203,11 @@ const MinimalErrorFallback: React.FC<ErrorFallbackProps> = ({
   return (
     <div className="flex items-center justify-center p-4 bg-destructive/10 border border-destructive/20 rounded">
       <div className="flex items-center gap-2">
-        <AlertCircle className="w-4 h-4 text-destructive" />
+        <AlertCircle className="size-4 text-destructive" />
         <span className="text-sm text-muted-foreground">Error occurred</span>
         {canRetry && (
           <Button size="sm" variant="ghost" onClick={resetError}>
-            <RefreshCw className="w-3 h-3" />
+            <RefreshCw className="size-3" />
           </Button>
         )}
       </div>

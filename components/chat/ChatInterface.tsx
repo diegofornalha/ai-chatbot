@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef, useCallback, useEffect, useReducer } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { ChatMessage } from './ChatMessage';
 import { MessageInput } from './MessageInput';
 import { SessionTabs } from '../session/SessionTabs';
@@ -10,6 +10,7 @@ import { Settings, Download, RefreshCw, Trash2, Bot, Clock, DollarSign, Activity
 import useChatStore from '@/lib/stores/chatStore';
 import { cn } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
+import { useScrollManager } from '@/hooks/use-scroll-manager';
 
 interface ChatInterfaceProps {
   sessionData?: any;

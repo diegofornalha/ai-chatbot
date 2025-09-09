@@ -148,7 +148,7 @@ export function ClaudeChat({ sessionId: initialSessionId }: ClaudeChatProps = {}
       {/* Overlay para mobile */}
       {sidebarOpen && (
         <div 
-          className="md:hidden fixed inset-0 bg-black bg-opacity-50 z-10"
+          className="md:hidden fixed inset-0 bg-black bg-black/50 z-10"
           onClick={() => setSidebarOpen(false)}
         />
       )}
@@ -232,7 +232,7 @@ export function ClaudeChat({ sessionId: initialSessionId }: ClaudeChatProps = {}
               >
                 <span className="text-sm">📋</span>
                 {copyTooltip && (
-                  <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded whitespace-nowrap">
+                  <span className="absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded whitespace-nowrap">
                     ID Copiado!
                   </span>
                 )}
@@ -244,7 +244,7 @@ export function ClaudeChat({ sessionId: initialSessionId }: ClaudeChatProps = {}
               >
                 <span className="text-sm">🔗</span>
                 {shareTooltip && (
-                  <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded whitespace-nowrap">
+                  <span className="absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded whitespace-nowrap">
                     Link Copiado!
                   </span>
                 )}
@@ -307,9 +307,9 @@ export function ClaudeChat({ sessionId: initialSessionId }: ClaudeChatProps = {}
           <div className="flex justify-start">
             <div className="bg-gray-100 rounded-lg px-4 py-2">
               <div className="flex space-x-2">
-                <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce"></div>
-                <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce delay-100"></div>
-                <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce delay-200"></div>
+                <div className="size-2 bg-gray-500 rounded-full animate-bounce"></div>
+                <div className="size-2 bg-gray-500 rounded-full animate-bounce delay-100"></div>
+                <div className="size-2 bg-gray-500 rounded-full animate-bounce delay-200"></div>
               </div>
             </div>
           </div>
@@ -332,9 +332,9 @@ export function ClaudeChat({ sessionId: initialSessionId }: ClaudeChatProps = {}
           >
             {isLoading ? (
               <div className="flex items-center space-x-2">
-                <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
-                <div className="w-2 h-2 bg-white rounded-full animate-pulse delay-75"></div>
-                <div className="w-2 h-2 bg-white rounded-full animate-pulse delay-150"></div>
+                <div className="size-2 bg-white rounded-full animate-pulse"></div>
+                <div className="size-2 bg-white rounded-full animate-pulse delay-75"></div>
+                <div className="size-2 bg-white rounded-full animate-pulse delay-150"></div>
               </div>
             ) : (
               'Enviar'
