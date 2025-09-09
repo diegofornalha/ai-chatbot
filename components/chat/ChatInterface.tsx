@@ -207,6 +207,15 @@ export function ChatInterface({
     }
   }, []);
 
+  // Cleanup effect para timeouts
+  React.useEffect(() => {
+    return () => {
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+    };
+  }, []);
+
   const handleNewSession = () => {
     const sessionId = createSession();
     setActiveSession(sessionId);

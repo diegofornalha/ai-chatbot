@@ -3,7 +3,20 @@
 import React from 'react';
 import { ErrorBoundary } from '@/components/error-boundary';
 import { InlineErrorFallback } from '@/components/error-fallbacks';
-import { Messages } from './messages';
+import dynamic from 'next/dynamic';
+
+// Lazy load Messages component para otimizar bundle inicial
+const Messages = dynamic(
+  () => import('./messages').then(mod => ({ default: mod.Messages })),
+  { 
+    ssr: true,
+    loading: () => (
+      <div className="flex items-center justify-center py-4">
+        <div className="animate-pulse text-muted-foreground">Carregando mensagens...</div>
+      </div>
+    )
+  }
+);
 import { PreviewMessage, ThinkingMessage } from './message';
 import type { Vote } from '@/lib/db/schema';
 import type { UseChatHelpers } from '@ai-sdk/react';
