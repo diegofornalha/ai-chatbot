@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useState, useRef, useEffect } from 'react';
-import { ErrorRecovery, logError } from '@/lib/error-reporting';
+import { logError, withTimeout, ErrorRecovery } from '@/lib/error-reporting';
 import { toast } from '@/components/toast';
 
 export interface UseErrorRecoveryOptions {
@@ -66,10 +66,9 @@ export function useErrorRecovery(options: UseErrorRecoveryOptions = {}) {
         setState(prev => ({ ...prev, attempt, canRetry: attempt < maxRetries }));
 
         // Add timeout to operation
-        const result = await ErrorRecovery.withTimeout(
+        const result = await withTimeout(
           operation,
-          timeout,
-          `Operation ${operationName || 'unknown'} timed out`
+          timeout
         );
 
         // Success
@@ -100,11 +99,13 @@ export function useErrorRecovery(options: UseErrorRecoveryOptions = {}) {
         }));
 
         // Log retry attempt
-        await logError(lastError, undefined, {
-          type: 'retry_attempt',
-          operation: operationName || 'unknown',
-          attempt,
-          maxRetries,
+        await logError(lastError, {
+          metadata: {
+            type: 'retry_attempt',
+            operation: operationName || 'unknown',
+            attempt,
+            maxRetries,
+          }
         });
 
         onError?.(lastError, attempt);
