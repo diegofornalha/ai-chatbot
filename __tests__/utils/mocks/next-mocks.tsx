@@ -38,8 +38,8 @@ export const mockUsePathname = (pathname = '/') => pathname;
 export const mockUseParams = (params: Record<string, string> = {}) => params;
 
 // Mock Next.js Image component
-export const mockImage = ({ src, alt, ...props }: any) => {
-  return <img src={src} alt={alt} {...props}/>;
+export const mockImage = ({ src, alt = '', ...props }: any) => {
+  return <img src={src} alt={alt || ''} aria-hidden={!alt} {...props}/>;
 };
 
 // Mock Next.js Link component

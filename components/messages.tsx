@@ -109,9 +109,9 @@ function PureMessages({
 
       {!isAtBottom && (
         <button
+          type="button"
           className="absolute bottom-40 left-1/2 z-10 p-2 rounded-full border shadow-lg transition-colors -translate-x-1/2 bg-background hover:bg-muted"
           onClick={() => scrollToBottom('smooth')}
-          type="button"
           aria-label="Scroll to bottom"
         >
           <ArrowDownIcon className="size-4" />

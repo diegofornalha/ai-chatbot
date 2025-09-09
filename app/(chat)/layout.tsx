@@ -37,7 +37,7 @@ export default async function Layout({
                 <div className="text-center">
                   <p className="mb-4">Sidebar failed to load</p>
                   {retryCount < maxRetries && (
-                    <button 
+                    <button type="button" 
                       onClick={resetError}
                       className="px-4 py-2 bg-primary text-primary-foreground rounded"
                     >

@@ -1,4 +1,5 @@
-import { useRef, useCallback, useReducer, useEffect } from 'react';
+import { useRef, useCallback, useReducer, useEffect, useMemo } from 'react';
+import { throttle } from '@/utils/throttle';
 
 interface ScrollState {
   autoScrollEnabled: boolean;
@@ -69,7 +70,7 @@ export function useScrollManager() {
     });
   }, [scrollState.autoScrollEnabled, scrollState.isUserScrolling]);
 
-  const handleScroll = useCallback(() => {
+  const handleScrollBase = useCallback(() => {
     if (!messagesContainerRef.current) return;
     
     // Clear existing debounce timeout
@@ -102,6 +103,12 @@ export function useScrollManager() {
       }
     }, 50); // Debounce delay
   }, []);
+
+  // Throttled version of handleScroll
+  const handleScroll = useMemo(
+    () => throttle(handleScrollBase, 100),
+    [handleScrollBase]
+  );
 
   const resetScroll = useCallback(() => {
     dispatch({ type: 'ENABLE_AUTO_SCROLL' });

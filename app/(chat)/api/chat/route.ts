@@ -92,7 +92,8 @@ export async function POST(request: Request) {
         visibility: selectedVisibilityType,
       });
     } else {
-      if (!chat || chat.userId !== session.user.id) {
+      // chat já foi verificado como não-null acima
+      if (chat.userId !== session.user.id) {
         return new ChatSDKError('forbidden:chat').toResponse();
       }
     }

@@ -200,10 +200,10 @@ export const InlineCitationCarouselPrev = ({
 
   return (
     <button
+      type="button"
       aria-label="Previous"
       className={cn('shrink-0', className)}
       onClick={handleClick}
-      type="button"
       {...props}
     >
       <ArrowLeftIcon className="size-4 text-muted-foreground" />
@@ -227,10 +227,10 @@ export const InlineCitationCarouselNext = ({
 
   return (
     <button
+      type="button"
       aria-label="Next"
       className={cn('shrink-0', className)}
       onClick={handleClick}
-      type="button"
       {...props}
     >
       <ArrowRightIcon className="size-4 text-muted-foreground" />

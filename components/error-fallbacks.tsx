@@ -421,7 +421,7 @@ export const InlineErrorFallback: React.FC<ErrorFallbackProps> = ({
       <Bug className="size-3 text-red-500" />
       <span className="text-red-700">Error</span>
       {canRetry && (
-        <button
+        <button type="button"
           onClick={resetError}
           className="text-red-600 hover:text-red-800 underline"
         >

@@ -81,8 +81,7 @@ export function ModelSelector({
               data-active={id === optimisticModelId}
               asChild
             >
-              <button
-                type="button"
+              <button type="button"
                 className="gap-4 group/item flex flex-row justify-between items-center w-full"
               >
                 <div className="flex flex-col gap-1 items-start">

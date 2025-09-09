@@ -37,8 +37,7 @@ function PureDocumentToolResult({
   const { setArtifact } = useArtifact();
 
   return (
-    <button
-      type="button"
+    <button type="button"
       className="bg-background cursor-pointer border py-2 px-3 rounded-xl w-fit flex flex-row gap-3 items-start"
       onClick={(event) => {
         if (isReadonly) {
@@ -103,8 +102,7 @@ function PureDocumentToolCall({
   const { setArtifact } = useArtifact();
 
   return (
-    <button
-      type="button"
+    <button type="button"
       className="cursor pointer w-fit border py-2 px-3 rounded-xl flex flex-row items-start justify-between gap-3"
       onClick={(event) => {
         if (isReadonly) {

@@ -315,7 +315,7 @@ ${m.content}`
       <header className="border-b bg-background/95 backdrop-blur">
         <div className="flex items-center justify-between px-4 py-3">
           <div className="flex items-center gap-3">
-            <button 
+            <button type="button" 
               onClick={() => window.location.reload()}
               className="relative hover:opacity-80 transition-opacity"
               title="Recarregar página"
@@ -356,25 +356,25 @@ ${m.content}`
                 Experimente perguntar o que quiser!
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-w-2xl mx-auto text-left">
-                <button
+                <button type="button"
                   onClick={() => handleSend("Notícias do Brasil e do Mundo Hoje")}
                   className="p-3 border rounded-lg hover:bg-muted/50 transition-colors text-sm font-semibold"
                 >
                   Notícias do Brasil e do Mundo Hoje
                 </button>
-                <button
+                <button type="button"
                   onClick={() => handleSend("Tendências de Insurtech 2025")}
                   className="p-3 border rounded-lg hover:bg-muted/50 transition-colors text-sm font-semibold"
                 >
                   Tendências de Insurtech 2025
                 </button>
-                <button
+                <button type="button"
                   onClick={() => handleSend("CEO da SUTHUB Renato Ferreira LinkedIn")}
                   className="p-3 border rounded-lg hover:bg-muted/50 transition-colors text-sm font-semibold"
                 >
                   CEO da SUTHUB Renato Ferreira LinkedIn
                 </button>
-                <button
+                <button type="button"
                   onClick={() => handleSend("Qual é o clima em Nova York?")}
                   className="p-3 border rounded-lg hover:bg-muted/50 transition-colors text-sm font-semibold"
                 >

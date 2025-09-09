@@ -92,7 +92,7 @@ export function WeatherCard({ data }: WeatherCardProps) {
 
       {(data.previsao && data.previsao.length > 0) ? (
         <div className="mt-6 pt-4 border-t">
-          <button 
+          <button type="button" 
             onClick={() => setIsForecastOpen(!isForecastOpen)}
             className="flex items-center justify-between w-full text-left hover:opacity-80 transition-opacity"
           >

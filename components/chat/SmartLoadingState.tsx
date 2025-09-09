@@ -120,7 +120,7 @@ export function SmartLoadingState({
               </p>
               
               <div className="flex gap-3">
-                <button
+                <button type="button"
                   onClick={() => {
                     const newWindow = window.open(window.location.href, '_blank');
                     newWindow?.focus();
@@ -165,7 +165,7 @@ interface QuickActionCardProps {
 
 function QuickActionCard({ icon, title, description, onClick }: QuickActionCardProps) {
   return (
-    <button
+    <button type="button"
       onClick={onClick}
       className="
         p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700

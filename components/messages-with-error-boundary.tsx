@@ -54,7 +54,7 @@ export function MessagesWithErrorBoundary(props: MessagesWithErrorBoundaryProps)
           <div className="text-center">
             <p className="text-muted-foreground mb-4">Messages failed to load</p>
             {retryCount < maxRetries && (
-              <button
+              <button type="button"
                 onClick={resetError}
                 className="px-4 py-2 bg-primary text-primary-foreground rounded hover:bg-primary/90"
               >
@@ -186,7 +186,7 @@ export function MessagePartErrorBoundary({ children, partType }: {
       fallback={({ resetError }) => (
         <div className="inline-flex items-center gap-1 px-2 py-1 bg-orange-100 border border-orange-300 rounded text-xs">
           <span className="text-orange-700">Failed to load {partType}</span>
-          <button
+          <button type="button"
             onClick={resetError}
             className="text-orange-600 underline hover:text-orange-800"
           >

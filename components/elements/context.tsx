@@ -274,11 +274,11 @@ export const Context = ({
     <HoverCard closeDelay={100} openDelay={100}>
       <HoverCardTrigger asChild>
         <button
+          type="button"
           className={cn(
             'inline-flex select-none items-center gap-1 rounded-md px-2.5 py-1 text-sm',
             'bg-background text-foreground',
           )}
-          type="button"
           {...props}
         >
           <span className="font-medium text-muted-foreground">

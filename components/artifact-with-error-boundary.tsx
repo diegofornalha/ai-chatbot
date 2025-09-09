@@ -83,7 +83,7 @@ export function ArtifactContentErrorBoundary({
               Failed to render {artifactType} content
             </p>
             {retryCount < maxRetries && (
-              <button
+              <button type="button"
                 onClick={resetError}
                 className="px-4 py-2 bg-primary text-primary-foreground rounded hover:bg-primary/90"
               >
@@ -114,7 +114,7 @@ export function ArtifactActionsErrorBoundary({
       fallback={({ resetError }) => (
         <div className="flex items-center gap-2 p-2 bg-orange-50 border border-orange-200 rounded">
           <span className="text-orange-700 text-sm">Actions unavailable</span>
-          <button
+          <button type="button"
             onClick={resetError}
             className="text-orange-600 text-xs underline hover:text-orange-800"
           >
@@ -227,14 +227,14 @@ export function ArtifactEditorErrorBoundary({
             </p>
             <div className="flex justify-center gap-3">
               {retryCount < maxRetries && (
-                <button
+                <button type="button"
                   onClick={resetError}
                   className="px-4 py-2 bg-orange-600 text-white rounded hover:bg-orange-700"
                 >
                   Restore Editor
                 </button>
               )}
-              <button
+              <button type="button"
                 onClick={() => window.location.reload()}
                 className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700"
               >
@@ -282,7 +282,7 @@ export function ArtifactPreviewErrorBoundary({
             <p className="text-red-600 text-sm mb-3">
               Unable to preview {artifactType}
             </p>
-            <button
+            <button type="button"
               onClick={resetError}
               className="px-3 py-1 bg-red-600 text-white rounded text-sm hover:bg-red-700"
             >

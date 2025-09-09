@@ -69,8 +69,7 @@ export function SidebarUserNav({ user }: { user: User }) {
             className="w-[--radix-popper-anchor-width]"
           >
             <DropdownMenuItem asChild data-testid="user-nav-item-auth">
-              <button
-                type="button"
+              <button type="button"
                 className="w-full cursor-pointer"
                 onClick={() => {
                   if (status === 'loading') {

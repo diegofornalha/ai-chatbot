@@ -53,8 +53,7 @@ export const Suggestion = ({
               <div className="rounded-full size-4 bg-muted-foreground/25" />
               <div className="font-medium">Assistant</div>
             </div>
-            <button
-              type="button"
+            <button type="button"
               className="text-xs text-gray-500 cursor-pointer"
               onClick={() => {
                 setIsExpanded(false);

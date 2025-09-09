@@ -292,7 +292,9 @@ export const setupPerformanceTests = () => {
   };
   
   const getPerformanceMeasures = () => [...performanceMeasures];
-  const clearPerformanceMeasures = () => performanceMeasures.length = 0;
+  const clearPerformanceMeasures = () => { 
+    performanceMeasures.length = 0; 
+  };
   
   beforeEach(() => {
     clearPerformanceMeasures();

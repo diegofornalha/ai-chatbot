@@ -66,7 +66,7 @@ export function MessageErrorBoundary({ children }: { children: React.ReactNode }
           <div className="flex items-center gap-2">
             <span className="text-red-600">Message failed to load</span>
             {retryCount < maxRetries && (
-              <button
+              <button type="button"
                 onClick={resetError}
                 className="text-red-600 underline hover:text-red-800"
               >
@@ -96,7 +96,7 @@ export function InputErrorBoundary({ children }: { children: React.ReactNode }) 
               The message input encountered an error
             </p>
             {retryCount < maxRetries ? (
-              <button
+              <button type="button"
                 onClick={resetError}
                 className="px-3 py-1 bg-orange-600 text-white rounded hover:bg-orange-700"
               >

@@ -120,8 +120,7 @@ export function EnhancedAuthForm({
         {error && (
           <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
             <p className="text-red-700 text-sm">{error}</p>
-            <button
-              type="button"
+            <button type="button"
               onClick={() => setError(null)}
               className="text-red-600 text-xs underline hover:text-red-800"
             >
@@ -256,13 +255,13 @@ export function SessionErrorBoundary({ children }: { children: React.ReactNode }
               There was a problem with your session
             </p>
             <div className="flex justify-center gap-2">
-              <button
+              <button type="button"
                 onClick={resetError}
                 className="px-3 py-1 bg-yellow-600 text-white rounded text-sm hover:bg-yellow-700"
               >
                 Retry
               </button>
-              <button
+              <button type="button"
                 onClick={() => { window.location.href = '/login'; }}
                 className="px-3 py-1 bg-gray-600 text-white rounded text-sm hover:bg-gray-700"
               >
@@ -303,13 +302,13 @@ export function AuthProviderErrorBoundary({ children }: { children: React.ReactN
               The authentication service is currently unavailable. Please try again later.
             </p>
             <div className="flex justify-center gap-3">
-              <button
+              <button type="button"
                 onClick={resetError}
                 className="px-4 py-2 bg-primary text-primary-foreground rounded hover:bg-primary/90"
               >
                 Try Again
               </button>
-              <button
+              <button type="button"
                 onClick={() => window.location.reload()}
                 className="px-4 py-2 bg-secondary text-secondary-foreground rounded hover:bg-secondary/90"
               >
