@@ -192,11 +192,13 @@ export function ClaudeChat({ sessionId: initialSessionId }: ClaudeChatProps = {}
           
           {/* Slider de Velocidade Personalizado */}
           <div className="speed-control">
+            <label htmlFor="speed-slider" className="sr-only">Velocidade de streaming</label>
             <span className={`text-sm ${isMounted && streamSpeed > 100 ? 'speed-emoji-slow' : ''}`}>
               🐢
             </span>
             <div className="relative">
               <input
+                id="speed-slider"
                 type="range"
                 min="10"
                 max="200"
@@ -317,8 +319,10 @@ export function ClaudeChat({ sessionId: initialSessionId }: ClaudeChatProps = {}
       </div>
 
       <form onSubmit={handleSubmit} className="p-4 border-t">
+        <label htmlFor="message-input" className="sr-only">Digite sua mensagem</label>
         <div className="flex space-x-2">
           <input
+            id="message-input"
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
