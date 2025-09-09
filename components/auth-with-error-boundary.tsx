@@ -160,7 +160,7 @@ function AuthFormFields({ defaultEmail }: { defaultEmail: string }) {
             </label>
             <div className="p-2 bg-red-50 border border-red-200 rounded text-sm text-red-700">
               Email field error
-              <button onClick={resetError} className="ml-2 underline">retry</button>
+              <button type="button" onClick={resetError} className="ml-2 underline">retry</button>
             </div>
           </div>
         )}
@@ -178,7 +178,7 @@ function AuthFormFields({ defaultEmail }: { defaultEmail: string }) {
             </label>
             <div className="p-2 bg-red-50 border border-red-200 rounded text-sm text-red-700">
               Password field error
-              <button onClick={resetError} className="ml-2 underline">retry</button>
+              <button type="button" onClick={resetError} className="ml-2 underline">retry</button>
             </div>
           </div>
         )}
@@ -263,6 +263,7 @@ export function SessionErrorBoundary({ children }: { children: React.ReactNode }
                 Retry
               </button>
               <button
+                type="button"
                 onClick={() => window.location.href = '/login'}
                 className="px-3 py-1 bg-gray-600 text-white rounded text-sm hover:bg-gray-700"
               >
@@ -310,6 +311,7 @@ export function AuthProviderErrorBoundary({ children }: { children: React.ReactN
                 Try Again
               </button>
               <button
+                type="button"
                 onClick={() => window.location.reload()}
                 className="px-4 py-2 bg-secondary text-secondary-foreground rounded hover:bg-secondary/90"
               >
