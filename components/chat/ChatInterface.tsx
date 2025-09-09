@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { ChatMessage } from './ChatMessage';
 import { MessageInput } from './MessageInput';
 import { SessionTabs } from '../session/SessionTabs';
@@ -41,17 +41,17 @@ export function ChatInterface({
     loadExternalSession,
   } = useChatStore();
 
-  const [isUserScrolling, setIsUserScrolling] = React.useState(false);
-  const [autoScrollEnabled, setAutoScrollEnabled] = React.useState(true);
-  const messagesEndRef = React.useRef<HTMLDivElement>(null);
-  const messagesContainerRef = React.useRef<HTMLDivElement>(null);
-  const scrollTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+  const [isUserScrolling, setIsUserScrolling] = useState(false);
+  const [autoScrollEnabled, setAutoScrollEnabled] = useState(true);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const activeSession = getActiveSession();
   const sessionList = Array.from(sessions.values());
 
   // Sistema inteligente de auto-scroll
-  const scrollToBottom = React.useCallback((behavior: ScrollBehavior = "smooth") => {
+  const scrollToBottom = useCallback((behavior: ScrollBehavior = "smooth") => {
     if (!autoScrollEnabled || isUserScrolling) return;
     
     requestAnimationFrame(() => {
@@ -64,7 +64,7 @@ export function ChatInterface({
   }, [autoScrollEnabled, isUserScrolling]);
 
   // Detecta quando usuário está rolando manualmente
-  const handleScroll = React.useCallback(() => {
+  const handleScroll = useCallback(() => {
     if (!messagesContainerRef.current) return;
     
     const container = messagesContainerRef.current;
@@ -89,7 +89,7 @@ export function ChatInterface({
   }, []);
 
   // Auto-scroll quando houver novas mensagens
-  React.useEffect(() => {
+  useEffect(() => {
     if (autoScrollEnabled && !isUserScrolling) {
       const timeoutId = setTimeout(() => {
         scrollToBottom("smooth");
@@ -100,7 +100,7 @@ export function ChatInterface({
   }, [activeSession?.messages, streamingContent, scrollToBottom, autoScrollEnabled, isUserScrolling]);
 
   // Força scroll quando iniciar streaming
-  React.useEffect(() => {
+  useEffect(() => {
     if (isStreaming) {
       setAutoScrollEnabled(true);
       setIsUserScrolling(false);
@@ -109,14 +109,14 @@ export function ChatInterface({
   }, [isStreaming, scrollToBottom]);
 
   // Carregar sessão externa
-  React.useEffect(() => {
+  useEffect(() => {
     if (sessionData && sessionData.messages) {
       loadExternalSession(sessionData);
     }
   }, [sessionData, loadExternalSession]);
 
   // Carregar histórico de demonstração na primeira vez
-  React.useEffect(() => {
+  useEffect(() => {
     // Converter Map para array
     const sessionList = sessions instanceof Map ? Array.from(sessions.values()) : 
                        Array.isArray(sessions) ? sessions : [];

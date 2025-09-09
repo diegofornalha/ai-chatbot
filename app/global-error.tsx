@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { AlertTriangle, RefreshCw, Home, Mail } from 'lucide-react';
 
@@ -10,7 +10,7 @@ interface GlobalErrorProps {
 }
 
 export default function GlobalError({ error, reset }: GlobalErrorProps) {
-  React.useEffect(() => {
+  useEffect(() => {
     // Log global errors
     console.error('Global Error:', error);
     
