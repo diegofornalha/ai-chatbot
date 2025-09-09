@@ -4,7 +4,7 @@
  */
 
 import { render, RenderOptions } from '@testing-library/react';
-import { ReactElement, ReactNode } from 'react';
+import React, { ReactElement, ReactNode } from 'react';
 
 // Test data factories
 export const createMockUser = (overrides: Partial<any> = {}) => ({
@@ -314,7 +314,9 @@ export const renderWithProviders = (
 
   // Here you would typically wrap with providers like Redux, Router, etc.
   // For now, just render normally
-  const Wrapper = wrapper || (({ children }: { children: ReactNode }) => children as React.ReactElement);
+  const Wrapper = wrapper || (({ children }: { children: ReactNode }) => 
+    React.createElement(React.Fragment, null, children)
+  );
 
   return {
     ...render(ui, {
