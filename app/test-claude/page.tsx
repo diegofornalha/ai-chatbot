@@ -71,10 +71,11 @@ export default function TestClaude() {
       
       <div className="max-w-2xl space-y-4">
         <div>
-          <label className="block text-sm font-medium mb-2">
+          <label htmlFor="test-message" className="block text-sm font-medium mb-2">
             Mensagem de teste:
           </label>
           <input
+            id="test-message"
             type="text"
             value={message}
             onChange={(e) => setMessage(e.target.value)}

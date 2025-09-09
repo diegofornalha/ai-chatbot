@@ -74,7 +74,7 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
               
               <Button 
                 variant="outline" 
-                onClick={() => window.location.href = '/'}
+                onClick={() => { window.location.href = '/'; }}
                 className="flex items-center gap-2"
               >
                 <Home className="size-4" />
@@ -83,7 +83,7 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
               
               <Button 
                 variant="ghost" 
-                onClick={() => window.location.href = 'mailto:support@example.com'}
+                onClick={() => { window.location.href = 'mailto:support@example.com'; }}
                 className="flex items-center gap-2"
               >
                 <Mail className="size-4" />

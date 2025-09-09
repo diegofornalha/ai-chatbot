@@ -155,12 +155,12 @@ function AuthFormFields({ defaultEmail }: { defaultEmail: string }) {
       <ErrorBoundary
         fallback={({ resetError }) => (
           <div className="flex flex-col gap-2">
-            <label className="text-zinc-600 font-normal dark:text-zinc-400">
+            <label htmlFor="email-input" className="text-zinc-600 font-normal dark:text-zinc-400">
               Email Address
             </label>
             <div className="p-2 bg-red-50 border border-red-200 rounded text-sm text-red-700">
               Email field error
-              <button onClick={resetError} className="ml-2 underline">retry</button>
+              <button type="button" onClick={resetError} className="ml-2 underline">retry</button>
             </div>
           </div>
         )}
@@ -173,12 +173,12 @@ function AuthFormFields({ defaultEmail }: { defaultEmail: string }) {
       <ErrorBoundary
         fallback={({ resetError }) => (
           <div className="flex flex-col gap-2">
-            <label className="text-zinc-600 font-normal dark:text-zinc-400">
+            <label htmlFor="password-input" className="text-zinc-600 font-normal dark:text-zinc-400">
               Password
             </label>
             <div className="p-2 bg-red-50 border border-red-200 rounded text-sm text-red-700">
               Password field error
-              <button onClick={resetError} className="ml-2 underline">retry</button>
+              <button type="button" onClick={resetError} className="ml-2 underline">retry</button>
             </div>
           </div>
         )}
@@ -263,7 +263,7 @@ export function SessionErrorBoundary({ children }: { children: React.ReactNode }
                 Retry
               </button>
               <button
-                onClick={() => window.location.href = '/login'}
+                onClick={() => { window.location.href = '/login'; }}
                 className="px-3 py-1 bg-gray-600 text-white rounded text-sm hover:bg-gray-700"
               >
                 Sign In

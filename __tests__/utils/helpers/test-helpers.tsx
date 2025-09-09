@@ -233,7 +233,7 @@ export const expectToThrowAsync = async (fn: () => Promise<any>, expectedError?:
 };
 
 // Async iteration helpers
-export const collectAsyncIterable = async <T>(iterable: AsyncIterable<T>): Promise<T[]> => {
+export const collectAsyncIterable = async <T,>(iterable: AsyncIterable<T>): Promise<T[]> => {
   const results: T[] = [];
   for await (const item of iterable) {
     results.push(item);
