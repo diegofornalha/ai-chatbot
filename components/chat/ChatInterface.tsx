@@ -464,7 +464,6 @@ export function ChatInterface({
                   <ChatMessage
                     role="assistant"
                     content={streamingContent}
-                    isStreaming
                   />
                 )}
 
@@ -551,7 +550,6 @@ export function ChatInterface({
             <MessageInput
               onSendMessage={handleSendMessage}
               onInterrupt={handleInterrupt}
-              isStreaming={isStreaming}
               disabled={!activeSessionId}
             />
           )}

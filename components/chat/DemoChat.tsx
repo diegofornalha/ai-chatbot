@@ -302,7 +302,6 @@ export function DemoChat() {
       <MessageInput
         onSendMessage={handleSend}
         disabled={isLoading || isRunningDemo}
-        isStreaming={isLoading}
         placeholder="Digite sua mensagem e pressione Enter..."
       />
     </div>

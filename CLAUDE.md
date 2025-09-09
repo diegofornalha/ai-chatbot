@@ -1,3 +1,4 @@
+sempre responda em pt br
 # Claude Code Configuration - SPARC Development Environment
 
 ## 🚨 CRITICAL: CONCURRENT EXECUTION & FILE MANAGEMENT
