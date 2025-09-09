@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useCallback, useState, Children, isValidElement, cloneElement } from 'react';
 import { ErrorBoundary } from '@/components/error-boundary';
 import { AuthErrorFallback, NetworkErrorFallback } from '@/components/error-fallbacks';
 import { AuthForm } from './auth-form';
@@ -21,7 +21,7 @@ export function AuthWithErrorBoundary({
   defaultEmail = '',
   formType = 'login',
 }: AuthWithErrorBoundaryProps) {
-  const handleAuthError = React.useCallback((error: Error, errorInfo: React.ErrorInfo, errorId: string) => {
+  const handleAuthError = useCallback((error: Error, errorInfo: React.ErrorInfo, errorId: string) => {
     logError(error, errorInfo, {
       component: 'AuthForm',
       formType,
@@ -53,10 +53,10 @@ export function EnhancedAuthForm({
   defaultEmail = '',
   formType = 'login',
 }: AuthWithErrorBoundaryProps) {
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [error, setError] = React.useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = React.useCallback(async (formData: FormData) => {
+  const handleSubmit = useCallback(async (formData: FormData) => {
     setIsLoading(true);
     setError(null);
 
@@ -133,9 +133,9 @@ export function EnhancedAuthForm({
         <AuthFormFields defaultEmail={defaultEmail} />
         
         <div className="flex flex-col gap-2">
-          {React.Children.map(children, child => {
-            if (React.isValidElement(child) && child.type === 'button') {
-              return React.cloneElement(child as React.ReactElement<any>, {
+          {Children.map(children, child => {
+            if (isValidElement(child) && child.type === 'button') {
+              return cloneElement(child as React.ReactElement<any>, {
                 disabled: isLoading,
                 children: isLoading ? 'Please wait...' : child.props.children,
               });
@@ -238,7 +238,7 @@ function PasswordField() {
 
 // Session error boundary
 export function SessionErrorBoundary({ children }: { children: React.ReactNode }) {
-  const handleSessionError = React.useCallback((error: Error, errorInfo: React.ErrorInfo, errorId: string) => {
+  const handleSessionError = useCallback((error: Error, errorInfo: React.ErrorInfo, errorId: string) => {
     logError(error, errorInfo, {
       component: 'Session',
       errorType: 'session_error',
@@ -283,7 +283,7 @@ export function SessionErrorBoundary({ children }: { children: React.ReactNode }
 
 // Auth provider error boundary
 export function AuthProviderErrorBoundary({ children }: { children: React.ReactNode }) {
-  const handleProviderError = React.useCallback((error: Error, errorInfo: React.ErrorInfo, errorId: string) => {
+  const handleProviderError = useCallback((error: Error, errorInfo: React.ErrorInfo, errorId: string) => {
     logError(error, errorInfo, {
       component: 'AuthProvider',
       errorType: 'auth_provider_error',

@@ -67,9 +67,9 @@ export function SmartLoadingState({
         <div className="flex items-start gap-4">
           {/* Ícone Animado */}
           <div className="relative">
-            <Brain className="w-8 h-8 text-blue-600 dark:text-blue-400 animate-pulse" />
+            <Brain className="size-8 text-blue-600 dark:text-blue-400 animate-pulse" />
             <div className="absolute -inset-1">
-              <div className="w-10 h-10 rounded-full border-2 border-blue-400 border-t-transparent animate-spin" />
+              <div className="size-10 rounded-full border-2 border-blue-400 border-t-transparent animate-spin" />
             </div>
           </div>
 
@@ -77,7 +77,7 @@ export function SmartLoadingState({
           <div className="flex-1">
             <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2 flex items-center gap-2">
               Processando
-              <Sparkles className="w-5 h-5 text-yellow-500 animate-pulse" />
+              <Sparkles className="size-5 text-yellow-500 animate-pulse" />
             </h3>
             
             {/* Barra de Progresso */}
@@ -97,7 +97,7 @@ export function SmartLoadingState({
 
             {/* Tempo Decorrido */}
             <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-4">
-              <Clock className="w-4 h-4" />
+              <Clock className="size-4" />
               <span>{elapsedTime}s decorridos</span>
               {estimatedTime && (
                 <span className="text-gray-400 dark:text-gray-500">
@@ -125,9 +125,9 @@ export function SmartLoadingState({
                     const newWindow = window.open(window.location.href, '_blank');
                     newWindow?.focus();
                   }}
-                  className="inline-flex items-center gap-2 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-all transform hover:scale-105 active:scale-95"
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-all hover:scale-105 active:scale-95"
                 >
-                  <ExternalLink className="w-4 h-4" />
+                  <ExternalLink className="size-4" />
                   Abrir em Nova Aba
                 </button>
               </div>
@@ -170,7 +170,7 @@ function QuickActionCard({ icon, title, description, onClick }: QuickActionCardP
       className="
         p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700
         hover:border-blue-300 dark:hover:border-blue-600 hover:shadow-md
-        transition-all transform hover:-translate-y-1
+        transition-all hover:-translate-y-1
         text-left group
       "
     >

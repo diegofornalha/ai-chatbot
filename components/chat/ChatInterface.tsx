@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef, useCallback, useEffect } from 'react';
+import React, { useState, useRef, useCallback, useEffect, useReducer } from 'react';
 import { ChatMessage } from './ChatMessage';
 import { MessageInput } from './MessageInput';
 import { SessionTabs } from '../session/SessionTabs';
@@ -41,17 +41,17 @@ export function ChatInterface({
     loadExternalSession,
   } = useChatStore();
 
-  const [isUserScrolling, setIsUserScrolling] = React.useState(false);
-  const [autoScrollEnabled, setAutoScrollEnabled] = React.useState(true);
-  const messagesEndRef = React.useRef<HTMLDivElement>(null);
-  const messagesContainerRef = React.useRef<HTMLDivElement>(null);
-  const scrollTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+  const [isUserScrolling, setIsUserScrolling] = useState(false);
+  const [autoScrollEnabled, setAutoScrollEnabled] = useState(true);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const activeSession = getActiveSession();
   const sessionList = Array.from(sessions.values());
 
   // Sistema inteligente de auto-scroll
-  const scrollToBottom = React.useCallback((behavior: ScrollBehavior = "smooth") => {
+  const scrollToBottom = useCallback((behavior: ScrollBehavior = "smooth") => {
     if (!autoScrollEnabled || isUserScrolling) return;
     
     requestAnimationFrame(() => {
@@ -64,7 +64,7 @@ export function ChatInterface({
   }, [autoScrollEnabled, isUserScrolling]);
 
   // Detecta quando usuário está rolando manualmente
-  const handleScroll = React.useCallback(() => {
+  const handleScroll = useCallback(() => {
     if (!messagesContainerRef.current) return;
     
     const container = messagesContainerRef.current;
@@ -199,7 +199,7 @@ export function ChatInterface({
         addMessage(demoId, {
           ...msg,
           timestamp: new Date(msg.timestamp)
-        } as any);
+        });
       });
       
       // Definir como sessão ativa
@@ -404,7 +404,9 @@ export function ChatInterface({
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => console.log("Configurações em desenvolvimento")}
+              onClick={() => {
+                // TODO: Implement settings modal
+              }}
               title="Configurações"
             >
               <Settings className="size-5" />
