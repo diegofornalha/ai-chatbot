@@ -314,7 +314,7 @@ export const renderWithProviders = (
 
   // Here you would typically wrap with providers like Redux, Router, etc.
   // For now, just render normally
-  const Wrapper = wrapper || (({ children }: { children: ReactNode }) => <>{children}</>);
+  const Wrapper = wrapper || (({ children }: { children: ReactNode }) => children as React.ReactElement);
 
   return {
     ...render(ui, {
