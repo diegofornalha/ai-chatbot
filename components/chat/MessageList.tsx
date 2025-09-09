@@ -73,6 +73,7 @@ export const MessageList = forwardRef<HTMLDivElement, MessageListProps>(
 
               {isStreaming && streamingContent && (
                 <ChatMessage
+                  role="assistant"
                   content={streamingContent}
                 />
               )}
