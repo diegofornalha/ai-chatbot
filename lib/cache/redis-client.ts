@@ -378,7 +378,10 @@ class RedisClient {
     }
 
     try {
-      const result = await (this.client! as any)[command](...args);
+      if (!this.client) {
+        throw new Error('Redis client not initialized');
+      }
+      const result = await (this.client as any)[command](...args);
       return result;
     } catch (error) {
       console.error(`Redis command ${command} failed:`, error);

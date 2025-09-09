@@ -278,7 +278,11 @@ export class ClaudeUnified {
     const provider = this.providers.get(this.currentProvider);
     if (!provider) {
       // Fallback para claude-chat se o provider não existir
-      return this.providers.get('claude-chat')!;
+      const fallbackProvider = this.providers.get('claude-chat');
+      if (!fallbackProvider) {
+        throw new Error('No provider available');
+      }
+      return fallbackProvider;
     }
     return provider;
   }
@@ -316,7 +320,10 @@ export class ClaudeUnified {
       
       // Tentar fallback para claude-chat
       if (provider.name !== 'claude-chat') {
-        const fallback = this.providers.get('claude-chat')!;
+        const fallback = this.providers.get('claude-chat');
+        if (!fallback) {
+          throw error;
+        }
         return await fallback.chat(validatedRequest);
       }
       
@@ -342,7 +349,10 @@ export class ClaudeUnified {
       
       // Tentar fallback para claude-chat
       if (provider.name !== 'claude-chat') {
-        const fallback = this.providers.get('claude-chat')!;
+        const fallback = this.providers.get('claude-chat');
+        if (!fallback) {
+          throw error;
+        }
         yield* fallback.streamChat(validatedRequest);
       } else {
         yield {

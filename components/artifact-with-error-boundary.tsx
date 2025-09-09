@@ -4,7 +4,7 @@ import React, { useCallback, useState, useEffect } from 'react';
 import { ErrorBoundary } from '@/components/error-boundary';
 import { ArtifactErrorFallback, LoadingErrorFallback } from '@/components/error-fallbacks';
 import { Artifact } from './artifact';
-import { logError, ErrorRecovery } from '@/lib/error-reporting';
+import { logError, withRetry } from '@/lib/error-reporting';
 import type { UseChatHelpers } from '@ai-sdk/react';
 import type { VisibilityType } from './visibility-selector';
 import type { Attachment, ChatMessage } from '@/lib/types';
@@ -203,7 +203,7 @@ export function ArtifactEditorErrorBoundary({
     // Try to save current content before crash
     if (documentId && content && content !== lastGoodContent) {
       try {
-        await ErrorRecovery.withRetry(async () => {
+        await withRetry(async () => {
           await fetch(`/api/document/${documentId}/autosave`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

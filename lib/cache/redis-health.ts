@@ -193,7 +193,10 @@ class RedisHealthChecker {
         return this.failCheck(startTime, 'Redis not available for performance check');
       }
 
-      const client = redisClient.getClient()!;
+      const client = redisClient.getClient();
+      if (!client) {
+        throw new Error('Redis client not available');
+      }
       
       // Test various operations
       const testKey = `health_check:${Date.now()}`;
@@ -238,7 +241,10 @@ class RedisHealthChecker {
         return this.failCheck(startTime, 'Redis not available for memory check');
       }
 
-      const client = redisClient.getClient()!;
+      const client = redisClient.getClient();
+      if (!client) {
+        throw new Error('Redis client not available');
+      }
       const info = await client.info('memory');
       
       const memoryInfo = this.parseRedisInfo(info);
@@ -281,7 +287,10 @@ class RedisHealthChecker {
         return this.failCheck(startTime, 'Redis not available for persistence check');
       }
 
-      const client = redisClient.getClient()!;
+      const client = redisClient.getClient();
+      if (!client) {
+        throw new Error('Redis client not available');
+      }
       const info = await client.info('persistence');
       
       const persistenceInfo = this.parseRedisInfo(info);
@@ -426,7 +435,10 @@ class RedisHealthChecker {
         return defaultSummary;
       }
 
-      const client = redisClient.getClient()!;
+      const client = redisClient.getClient();
+      if (!client) {
+        throw new Error('Redis client not available');
+      }
       const [serverInfo, memoryInfo, statsInfo, persistenceInfo] = await Promise.all([
         client.info('server'),
         client.info('memory'),

@@ -1,353 +1,318 @@
 sempre responda em pt br
-# Claude Code Configuration - SPARC Development Environment
 
-## 🚨 CRITICAL: CONCURRENT EXECUTION & FILE MANAGEMENT
+🎯 O Framework Definitivo para PRs Perfeitas: "ATOMIC-PR"
+📐 Regra de Ouro: 1 PR = 1 Problema = 1 Dia
+A.T.O.M.I.C - Os 6 Pilares
+A - Atomicidade (One Thing)
+Tamanho Ideal:
+yamlArquivos: 3-7 (máximo 10)
+Linhas: 50-200 (máximo 400)
+Tempo review: 15-30 minutos
+Complexidade: 1 problema específico
+Exemplo Prático:
+bash# ❌ ERRADO: PR "Melhorias gerais no chat"
+- Corrige autenticação
+- Adiciona dark mode  
+- Otimiza performance
+- Refatora componentes
+= 50 arquivos, 2000 linhas
 
-**ABSOLUTE RULES**:
-1. ALL operations MUST be concurrent/parallel in a single message
-2. **NEVER save working files, text/mds and tests to the root folder**
-3. ALWAYS organize files in appropriate subdirectories
-4. **USE CLAUDE CODE'S TASK TOOL** for spawning agents concurrently, not just MCP
+# ✅ CERTO: 4 PRs separadas
+PR #1: "fix: corrige validação de ownership no chat"
+= 3 arquivos, 45 linhas
 
-### ⚡ GOLDEN RULE: "1 MESSAGE = ALL RELATED OPERATIONS"
+PR #2: "feat: adiciona dark mode ao ChatHeader"
+= 5 arquivos, 120 linhas
 
-**MANDATORY PATTERNS:**
-- **TodoWrite**: ALWAYS batch ALL todos in ONE call (5-10+ todos minimum)
-- **Task tool (Claude Code)**: ALWAYS spawn ALL agents in ONE message with full instructions
-- **File operations**: ALWAYS batch ALL reads/writes/edits in ONE message
-- **Bash commands**: ALWAYS batch ALL terminal operations in ONE message
-- **Memory operations**: ALWAYS batch ALL memory store/retrieve in ONE message
+PR #3: "perf: implementa virtual scrolling no MessageList"
+= 4 arquivos, 180 linhas
 
-### 🎯 CRITICAL: Claude Code Task Tool for Agent Execution
+PR #4: "refactor: extrai lógica do chat para custom hook"
+= 6 arquivos, 95 linhas
+T - Testável (Provas Concretas)
+Structure de Testes Obrigatória:
+typescript// Para CADA mudança significativa:
 
-**Claude Code's Task tool is the PRIMARY way to spawn agents:**
-```javascript
-// ✅ CORRECT: Use Claude Code's Task tool for parallel agent execution
-[Single Message]:
-  Task("Research agent", "Analyze requirements and patterns...", "researcher")
-  Task("Coder agent", "Implement core features...", "coder")
-  Task("Tester agent", "Create comprehensive tests...", "tester")
-  Task("Reviewer agent", "Review code quality...", "reviewer")
-  Task("Architect agent", "Design system architecture...", "system-architect")
-```
+// 1. Teste do problema original (prova que existia)
+test('BUG: should fail before fix', () => {
+  // Código que reproduz o bug
+  expect(() => brokenFunction()).toThrow();
+});
 
-**MCP tools are ONLY for coordination setup:**
-- `mcp__claude-flow__swarm_init` - Initialize coordination topology
-- `mcp__claude-flow__agent_spawn` - Define agent types for coordination
-- `mcp__claude-flow__task_orchestrate` - Orchestrate high-level workflows
+// 2. Teste da correção (prova que foi resolvido)
+test('FIX: should work after fix', () => {
+  expect(fixedFunction()).toBe(expected);
+});
 
-### 📁 File Organization Rules
+// 3. Teste de regressão (prova que não volta)
+test('REGRESSION: should never break again', () => {
+  // Edge cases
+  expect(fixedFunction(null)).toBeNull();
+  expect(fixedFunction(undefined)).toBeUndefined();
+  expect(fixedFunction([])).toEqual([]);
+});
 
-**NEVER save to root folder. Use these directories:**
-- `/src` - Source code files
-- `/tests` - Test files
-- `/docs` - Documentation and markdown files
-- `/config` - Configuration files
-- `/scripts` - Utility scripts
-- `/examples` - Example code
+// 4. Teste de performance (se aplicável)
+test('PERF: should complete in < 100ms', () => {
+  const start = performance.now();
+  fixedFunction(largeDataset);
+  expect(performance.now() - start).toBeLessThan(100);
+});
+O - Observável (Métricas Claras)
+PR Description Template:
+markdown## 📊 Métricas Objetivas
 
-## Project Overview
+### Performance
+- **Antes**: 340ms render time
+- **Depois**: 85ms render time  
+- **Ganho**: 75% mais rápido
 
-This project uses SPARC (Specification, Pseudocode, Architecture, Refinement, Completion) methodology with Claude-Flow orchestration for systematic Test-Driven Development.
+### Bundle Size
+- **Antes**: 245KB
+- **Depois**: 238KB
+- **Impacto**: -7KB (-2.8%)
 
-## SPARC Commands
+### Test Coverage
+- **Antes**: 72%
+- **Depois**: 81%
+- **Δ**: +9%
 
-### Core Commands
-- `npx claude-flow sparc modes` - List available modes
-- `npx claude-flow sparc run <mode> "<task>"` - Execute specific mode
-- `npx claude-flow sparc tdd "<feature>"` - Run complete TDD workflow
-- `npx claude-flow sparc info <mode>` - Get mode details
+### TypeScript Errors
+- **Antes**: 3
+- **Depois**: 0
+- **Resolvidos**: 100%
 
-### Batchtools Commands
-- `npx claude-flow sparc batch <modes> "<task>"` - Parallel execution
-- `npx claude-flow sparc pipeline "<task>"` - Full pipeline processing
-- `npx claude-flow sparc concurrent <mode> "<tasks-file>"` - Multi-task processing
+## 🎥 Demo
+[Loom video 2 min mostrando antes/depois]
 
-### Build Commands
-- `npm run build` - Build project
-- `npm run test` - Run tests
-- `npm run lint` - Linting
-- `npm run typecheck` - Type checking
+## 📸 Screenshots
+| Antes | Depois |
+|-------|--------|
+| ![bug] | ![fixed] |
+M - Manutenível (Documentação Viva)
+Código Auto-Documentado:
+typescript// ❌ RUIM: Comentário desnecessário
+// Incrementa o contador em 1
+counter++;
 
-## SPARC Workflow Phases
+// ✅ BOM: Documenta o PORQUÊ, não o QUÊ
+// Incrementa após validação para evitar race condition
+// identificada no bug #4521 (2024-01-15)
+if (isValid) counter++;
 
-1. **Specification** - Requirements analysis (`sparc run spec-pseudocode`)
-2. **Pseudocode** - Algorithm design (`sparc run spec-pseudocode`)
-3. **Architecture** - System design (`sparc run architect`)
-4. **Refinement** - TDD implementation (`sparc tdd`)
-5. **Completion** - Integration (`sparc run integration`)
+// ✅ ÓTIMO: Decisão arquitetural documentada
+/**
+ * DECISÃO: Usamos debounce de 300ms baseado em análise
+ * de user behavior que mostrou 95% dos usuários param
+ * de digitar por >= 300ms entre palavras.
+ * 
+ * Alternativas consideradas:
+ * - Throttle: Descartado, perderia keystrokes
+ * - No delay: Descartado, 5000 requests/min inviável
+ * 
+ * @see https://jira.com/PERF-123
+ */
+const DEBOUNCE_MS = 300;
+I - Independente (Zero Dependências)
+Checklist de Independência:
+bash#!/bin/bash
+# Cada PR deve passar TODOS os testes sozinha
 
-## Code Style & Best Practices
+# 1. Branch isolation test
+git checkout -b test-isolation
+git cherry-pick <commit-da-pr>
+npm test # DEVE passar
 
-- **Modular Design**: Files under 500 lines
-- **Environment Safety**: Never hardcode secrets
-- **Test-First**: Write tests before implementation
-- **Clean Architecture**: Separate concerns
-- **Documentation**: Keep updated
+# 2. Deployment isolation
+npm run build # DEVE buildar
+npm run start # DEVE rodar
 
-## 🚀 Available Agents (54 Total)
+# 3. Rollback safety
+git revert HEAD
+npm test # DEVE continuar passando
+C - Completo (Definition of Done)
+DoD Checklist Rigoroso:
+markdown## ✅ Definition of Done
 
-### Core Development
-`coder`, `reviewer`, `tester`, `planner`, `researcher`
+### Code Quality
+- [ ] 0 erros TypeScript
+- [ ] 0 warnings ESLint  
+- [ ] 0 vulnerabilidades (npm audit)
+- [ ] Prettier aplicado
 
-### Swarm Coordination
-`hierarchical-coordinator`, `mesh-coordinator`, `adaptive-coordinator`, `collective-intelligence-coordinator`, `swarm-memory-manager`
+### Testing
+- [ ] Unit tests: ✅ (coverage > 80%)
+- [ ] Integration tests: ✅
+- [ ] E2E test (se UI): ✅
+- [ ] Testa em Safari/Firefox/Chrome
 
-### Consensus & Distributed
-`byzantine-coordinator`, `raft-manager`, `gossip-coordinator`, `consensus-builder`, `crdt-synchronizer`, `quorum-manager`, `security-manager`
+### Documentation
+- [ ] README atualizado (se necessário)
+- [ ] JSDoc em funções públicas
+- [ ] CHANGELOG.md atualizado
+- [ ] Storybook (se componente): ✅
 
-### Performance & Optimization
-`perf-analyzer`, `performance-benchmarker`, `task-orchestrator`, `memory-coordinator`, `smart-agent`
+### Performance
+- [ ] Lighthouse score > 90
+- [ ] Bundle size não aumentou > 2%
+- [ ] Sem memory leaks
+- [ ] Profiler mostra < 16ms render
 
-### GitHub & Repository
-`github-modes`, `pr-manager`, `code-review-swarm`, `issue-tracker`, `release-manager`, `workflow-automation`, `project-board-sync`, `repo-architect`, `multi-repo-swarm`
+### Security
+- [ ] Sem dados sensíveis em logs
+- [ ] Inputs sanitizados
+- [ ] Auth verificada
+- [ ] OWASP checklist aplicada
+🚀 O Processo Perfeito: "PR-FLOW"
+1. PRE-PR (Antes de Codar)
+bash# 1. Crie issue PRIMEIRO
+gh issue create --title "Bug: Chat ownership validation fails"
 
-### SPARC Methodology
-`sparc-coord`, `sparc-coder`, `specification`, `pseudocode`, `architecture`, `refinement`
+# 2. Discuta solução
+- Comente alternativas na issue
+- Obtenha consenso da abordagem
+- Defina métricas de sucesso
 
-### Specialized Development
-`backend-dev`, `mobile-dev`, `ml-developer`, `cicd-engineer`, `api-docs`, `system-architect`, `code-analyzer`, `base-template-generator`
+# 3. Branch com nome descritivo
+git checkout -b fix/chat-ownership-validation-issue-123
+2. DURANTE (Desenvolvimento)
+bash# Commits atômicos e descritivos
+git commit -m "test: add failing test for ownership bug"
+git commit -m "fix: implement ownership validation"  
+git commit -m "test: add regression test suite"
+git commit -m "docs: update README with security notes"
 
-### Testing & Validation
-`tdd-london-swarm`, `production-validator`
+# Self-review rigoroso
+git diff main --stat  # Confere tamanho
+git diff main         # Revisa linha por linha
+3. PRE-SUBMIT (Validação Local)
+bash#!/bin/bash
+# pre-pr-check.sh
 
-### Migration & Planning
-`migration-planner`, `swarm-init`
+echo "🔍 Validando PR..."
 
-## 🎯 Claude Code vs MCP Tools
+# Size check
+files_changed=$(git diff main --name-only | wc -l)
+if [ $files_changed -gt 10 ]; then
+  echo "❌ PR muito grande: $files_changed arquivos"
+  exit 1
+fi
 
-### Claude Code Handles ALL EXECUTION:
-- **Task tool**: Spawn and run agents concurrently for actual work
-- File operations (Read, Write, Edit, MultiEdit, Glob, Grep)
-- Code generation and programming
-- Bash commands and system operations
-- Implementation work
-- Project navigation and analysis
-- TodoWrite and task management
-- Git operations
-- Package management
-- Testing and debugging
+# Quality gates
+npm run typecheck || exit 1
+npm run lint || exit 1
+npm run test || exit 1
+npm run test:e2e || exit 1
+npm run build || exit 1
 
-### MCP Tools ONLY COORDINATE:
-- Swarm initialization (topology setup)
-- Agent type definitions (coordination patterns)
-- Task orchestration (high-level planning)
-- Memory management
-- Neural features
-- Performance tracking
-- GitHub integration
+echo "✅ PR pronta para review!"
+4. SUBMIT (PR Criação)
+markdown## Título (50 chars max)
+fix: prevent unauthorized chat access via ownership check
 
-**KEY**: MCP coordinates the strategy, Claude Code's Task tool executes with real agents.
+## Template
+### 🎯 Problema
+Users could access chats they don't own by guessing IDs
 
-## 🚀 Quick Setup
+### 💡 Solução  
+Added ownership validation middleware with user ID check
 
-```bash
-# Add MCP servers (Claude Flow required, others optional)
-claude mcp add claude-flow npx claude-flow@alpha mcp start
-claude mcp add ruv-swarm npx ruv-swarm mcp start  # Optional: Enhanced coordination
-claude mcp add flow-nexus npx flow-nexus@latest mcp start  # Optional: Cloud features
-```
+### 🧪 Como Testar
+1. Login as userA
+2. Try accessing userB's chat via /chat/[userB-chat-id]
+3. Should see 403 Forbidden
 
-## MCP Tool Categories
+### 📊 Impacto
+- Security: HIGH (fixes critical vulnerability)
+- Performance: NONE (< 1ms overhead)
+- Breaking: NO
 
-### Coordination
-`swarm_init`, `agent_spawn`, `task_orchestrate`
+### ✅ Checklist
+- [x] Testes passando
+- [x] Sem breaking changes
+- [x] Documentação atualizada
+5. REVIEW (Facilitando para Reviewers)
+Adicione Comentários no PR:
+typescript// PR Comment: "Ponto de atenção aqui"
+if (!chat || chat.userId !== session.user.id) {
+  // @reviewer: Considerei usar early return vs único if
+  // Optei por único if para melhor readability
+  return new ForbiddenError();
+}
+6. PÓS-MERGE (Monitoramento)
+typescript// monitoring.ts
+import { datadogRum } from '@datadog/browser-rum';
 
-### Monitoring
-`swarm_status`, `agent_list`, `agent_metrics`, `task_status`, `task_results`
+// Adicione tracking específico
+datadogRum.addAction('pr_7_chat_validation', {
+  pr_number: 7,
+  feature: 'chat_ownership',
+  deployed_at: new Date().toISOString()
+});
 
-### Memory & Neural
-`memory_usage`, `neural_status`, `neural_train`, `neural_patterns`
-
-### GitHub Integration
-`github_swarm`, `repo_analyze`, `pr_enhance`, `issue_triage`, `code_review`
-
-### System
-`benchmark_run`, `features_detect`, `swarm_monitor`
-
-### Flow-Nexus MCP Tools (Optional Advanced Features)
-Flow-Nexus extends MCP capabilities with 70+ cloud-based orchestration tools:
-
-**Key MCP Tool Categories:**
-- **Swarm & Agents**: `swarm_init`, `swarm_scale`, `agent_spawn`, `task_orchestrate`
-- **Sandboxes**: `sandbox_create`, `sandbox_execute`, `sandbox_upload` (cloud execution)
-- **Templates**: `template_list`, `template_deploy` (pre-built project templates)
-- **Neural AI**: `neural_train`, `neural_patterns`, `seraphina_chat` (AI assistant)
-- **GitHub**: `github_repo_analyze`, `github_pr_manage` (repository management)
-- **Real-time**: `execution_stream_subscribe`, `realtime_subscribe` (live monitoring)
-- **Storage**: `storage_upload`, `storage_list` (cloud file management)
-
-**Authentication Required:**
-- Register: `mcp__flow-nexus__user_register` or `npx flow-nexus@latest register`
-- Login: `mcp__flow-nexus__user_login` or `npx flow-nexus@latest login`
-- Access 70+ specialized MCP tools for advanced orchestration
-
-## 🚀 Agent Execution Flow with Claude Code
-
-### The Correct Pattern:
-
-1. **Optional**: Use MCP tools to set up coordination topology
-2. **REQUIRED**: Use Claude Code's Task tool to spawn agents that do actual work
-3. **REQUIRED**: Each agent runs hooks for coordination
-4. **REQUIRED**: Batch all operations in single messages
-
-### Example Full-Stack Development:
-
-```javascript
-// Single message with all agent spawning via Claude Code's Task tool
-[Parallel Agent Execution]:
-  Task("Backend Developer", "Build REST API with Express. Use hooks for coordination.", "backend-dev")
-  Task("Frontend Developer", "Create React UI. Coordinate with backend via memory.", "coder")
-  Task("Database Architect", "Design PostgreSQL schema. Store schema in memory.", "code-analyzer")
-  Task("Test Engineer", "Write Jest tests. Check memory for API contracts.", "tester")
-  Task("DevOps Engineer", "Setup Docker and CI/CD. Document in memory.", "cicd-engineer")
-  Task("Security Auditor", "Review authentication. Report findings via hooks.", "reviewer")
+// Monitore por 24h
+// Se métrica X piorar > 5%, prepare rollback
+📊 Métricas de PR Perfeita
+typescriptinterface PerfectPR {
+  // Tamanho
+  files: number;        // <= 10
+  additions: number;    // <= 200
+  deletions: number;    // >= additions * 0.3 (cleanup)
   
-  // All todos batched together
-  TodoWrite { todos: [...8-10 todos...] }
+  // Qualidade
+  testsAdded: boolean;  // true
+  coverage: number;     // >= 80
+  reviewTime: string;   // <= "30 min"
   
-  // All file operations together
-  Write "backend/server.js"
-  Write "frontend/App.jsx"
-  Write "database/schema.sql"
-```
-
-## 📋 Agent Coordination Protocol
-
-### Every Agent Spawned via Task Tool MUST:
-
-**1️⃣ BEFORE Work:**
-```bash
-npx claude-flow@alpha hooks pre-task --description "[task]"
-npx claude-flow@alpha hooks session-restore --session-id "swarm-[id]"
-```
-
-**2️⃣ DURING Work:**
-```bash
-npx claude-flow@alpha hooks post-edit --file "[file]" --memory-key "swarm/[agent]/[step]"
-npx claude-flow@alpha hooks notify --message "[what was done]"
-```
-
-**3️⃣ AFTER Work:**
-```bash
-npx claude-flow@alpha hooks post-task --task-id "[task]"
-npx claude-flow@alpha hooks session-end --export-metrics true
-```
-
-## 🎯 Concurrent Execution Examples
-
-### ✅ CORRECT WORKFLOW: MCP Coordinates, Claude Code Executes
-
-```javascript
-// Step 1: MCP tools set up coordination (optional, for complex tasks)
-[Single Message - Coordination Setup]:
-  mcp__claude-flow__swarm_init { topology: "mesh", maxAgents: 6 }
-  mcp__claude-flow__agent_spawn { type: "researcher" }
-  mcp__claude-flow__agent_spawn { type: "coder" }
-  mcp__claude-flow__agent_spawn { type: "tester" }
-
-// Step 2: Claude Code Task tool spawns ACTUAL agents that do the work
-[Single Message - Parallel Agent Execution]:
-  // Claude Code's Task tool spawns real agents concurrently
-  Task("Research agent", "Analyze API requirements and best practices. Check memory for prior decisions.", "researcher")
-  Task("Coder agent", "Implement REST endpoints with authentication. Coordinate via hooks.", "coder")
-  Task("Database agent", "Design and implement database schema. Store decisions in memory.", "code-analyzer")
-  Task("Tester agent", "Create comprehensive test suite with 90% coverage.", "tester")
-  Task("Reviewer agent", "Review code quality and security. Document findings.", "reviewer")
+  // Clareza
+  hasScreenshots: boolean;  // true se UI
+  hasMetrics: boolean;      // true sempre
+  commitMessages: "atomic"; // granular
   
-  // Batch ALL todos in ONE call
-  TodoWrite { todos: [
-    {id: "1", content: "Research API patterns", status: "in_progress", priority: "high"},
-    {id: "2", content: "Design database schema", status: "in_progress", priority: "high"},
-    {id: "3", content: "Implement authentication", status: "pending", priority: "high"},
-    {id: "4", content: "Build REST endpoints", status: "pending", priority: "high"},
-    {id: "5", content: "Write unit tests", status: "pending", priority: "medium"},
-    {id: "6", content: "Integration tests", status: "pending", priority: "medium"},
-    {id: "7", content: "API documentation", status: "pending", priority: "low"},
-    {id: "8", content: "Performance optimization", status: "pending", priority: "low"}
-  ]}
-  
-  // Parallel file operations
-  Bash "mkdir -p app/{src,tests,docs,config}"
-  Write "app/package.json"
-  Write "app/src/server.js"
-  Write "app/tests/server.test.js"
-  Write "app/docs/API.md"
-```
+  // Impacto
+  performance: "improved" | "neutral";
+  security: "improved" | "neutral";  
+  breakingChanges: false;
+}
+🎁 Bonus: Script "PR Perfeita"
+bash#!/bin/bash
+# perfect-pr.sh
 
-### ❌ WRONG (Multiple Messages):
-```javascript
-Message 1: mcp__claude-flow__swarm_init
-Message 2: Task("agent 1")
-Message 3: TodoWrite { todos: [single todo] }
-Message 4: Write "file.js"
-// This breaks parallel coordination!
-```
+echo "🎯 Criando PR Perfeita..."
 
-## Performance Benefits
+# 1. Análise automática
+echo "📊 Analisando mudanças..."
+files=$(git diff main --name-only | wc -l)
+lines_added=$(git diff main --stat | tail -1 | awk '{print $4}')
+lines_removed=$(git diff main --stat | tail -1 | awk '{print $6}')
 
-- **84.8% SWE-Bench solve rate**
-- **32.3% token reduction**
-- **2.8-4.4x speed improvement**
-- **27+ neural models**
+# 2. Validações
+if [ $files -gt 10 ]; then
+  echo "❌ PR muito grande. Dividir em:"
+  git diff main --name-only | head -5
+  echo "--- PR 1: Primeiros 5 arquivos ---"
+  git diff main --name-only | tail -$((files-5))
+  echo "--- PR 2: Resto ---"
+  exit 1
+fi
 
-## Hooks Integration
+# 3. Gerar relatório
+cat > pr-report.md << EOF
+# PR Quality Report
 
-### Pre-Operation
-- Auto-assign agents by file type
-- Validate commands for safety
-- Prepare resources automatically
-- Optimize topology by complexity
-- Cache searches
+## 📏 Size Metrics
+- Files: $files/10 ✅
+- Lines Added: $lines_added
+- Lines Removed: $lines_removed
+- Net Change: $((lines_added - lines_removed))
 
-### Post-Operation
-- Auto-format code
-- Train neural patterns
-- Update memory
-- Analyze performance
-- Track token usage
+## 🧪 Test Coverage
+$(npm test -- --coverage --silent | grep "All files")
 
-### Session Management
-- Generate summaries
-- Persist state
-- Track metrics
-- Restore context
-- Export workflows
+## 📦 Bundle Impact
+$(npm run build:analyze | grep "Total size")
 
-## Advanced Features (v2.0.0)
+## ✅ Ready for Review!
+EOF
 
-- 🚀 Automatic Topology Selection
-- ⚡ Parallel Execution (2.8-4.4x speed)
-- 🧠 Neural Training
-- 📊 Bottleneck Analysis
-- 🤖 Smart Auto-Spawning
-- 🛡️ Self-Healing Workflows
-- 💾 Cross-Session Memory
-- 🔗 GitHub Integration
-
-## Integration Tips
-
-1. Start with basic swarm init
-2. Scale agents gradually
-3. Use memory for context
-4. Monitor progress regularly
-5. Train patterns from success
-6. Enable hooks automation
-7. Use GitHub tools first
-
-## Support
-
-- Documentation: https://github.com/ruvnet/claude-flow
-- Issues: https://github.com/ruvnet/claude-flow/issues
-- Flow-Nexus Platform: https://flow-nexus.ruv.io (registration required for cloud features)
-
----
-
-Remember: **Claude Flow coordinates, Claude Code creates!**
-
-# important-instruction-reminders
-Do what has been asked; nothing more, nothing less.
-NEVER create files unless they're absolutely necessary for achieving your goal.
-ALWAYS prefer editing an existing file to creating a new one.
-NEVER proactively create documentation files (*.md) or README files. Only create documentation files if explicitly requested by the User.
-Never save working files, text/mds and tests to the root folder.
+echo "✅ PR Perfeita criada! Veja pr-report.md"

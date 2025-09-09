@@ -216,165 +216,163 @@ export class AuthorizationError extends Error {
 }
 
 // Error recovery utilities
-export class ErrorRecovery {
-  static async withRetry<T>(
-    operation: () => Promise<T>,
-    maxAttempts = 3,
-    delay = 1000,
-    backoffMultiplier = 2
-  ): Promise<T> {
-    let lastError: Error;
-    
-    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
-      try {
-        return await operation();
-      } catch (error) {
-        lastError = error instanceof Error ? error : new Error(String(error));
-        
-        if (attempt === maxAttempts) {
-          break;
-        }
-        
-        // Log retry attempt
-        await logError(lastError, undefined, {
-          type: 'retry_attempt',
-          attempt,
-          maxAttempts,
-          nextDelay: delay,
-        });
-        
-        // Wait before retrying
-        await new Promise(resolve => setTimeout(resolve, delay));
-        delay *= backoffMultiplier;
-      }
-    }
-    
-    throw lastError!;
-  }
-
-  static async withTimeout<T>(
-    operation: () => Promise<T>,
-    timeoutMs: number,
-    timeoutMessage = 'Operation timed out'
-  ): Promise<T> {
-    const timeoutPromise = new Promise<never>((_, reject) => {
-      setTimeout(() => reject(new Error(timeoutMessage)), timeoutMs);
-    });
-
-    return Promise.race([operation(), timeoutPromise]);
-  }
-
-  static async withCircuitBreaker<T>(
-    operation: () => Promise<T>,
-    failureThreshold = 5,
-    resetTimeout = 60000
-  ): Promise<T> {
-    // Simple circuit breaker implementation
-    const key = operation.toString();
-    const state = CircuitBreaker.getState(key);
-    
-    if (state.isOpen && Date.now() - state.lastFailureTime < resetTimeout) {
-      throw new Error('Circuit breaker is open');
-    }
-    
+export async function withRetry<T>(
+  operation: () => Promise<T>,
+  maxAttempts = 3,
+  initialDelay = 1000,
+  backoffMultiplier = 2
+): Promise<T> {
+  let lastError: Error = new Error('No attempts made');
+  let currentDelay = initialDelay;
+  
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
     try {
-      const result = await operation();
-      CircuitBreaker.recordSuccess(key);
-      return result;
+      return await operation();
     } catch (error) {
-      CircuitBreaker.recordFailure(key);
-      if (CircuitBreaker.getFailureCount(key) >= failureThreshold) {
-        CircuitBreaker.openCircuit(key);
+      lastError = error instanceof Error ? error : new Error(String(error));
+      
+      if (attempt === maxAttempts) {
+        break;
       }
-      throw error;
+      
+      // Log retry attempt
+      await logError(lastError, undefined, {
+        type: 'retry_attempt',
+        attempt,
+        maxAttempts,
+        nextDelay: currentDelay,
+      });
+      
+      // Wait before retrying
+      await new Promise(resolve => setTimeout(resolve, currentDelay));
+      currentDelay *= backoffMultiplier;
     }
+  }
+  
+  throw lastError;
+}
+
+export async function withTimeout<T>(
+  operation: () => Promise<T>,
+  timeoutMs: number,
+  timeoutMessage = 'Operation timed out'
+): Promise<T> {
+  const timeoutPromise = new Promise<never>((_, reject) => {
+    setTimeout(() => reject(new Error(timeoutMessage)), timeoutMs);
+  });
+
+  return Promise.race([operation(), timeoutPromise]);
+}
+
+export async function withCircuitBreaker<T>(
+  operation: () => Promise<T>,
+  failureThreshold = 5,
+  resetTimeout = 60000
+): Promise<T> {
+  // Simple circuit breaker implementation
+  const key = operation.toString();
+  const state = getCircuitBreakerState(key);
+  
+  if (state.isOpen && Date.now() - state.lastFailureTime < resetTimeout) {
+    throw new Error('Circuit breaker is open');
+  }
+  
+  try {
+    const result = await operation();
+    recordCircuitBreakerSuccess(key);
+    return result;
+  } catch (error) {
+    recordCircuitBreakerFailure(key);
+    if (getCircuitBreakerFailureCount(key) >= failureThreshold) {
+      openCircuitBreaker(key);
+    }
+    throw error;
   }
 }
 
 // Simple circuit breaker state management
-class CircuitBreaker {
-  private static states = new Map<string, {
-    failures: number;
-    isOpen: boolean;
-    lastFailureTime: number;
-  }>();
+const circuitBreakerStates = new Map<string, {
+  failures: number;
+  isOpen: boolean;
+  lastFailureTime: number;
+}>();
 
-  static getState(key: string) {
-    if (!CircuitBreaker.states.has(key)) {
-      CircuitBreaker.states.set(key, {
-        failures: 0,
-        isOpen: false,
-        lastFailureTime: 0,
-      });
-    }
-    return CircuitBreaker.states.get(key)!;
+function getCircuitBreakerState(key: string) {
+  if (!circuitBreakerStates.has(key)) {
+    circuitBreakerStates.set(key, {
+      failures: 0,
+      isOpen: false,
+      lastFailureTime: 0,
+    });
   }
+  const state = circuitBreakerStates.get(key);
+  if (!state) {
+    throw new Error('Circuit breaker state not found');
+  }
+  return state;
+}
 
-  static recordSuccess(key: string) {
-    const state = CircuitBreaker.getState(key);
-    state.failures = 0;
-    state.isOpen = false;
-  }
+function recordCircuitBreakerSuccess(key: string) {
+  const state = getCircuitBreakerState(key);
+  state.failures = 0;
+  state.isOpen = false;
+}
 
-  static recordFailure(key: string) {
-    const state = CircuitBreaker.getState(key);
-    state.failures++;
-    state.lastFailureTime = Date.now();
-  }
+function recordCircuitBreakerFailure(key: string) {
+  const state = getCircuitBreakerState(key);
+  state.failures++;
+  state.lastFailureTime = Date.now();
+}
 
-  static openCircuit(key: string) {
-    const state = CircuitBreaker.getState(key);
-    state.isOpen = true;
-  }
+function openCircuitBreaker(key: string) {
+  const state = getCircuitBreakerState(key);
+  state.isOpen = true;
+}
 
-  static getFailureCount(key: string) {
-    return CircuitBreaker.getState(key).failures;
-  }
+function getCircuitBreakerFailureCount(key: string) {
+  return getCircuitBreakerState(key).failures;
 }
 
 // Performance monitoring
-export class PerformanceMonitor {
-  static measureAsync<T>(
-    name: string,
-    operation: () => Promise<T>
-  ): Promise<T> {
-    return new Promise(async (resolve, reject) => {
-      const start = performance.now();
+export function measureAsync<T>(
+  name: string,
+  operation: () => Promise<T>
+): Promise<T> {
+  const start = performance.now();
+  
+  return operation()
+    .then((result) => {
+      const duration = performance.now() - start;
       
-      try {
-        const result = await operation();
-        const duration = performance.now() - start;
-        
-        // Log performance metrics
-        if (config.enableConsoleLogging) {
-          console.log(`⏱️ Performance [${name}]: ${duration.toFixed(2)}ms`);
-        }
-        
-        // Report slow operations
-        if (duration > 5000) { // 5 seconds threshold
-          logError(`Slow operation detected: ${name}`, undefined, {
-            type: 'performance_warning',
-            duration,
-            operation: name,
-          });
-        }
-        
-        resolve(result);
-      } catch (error) {
-        const duration = performance.now() - start;
-        logError(
-          error instanceof Error ? error : new Error(String(error)),
-          undefined,
-          {
-            type: 'operation_failure',
-            duration,
-            operation: name,
-          }
-        );
-        reject(error);
+      // Log performance metrics
+      if (config.enableConsoleLogging) {
+        console.log(`⏱️ Performance [${name}]: ${duration.toFixed(2)}ms`);
       }
+      
+      // Report slow operations
+      if (duration > 5000) { // 5 seconds threshold
+        logError(`Slow operation detected: ${name}`, undefined, {
+          type: 'performance_warning',
+          duration,
+          operation: name,
+        });
+      }
+      
+      return result;
+    })
+    .catch((error) => {
+      const duration = performance.now() - start;
+      logError(
+        error instanceof Error ? error : new Error(String(error)),
+        undefined,
+        {
+          type: 'operation_failure',
+          duration,
+          operation: name,
+        }
+      );
+      throw error;
     });
-  }
 }
 
 export { config as errorReportingConfig };

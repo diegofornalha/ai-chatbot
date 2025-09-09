@@ -4,7 +4,7 @@ import React, { useCallback, useState, Children, isValidElement, cloneElement } 
 import { ErrorBoundary } from '@/components/error-boundary';
 import { AuthErrorFallback, } from '@/components/error-fallbacks';
 import { AuthForm } from './auth-form';
-import { logError, ErrorRecovery, NetworkError, AuthenticationError } from '@/lib/error-reporting';
+import { logError, withRetry, NetworkError, AuthenticationError } from '@/lib/error-reporting';
 
 interface AuthWithErrorBoundaryProps {
   action: NonNullable<
@@ -61,7 +61,7 @@ export function EnhancedAuthForm({
     setError(null);
 
     try {
-      await ErrorRecovery.withRetry(async () => {
+      await withRetry(async () => {
         if (typeof action === 'string') {
           // Handle form action URL
           const response = await fetch(action, {
